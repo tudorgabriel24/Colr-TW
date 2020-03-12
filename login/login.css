@@ -5,14 +5,13 @@ body {
     width: 100vw;
     margin: 0 auto;
     height: 100vh;
-    background-color: #323232;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .page { 
     height: 100%;
     width: 100%;
-    background: linear-gradient(130deg, #4169e1 50%, #323232 0%);
+    background: linear-gradient(130deg, #3A7CA5 50%, #16425B 0%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,6 +47,7 @@ body {
 .switch-login {
     transition-duration: 0.4s;
     flex: 1; 
+    opacity: 0.5;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     display: flex;
@@ -59,6 +59,7 @@ body {
     background-color: #fff !important;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
+    opacity: 1 !important;
 }
 .switch-login > .active-form {
     border-top-right-radius: 15px;
@@ -66,16 +67,17 @@ body {
 .switch-register {
     transition-duration: 0.4s;
     flex: 1;
+    opacity: 0.5;
     background-color: #E5E5E5;
     border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    /* border-bottom-left-radius: 15px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
 
 }
 .switch-button-text {
-    color: rgb(61, 61, 61);
+    color: #3A7CA5;
     font-weight: bold;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -97,7 +99,7 @@ body {
     flex-direction: column;
     height: 100%;
     align-self: center;
-    width: 50%;
+    width: 70%;
     justify-content: space-around;
 
 }
@@ -110,15 +112,15 @@ body {
 
 input {
     padding: 10px;
-    border-radius: 5px;
-    border: 0.5px solid grey;
+    border: none;
+    border-bottom: 1px solid #E5E5E5;
     margin-bottom: 10px;
     outline: none;
 }
 
 input:focus {
     transition-duration: 0.4s;
-    border-color: #4169e1;
+    border-color: #3A7CA5;
 }
 
 .input:invalid {
@@ -136,13 +138,19 @@ input:focus {
     color: red;
 
 }
+
+.hide {
+    /* display:none; */
+    visibility: hidden;
+}
+
 .submit-button {
     background-color: #fff;
     padding: 5px;
-    color: #323232;
-    border: 2px solid #4169e1;
+    color: #3A7CA5;
+    border: 2px solid #3A7CA5;
     width: 50%;
-    border-radius: 15px;
+    border-radius: 50px;
     align-self: center;
     transition-duration: 0.4s;
     font-weight: bold;
@@ -152,7 +160,7 @@ input:focus {
 }
 
 .submit-button:hover {
-    background-color:#4169e1;
+    background-color:#3A7CA5;
     color: #fff;
 
 }
