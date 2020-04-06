@@ -19,7 +19,7 @@ body{
 .hamburger{
     width: 1.2em;
     height: 0.2em;
-    background-color: #001514;
+    background-color: #637074;
     margin: 0.12em 0;
     display: block;
 }
@@ -28,16 +28,6 @@ body{
     margin-left: 1.5%;
     width: 6%;
 }
-/* .page-header{
-    position: relative;
-    height: 50px;
-    width: 100%;
-    background: #fff;
-    z-index: 900;
-    border: none;
-    box-sizing: border-box;  
-} */
-
 .sidenav {
     height: 100%;
     width: 0; 
@@ -45,14 +35,14 @@ body{
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #39393A; 
+    background-color: #333333; 
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; 
     transition: 0.6s; 
   }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 1rem 1rem 1rem 3rem;
     text-decoration: none;
     color: #fff;
     display: block;
@@ -65,7 +55,7 @@ body{
   }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: #3a7ca5;
   }
 
 .sidenav .closebtn {
@@ -77,7 +67,7 @@ body{
   }
 #userLogin{
   /* float: right; */
-  color: #001514;
+  color: #637074;
   margin-top: 0.4rem;
   padding-right: 1em;
   font-size: 1em;
@@ -97,23 +87,25 @@ body{
   font-weight:bold;
   text-align: center;
   padding-right: 0.5em;
+  transition: 0.3s;
+}
+#userLogin div:hover{
+  color: #16425B;
+  transition: 0.3s;
+  font-size: 2.5rem;
 }
 #userLogin img{
   width: 3.7rem;
-  color: #001514;
+  color: #637074;
   justify-content: center;
 }
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  } 
-  /* NU MERGRE */
-@media screen and (max-height: 450px) {
-    #userLogin{margin-top: 0rem;}
-    #userLogin div{
-      display: none;
-      visibility: hidden;}
-  }      
+    .sidenav a {font-size: 18px;}    
+  }   
+@media(max-width: 450px){
+  #userLogin div{visibility: hidden;}
+  }
                         /*Content*/
 .container{
   display: flex;
@@ -132,7 +124,7 @@ body{
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border-radius: 0.15em;
-  background-color: #001514;
+  background-color: #333333;
   text-align: center;
   border: none;
   cursor: pointer;
@@ -148,6 +140,11 @@ body{
   text-decoration: none;
   color:  #E6E6E6;
   font-weight:300;
+}
+@media(max-width: 450px){
+  .container img{width: auto;}
+  .container button{width: auto;}
+  .container button:hover{width: 50%;}
 }
                         /*Footer*/
 footer{
