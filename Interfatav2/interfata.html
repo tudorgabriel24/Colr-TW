@@ -5,35 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FirstPage</title>
     <link rel="stylesheet" href="Interfata.css">
-    <script src="interfata.js"></script>
+    <script src="HamburgerMenu.js"></script>
 </head>
 <body>
     <header>
-        <div class="page-header">
-            
-                
+        <div>
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="#"><img src="./user.png" alt="Connect" id="Userimg" /></a>
                     <a href="#">Noutati</a>
-                    <a href="#">Postarile tale</a>
+                    <a href="#">Postari</a>
                     <a href="#">Statistici</a>
                     <a href="#">Contact</a>
                 </div>
-                  <span style="font-size:30px;cursor:pointer" onclick="openNav()">
-                    <div class="header-menu">
+                <div>
+                    <a href="#" id="userLogin">
+                        <span>
+                            <div>Login</div>
+                            <img src="user.svg" alt="Login"></img>
+                        </span>
+                    </a>
+                </div> 
+                <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
                     <div class="hamburger"></div>
                     <div class="hamburger"></div>
                     <div class="hamburger"></div>
-                    </div>
-                  </span>
+                </div>  
+                       
+                
+                    
         </div>
         
     </header>
     <section>
-        <div >
-            content pe pagina
+        <div class="container">
+            <img src="logo.svg" alt="Login"></img>
+            <button><a href="noutati.html">Enter</a></button>
         </div>
+        
     </section>
+    <footer>
+        
+    </footer>
 </body>
 </html>
