@@ -11,7 +11,7 @@ body {
 .page { 
     height: 100%;
     width: 100%;
-    background: linear-gradient(130deg, #3A7CA5 50%, #16425B 0%);
+    background: linear-gradient(130deg, #fff 0, #fff 10%,#3A7CA5 10%,#3A7CA5 50%,#16425B 50%, #16425B 90%, #fff 0%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,6 +27,9 @@ body {
     max-width: 50%;
     max-height: 60%;
     border-radius: 15px;
+    -webkit-box-shadow: 4px 0px 21px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 0px 21px -7px rgba(0,0,0,0.75);
+    box-shadow: 4px 0px 21px -7px rgba(0,0,0,0.75);
 }
 
 .switch-bar {
