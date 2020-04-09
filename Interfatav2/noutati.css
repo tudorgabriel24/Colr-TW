@@ -225,8 +225,6 @@ input{
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit,minmax(30rem,1fr));
-    /* grid-template-rows: minmax(30rem, max-content)
-                       repeat(auto-fill, 60rem); */
     margin-bottom: 3rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -234,6 +232,7 @@ input{
 }
 .container{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -246,6 +245,14 @@ input{
   width: 100%;
   height: auto;
   object-fit: cover;
+  flex: 25%;
+  overflow: hidden;
+  transition: 0.5s;
+}
+.container img:hover{
+  filter: sepia(50%);
+  transition: 0.5s;
+  cursor: pointer;
 }
 .container p{
   display: block;
