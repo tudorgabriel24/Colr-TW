@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Upload</title>
+        <link rel="stylesheet" href="upload.css">
+        <link rel="stylesheet" href="noutati.css">
+    </head>
+    <body>
+        <header>
+            <div>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#">Noutati</a>
+                    <a href="#">Postari</a>
+                    <a href="#">Statistici</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div>
+                    <img src="logo.svg" id="miniLogo"></img>
+                </div>
+                <div>
+                    <a href="#" id="userLogin">
+                        <span>
+                            <div>Login</div>
+                            <img src="user.svg" alt="Login"></img>
+                        </span>
+                    </a>
+                </div> 
+                <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                </div>        
+            </div>
+        </header>
+        <section>
+            <form>
+                <label for="fname">Photo Name:</label><br>
+                <input type="text" id="fname" name="fname"><br>
+                <label for="year">Year:</label>
+                <input type="text" id="year" name="year"><br>
+            </form>
+        </section>
+    </body>
+
+</html>
