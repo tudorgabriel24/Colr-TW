@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Upload</title>
+        <script src="HamburgerMenu.js"></script>
         <link rel="stylesheet" href="upload.css">
         <link rel="stylesheet" href="noutati.css">
     </head>
@@ -35,13 +36,22 @@
                 </div>        
             </div>
         </header>
-        <section>
+        <section class="formCont">
             <form>
-                <label for="fname">Photo Name:</label><br>
-                <input type="text" id="fname" name="fname"><br>
-                <label for="year">Year:</label>
-                <input type="text" id="year" name="year"><br>
+                <div class="uplBut">
+                    <!-- <button class="btn">Upload a file</button> -->
+                    <input type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
+                </div>
+                <input class="inpText" type="text" placeholder="Name" id="phname" name="phname" maxlength="16" required><br>
+                <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
+                <input class="inpText" type="text" placeholder="Brand" id="brand" name="brand" required><br>
+                <input class="inpText" type="text" placeholder="Weight" id="weight" name="weight" required><br>
+                <input class="inpText" type="text" placeholder="Country" id="country" name="country" required><br>
+                <textarea class="inpText" type="text" placeholder="Description" id="description" name="description" rows="5" required></textarea><br>
+                <input class="inpText" type="text" placeholder="Usage" id="usage" name="usage"><br><br><br>
+                <input class="inpSub" type="submit"><br>
             </form>
+            <img id="blah"/><br>
         </section>
     </body>
 
