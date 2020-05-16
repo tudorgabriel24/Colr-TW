@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Upload</title>
+        <script src="../js/HamburgerMenu.js"></script>
+        <link rel="stylesheet" href="../css/upload.css">
+        <link rel="stylesheet" href="../css/noutati.css">
+    </head>
+    <body>
+        <header>
+            <div>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#">Noutati</a>
+                    <a href="#">Postari</a>
+                    <a href="#">Statistici</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div>
+                    <img src="../assets/logo.svg" id="miniLogo"></img>
+                </div>
+                <div>
+                    <a href="#" id="userLogin">
+                        <span>
+                            <div>Login</div>
+                            <img src="../assets/user.svg" alt="Login"></img>
+                        </span>
+                    </a>
+                </div> 
+                <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                    <div class="hamburger"></div>
+                </div>        
+            </div>
+        </header>
+        <section class="formCont">
+            <form>
+                <div class="uplBut">
+                    <!-- <button class="btn">Upload a file</button> -->
+                    <input type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
+                </div>
+                <input class="inpText" type="text" placeholder="Name" id="phname" name="phname" maxlength="16" required><br>
+                <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
+                <input class="inpText" type="text" placeholder="Brand" id="brand" name="brand" required><br>
+                <input class="inpText" type="text" placeholder="Weight" id="weight" name="weight" required><br>
+                <input class="inpText" type="text" placeholder="Country" id="country" name="country" required><br>
+                <textarea class="inpText" type="text" placeholder="Description" id="description" name="description" rows="5" required></textarea><br>
+                <input class="inpText" type="text" placeholder="Usage" id="usage" name="usage"><br><br><br>
+                <input class="inpSub" type="submit"><br>
+            </form>
+            <img id="blah"/><br>
+        </section>
+    </body>
+
+</html>
