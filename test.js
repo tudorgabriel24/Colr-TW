@@ -1,13 +1,14 @@
 const mysql = require("mysql");
 const crypto = require("crypto");
 
+var conn = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "colr",
+});
+
 function query(sql) {
-    var conn = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "colr",
-    });
     conn.connect(function(err) {
         if (err) {
             throw err;
@@ -28,7 +29,7 @@ function insert(table, jsonData) {
     var hasID = false;
     const hash = crypto.createHash("md5");
     for (var key in jsonData) {
-        colums.push("'" + key + "'");
+        colums.push(key);
         if (key == "ID") {
             hash.update(Date.now().toString());
             values.push("'" + hash.digest('hex') + "'");
@@ -39,7 +40,7 @@ function insert(table, jsonData) {
         }
     }
     if (hasID == false) {
-        colums.push("'ID'");
+        colums.push("ID");
         hash.update(Date.now().toString());
         values.push("'" + hash.digest('hex') + "'");
     }
@@ -52,8 +53,8 @@ function insert(table, jsonData) {
     
     var sql = `INSERT INTO ${table} (${colums}) VALUES (${values})`;
     console.log(sql);
-    // query(sql);
+    query(sql);
     
 }
 
-insert('users', {'brand': 'cuca cola', 'year': 1998});
+insert('articles', {'brand': 'cuca cola', 'year': 1998});
