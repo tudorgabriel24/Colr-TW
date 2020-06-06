@@ -20,12 +20,44 @@ module.exports = http.createServer((req, res) => {
     if (err) throw err;
     console.log("Connected!");
 
-    insertion =
-      "INSERT INTO articles(id, brand, year, name) VALUES ( '30', 'Timisoreana', '2008','Beer Bottle')";
+    let brand = "Timisoreana"; // Trebuie sa fie schimbate pentru ceea ce va veni de pe front, o sa fie mai multe tipuri
+    let id = "65";
 
-    connection.query(insertion, function (err, result) {
+    //INSERT
+
+    // var insertion =
+    //   "INSERT INTO articles(id, brand) VALUES ('" + id + "', '" + brand + "');";
+    // connection.query(insertion, function (err, result) {
+    //   if (err) throw err;
+    //   console.log("Result: " + result);
+    // });
+
+    // SELECT
+    var selection =
+      "SELECT * FROM articles WHERE brand = " + mysql.escape(brand);
+    connection.query(selection, function (err, result) {
       if (err) throw err;
       console.log("Result: " + result);
+      console.log("Number of records recieved: " + result.affectedRows);
+    });
+
+    // //DELETE
+
+    // var deletion = "DELETE FROM articles WHERE brand = ?";
+    // connection.query(deletion, [brand], function (err, result) {
+    //   if (err) throw err;
+    //   console.log("Result: " + result);
+    //   console.log("Number of records recieved: " + result.affectedRows);
+    // });
+
+    //UPDATE
+    var new_brand = "Cola";
+    // var update_brand = [new_brand, brand];
+    var update_data = "UPDATE articole SET brand = ? WHERE brand = ?;";
+    connection.query(update_data, [new_brand, brand], function (err, result) {
+      if (err) throw err;
+      console.log("Result: " + result);
+      console.log(result.affectedRows + " record(s) updated");
     });
   });
 
