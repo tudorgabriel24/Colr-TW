@@ -8,19 +8,19 @@ module.exports = http.createServer((req, res) => {
 
   // Database connection
 
-  var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "colr",
-    charset: "utf8_general_ci",
-  });
+  // var connection = mysql.createConnection({
+  //   host: "localhost",
+  //   user: "root",
+  //   password: "",
+  //   database: "colr",
+  //   charset: "utf8_general_ci",
+  // });
 
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
+  // connection.connect(function (err) {
+  //   if (err) throw err;
+  //   console.log("Connected!");
 
-  });
+  // });
 
   // GET Endpoint
   if (reqUrl.pathname == "/sample" && req.method === "GET") {
