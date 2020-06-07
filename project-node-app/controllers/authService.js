@@ -1,26 +1,26 @@
 // const url = require("url");
 const crypto = require("crypto");
 const connection = require("../server").connection;
-let userExist = async (user, searchType) => {
-  console.log(searchType);
+const jwt = require('jsonwebtoken');
+
+let userExist = async (user) => {
   let userQuery = `SELECT * FROM USERS WHERE EMAIL= '${user.email}';`;
   let connectionPromise = new Promise((resolve, reject) => {
     connection.query(userQuery, (err, result) => {
-      if (err) throw err;
-
-      if(result[0] === undefined) console.log('user doesn t exist');
-      else {
-          if(searchType === "register") {
-            console.log("User exists in database, failed to register.")
-           resolve(true);
-          } 
-          const hashPass = crypto.createHash("sha256");
-          hashPass.update(user.password);
-          if(result[0].password === hashPass.digest('hex')) {
-              resolve(true);
-            }
+      if (err) reject(err);
+      let dbUser = null;
+      if(result[0] === undefined) {
+        console.log('user doesn t exist');
       }
-      resolve(false);
+      else {
+        dbUser = {
+          ID: result[0].ID,
+          email: result[0].email,
+          fullName: result[0].fullName,
+          password: result[0].password
+        }
+      }
+      resolve(dbUser);
     });
   }); 
   return connectionPromise; 
@@ -64,14 +64,19 @@ exports.loginRequest = async(req, resp) => {
   req.on('end', async () => {
     try {
       body = JSON.parse(body);
-      let exist = await userExist(body,"login");
-      if(exist) {
+      let userData = await userExist(body,"login");
+      if(userData !== null) {
         response = {
           success: true,
         };
+        const token = jwt.sign({_id: userData.ID}, "secret");
+        console.log(token);
+        resp.setHeader("Authorization",token);
       }
+        resp.setHeader("Content-Type","application/json");
+ 
       resp.statusCode = response.success ? 200 : 404;
-      resp.setHeader("Content-Type", "application/json");
+ 
       resp.write(JSON.stringify(response));
       resp.end();
     }
