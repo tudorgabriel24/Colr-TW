@@ -151,15 +151,36 @@ function deleteEntry(table, id) {
     query(`DELETE FROM '${table}' WHERE ID = '${id}'`);
 }
 
+function deleteAllArticles() {
+    conn.query(`SELECT ID FROM articles`, function(err, results, fields) {
+        for (var i in results) {
+            query(`DELETE FROM articles WHERE ID = '${results[i]['ID']}'`);
+        }
+    });
+}
+
+function deleteAll() {
+    conn.query(`SELECT ID FROM users`, function(err, results, fields) {
+        if (err) {
+            throw err;
+        }
+        for (var i in results) {
+            query(`DELETE FROM users WHERE ID = '${results[i]['ID']}'`);
+        }
+    });
+}
+
 // insert('articles', {'brand': 'cuca cola', 'year': 1998});
 
 // insertUser(0, 'asd', 'marina@marian.com', '12345');
 
-insertArticle('b8ad2480f1870d522629cabd378ae122', 'mare capac', 2002, 'timisoreana', 0, 'Romania', 'bere pet', 'sters');
+// insertArticle('b8ad2480f1870d522629cabd378ae122', 'mare capac', 2002, 'timisoreana', 0, 'Romania', 'bere pet', 'sters');
 
 // updateUser('67ad7c87fde38897fa717203061a6149', null, null, null);
 
 // console.log(query(`SELECT * FROM users`));
 
 // deleteUser('67ad7c87fde38897fa717203061a6149');
+
+deleteAllArticles();
 
