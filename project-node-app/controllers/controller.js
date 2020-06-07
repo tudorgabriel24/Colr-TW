@@ -8,26 +8,19 @@ module.exports = http.createServer((req, res) => {
 
   // Database connection
 
-  var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "colr",
-    charset: "utf8_general_ci",
-  });
+  // var connection = mysql.createConnection({
+  //   host: "localhost",
+  //   user: "root",
+  //   password: "",
+  //   database: "colr",
+  //   charset: "utf8_general_ci",
+  // });
 
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
+  // connection.connect(function (err) {
+  //   if (err) throw err;
+  //   console.log("Connected!");
 
-    insertion =
-      "INSERT INTO articles(id, brand, year, name) VALUES ( '30', 'Timisoreana', '2008','Beer Bottle')";
-
-    connection.query(insertion, function (err, result) {
-      if (err) throw err;
-      console.log("Result: " + result);
-    });
-  });
+  // });
 
   // GET Endpoint
   if (reqUrl.pathname == "/sample" && req.method === "GET") {
