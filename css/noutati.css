@@ -107,6 +107,7 @@ header {
   color: #16425b;
   transition: 0.3s;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 #userLogin img {
   width: 3.7rem;
@@ -308,4 +309,33 @@ input {
 .container a:hover {
   color: #215cb4;
   transition: 0.35s;
+}
+.button_container {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin: 2rem;
+}
+.mybutton {
+  background-color: #fff;
+  padding: 0.5rem;
+  color: #323232;
+  border: 0.1rem solid #3d3d3d;
+  width: 10%;
+  border-radius: 0.5rem;
+  align-self: center;
+  transition-duration: 0.2s;
+  font-weight: bold;
+  font-size: 1.4rem;
+  font-size-adjust: 0.5rem;
+  outline: none;
+  margin: 0.8rem;
+}
+.mybutton:hover {
+  background-color: #16425b;
+  border: 0.1rem solid #16425b;
+  color: #fff;
+  cursor: pointer;
 }

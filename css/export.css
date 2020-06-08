@@ -75,7 +75,6 @@ ul li.checked::before {
   margin-left: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding-left: 2rem;
   pointer-events: none;
 }
@@ -89,10 +88,10 @@ ul li.checked::before {
   align-self: center;
   transition-duration: 0.2s;
   font-weight: bold;
-  font-size: 1, 2rem;
+  font-size: 1rem;
   font-size-adjust: 0.5rem;
   outline: none;
-  margin-bottom: 2rem;
+  margin: 0.8rem;
 }
 .btn:hover {
   background-color: #16425b;
