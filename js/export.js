@@ -1,51 +1,51 @@
-// window.emptyList = function () {
-//   var lis = document.querySelectorAll("#myList li");
-//   for (var i = 0; (li = lis[i]); i++) {
-//     li.parentNode.removeChild(li);
-//     i -= 1;
-//   }
-// };
+const container = document.querySelector(".container");
 
-// window.emptyList = function () {
-//   var lis = document.querySelectorAll("#myList li");
-//   for (var i = 0; (li = lis[i]); i++) {
-//     li.parentNode.removeChild(li);
-//     this.event.stopPropagation();
-//   }
-// };
+class item {
+  constructor(itemName, image_url) {
+    this.createDiv(itemName, image_url);
+  }
+  createDiv(itemName, image_url) {
+    let input = document.createElement("p");
+    input.value = itemName;
+    // input.disabled = true;
+    input.classList.add("item_input");
+    input.type = "text";
+    input.innerHTML = itemName;
 
-//Cross the list item
-var list = document.querySelector("ul");
-list.addEventListener(
-  "click",
-  function (ev) {
-    if (ev.target.tagName === "LI") {
-      ev.target.classList.toggle("checked");
-    }
-  },
-  false
-);
+    let image = document.createElement("img");
+    image.value = image_url;
+    image.setAttribute("src", image_url);
+    image.classList.add("size");
 
-//Eliminate list elements
-var items = document.querySelectorAll("#mylist li"),
-  tab = [],
-  liIndex;
+    let itemBox = document.createElement("div");
+    itemBox.classList.add("item");
 
-// populate tab with li data
-for (var i = 0; i < items.length; i++) {
-  tab.push(items[i].innerHTML);
-}
-console.log(tab);
+    let removeButton = document.createElement("button");
+    removeButton.innerHTML = "remove";
+    removeButton.classList.add("removeButton");
 
-// get li index using tab array on li click event
-for (var i = 0; i < items.length; i++) {
-  items[i].onclick = function () {
-    liIndex = tab.indexOf(this.innerHTML);
-    console.log(this.innerHTML + " INDEX = " + liIndex);
-  };
+    container.appendChild(itemBox);
+
+    itemBox.appendChild(image);
+    itemBox.appendChild(input);
+    itemBox.appendChild(removeButton);
+
+    removeButton.addEventListener("click", () => this.remove(itemBox));
+  }
+
+  remove(item) {
+    container.removeChild(item);
+  }
 }
 
-function removeElement() {
-  console.log(items);
-  items[liIndex].parentNode.removeChild(items[liIndex]);
-}
+///De testare, urmeaza sa fie luate din baza de date
+new item("Descriere/Titlu", "../assets/coca.jpeg");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Titlu", "../assets/jhonniewalker.jpeg ");
