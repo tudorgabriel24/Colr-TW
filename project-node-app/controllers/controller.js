@@ -42,9 +42,44 @@ module.exports = http.createServer((req, res) => {
 
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    service.addArticle(req, res);
+    service.addArticles(req, res);
+  }
+    else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.updateArticle(req, res);
     
 
+  } else if (reqUrl.pathname == "/articles" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.deleteArticle(req, res);
+    
+
+  } else if (reqUrl.pathname == "/cart" && req.method == "GET") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.getCart(req, res);
+    
+
+  } else if (reqUrl.pathname == "/cart" && req.method == "POST") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.addToCart(req, res);
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "GET") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.getUsers(req, res);
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "POST") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.addUser(req, res);
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.updateUser(req, res);
+  } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.deleteUser(req, res);
   } else {
     console.log(
       "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname

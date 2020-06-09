@@ -112,6 +112,17 @@ exports.deleteUser = function (req, res) {
   });
 }
 
+exports.getCart = function (req, res) {
+  var jsonData = {
+
+  };
+  db.getEntries(`'user_articles'`, jsonData, 1).then(function(response) {
+      utils.writeJson(res, response);
+  }).catch(function(response) {
+      utils.writeJson(res, response);
+  });
+}
+
 exports.testRequest = function (req, res) {
   body = "";
 
