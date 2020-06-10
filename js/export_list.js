@@ -40,12 +40,5 @@ class item {
 
 ///De testare, urmeaza sa fie luate din baza de date
 new item("Descriere/Titlu", "../assets/coca.jpeg");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
-new item("Titlu", "../assets/jhonniewalker.jpeg ");
+new item("Descriere/Titlu", "../assets/coca.jpeg");
+new item("Descriere/Titlu", "../assets/coca.jpeg");
