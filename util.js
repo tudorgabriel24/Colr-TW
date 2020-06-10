@@ -38,6 +38,6 @@ var ResponsePayload = function(code, payload) {
     if(typeof payload === 'object') {
       payload = JSON.stringify(payload, null, 2);
     }
-    response.writeHead(code, {'Content-Type': 'application/json'});
+    response.writeHead(code, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
     response.end(payload);
   }

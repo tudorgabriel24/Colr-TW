@@ -9,6 +9,29 @@ module.exports = http.createServer((req, res) => {
   var service = require("./service");
   const reqUrl = url.parse(req.url, true);
 
+  // console.log(req.method);
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Request-Method', '*');
+  // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+  // res.setHeader('Access-Control-Allow-Headers', '*');
+
+  const headers = {
+    'Access-Control-Allow-Headers': '*', 
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, DELETE',
+    'Access-Control-Max-Age': 2592000, // 30 days
+    /** add other headers as per requirement */
+  };
+
+  if (req.method == "OPTIONS") {
+    // for(var key in req) {
+    //   console.log(key);
+    // }
+    res.writeHead(204, headers);
+    res.end();
+    return;
+  }
+
   // if (req.method == 'GET') {
   //   var query = reqUrl.
   // }
@@ -52,33 +75,15 @@ module.exports = http.createServer((req, res) => {
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     let body = '';
-    var form = new formidable.IncomingForm();
 
-    // form.parse analyzes the incoming stream data, picking apart the different fields and files for you.
 
-    form.parse(req, function(err, fields, files) {
-      if (err) {
-
-        // Check for and handle any errors here.
-
-        console.error(err.message);
-        return;
-      }
-      req.body = fields;
-      // console.log(files['image']);
-      service.addArticle(req, res);
-      // res.writeHead(200, {'content-type': 'application/json'});
-      // res.write('received upload:\n\n');
-
-      // // This last line responds to the form submission with a list of the parsed data and files.
-
-      // res.end({fields: fields, files: files});
+    
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.addArticle(req, res);
     });
-    // req.on('data', chunk => {
-    //     body += chunk.toString(); // convert Buffer to string
-    //     req.body = parse(body);
-    //     service.addArticle(req, res);
-    // });
   }
     else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
@@ -119,7 +124,7 @@ module.exports = http.createServer((req, res) => {
 
   } else {
     console.log(
-      "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname
+      "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
     service.invalidRequest(req, res);
   }
