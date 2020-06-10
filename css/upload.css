@@ -3,6 +3,8 @@ body {
 }
 
 .formCont > form {
+  transition: 1s;
+  overflow: auto;
   box-shadow: 0.001rem 0.001rem 0.008rem 0.033rem grey;
   border: #637074 solid 0.05rem;
   border-radius: 20px;
@@ -64,8 +66,7 @@ body {
   font-weight: bold;
   font-size-adjust: 0.5rem;
   outline: none;
-  margin: 0.3rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   overflow: auto;
 }
 

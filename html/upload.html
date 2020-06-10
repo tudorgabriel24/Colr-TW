@@ -37,20 +37,21 @@
             </div>
         </header>
         <section class="formCont">
-            <form method="POST">
+            <form enctype="multipart/form-data" action="http://localhost:3000/articles" method="POST">
                     <!-- <button class="btn">Upload a file</button> -->
-                <input class="uplBut" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
-                <input class="inpText" type="text" placeholder="Name" id="phname" name="phname" maxlength="16" required><br>
+                <input class="uplBut" type="file" enctype="multipart/form-data" name="image" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
+                <input class="inpText" type="text" placeholder="Name" id="name" name="name" maxlength="16" required><br>
                 <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
                 <input class="inpText" type="text" placeholder="Brand" id="brand" name="brand" required><br>
-                <input class="inpText" type="text" placeholder="Weight" id="weight" name="weight" required><br>
+                <input class="inpText" type="text" placeholder="Alcholic" id="alcoholic" name="alcoholic" required><br>
                 <input class="inpText" type="text" placeholder="Country" id="country" name="country" required><br>
                 <textarea class="inpText" type="text" placeholder="Description" id="description" name="description" rows="5" required></textarea><br>
-                <input class="inpText" type="text" placeholder="Usage" id="usage" name="usage"><br><br><br>
-                <input class="inpSub" type="submit"><br>
+                <input class="inpText" type="text" placeholder="Current State" id="currentState" name="currentState"><br><br><br>
+                <input class="inpSub" onclick="send()" type="submit"><br>
             </form>
             <img id="blah"/><br>
         </section>
     </body>
+
 
 </html>

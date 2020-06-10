@@ -18,12 +18,10 @@ exports.sampleRequest = function (req, res) {
 };
 
 exports.addArticle = function (req, res) {
-  var jsonData = {
-      'user_id': req.session.user,
-      'name': req.body.name,
-      'year': req.body.year
-  }
-  db.insertEntry(`'articles'`, jsonData).then(function(response) {
+  console.log('asd');
+  var jsonData = req.body;
+  jsonData['user_id'] = 'f87330d93a88e085a5c9946d93c2bd9d';
+  db.insertEntry('articles', jsonData).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
