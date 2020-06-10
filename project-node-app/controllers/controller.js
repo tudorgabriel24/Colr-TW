@@ -5,6 +5,14 @@ var mysql = require("mysql");
 module.exports = http.createServer((req, res) => {
   var service = require("./service");
   const reqUrl = url.parse(req.url, true);
+  req.body = reqUrl.query;
+  console.log(req.body.year);
+
+  // if (req.method == 'GET') {
+  //   var query = reqUrl.
+  // }
+
+
 
   // Database connection
 
@@ -37,7 +45,7 @@ module.exports = http.createServer((req, res) => {
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    service.getArticle(req, res);
+    service.getArticles(req, res);
 
 
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {

@@ -64,6 +64,7 @@ exports.updateUser = function (req, res) {
 };
 
 exports.updateArticle = function (req, res) {
+
   var jsonData = {
 
   };
@@ -75,10 +76,12 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  var jsonData = {
-
-  };
-  db.getEntries(`'articles'`, jsonData, req.params.order).then(function(response) {
+  // for (var key in req) {
+  //   console.log(key);
+  // }
+  // console.log(req.query);
+  var jsonData = req.body;
+  db.getEntries('articles', jsonData, 1).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);

@@ -71,9 +71,8 @@ async function getEntries(table, jsonData, orderColumn) {
     for (var key in jsonData) {
         get.push(`${key} = '${jsonData[key]}'`);
     }
-    get = get.join();
-    console.log(get);
-    var selectSQL = `SELECT * FROM '${table}' WHERE ${get} ORDER BY ${orderColumn}`;
+    get = get.join(' AND ');
+    var selectSQL = `SELECT * FROM ${table} WHERE ${get} ORDER BY 1`;
     var res = await query(selectSQL);
     return res;
 }

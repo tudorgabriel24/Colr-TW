@@ -37,10 +37,10 @@
             </div>
         </header>
         <section class="formCont">
-            <form>
+            <form method="POST">
                 <div class="uplBut">
                     <!-- <button class="btn">Upload a file</button> -->
-                    <input type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
+                    <input type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">Upload Photo<br>
                 </div>
                 <input class="inpText" type="text" placeholder="Name" id="phname" name="phname" maxlength="16" required><br>
                 <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
