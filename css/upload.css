@@ -3,8 +3,8 @@ body {
 }
 
 .formCont > form {
-  
-  border: 5px ridge rgb(71, 70, 70);
+  box-shadow: 0.001rem 0.001rem 0.008rem 0.033rem grey;
+  border: #637074 solid 0.05rem;
   border-radius: 20px;
   display: flex;
   flex-flow: column wrap;
@@ -13,7 +13,7 @@ body {
   grid-column-start: 2;
   grid-row-start: 1;
   grid-row-end: 3;
-  background-color: #d4d4d3;
+  background-color: #c5c5c4;
   /* margin-left: 25%;
     margin-right: 25%; */
   /* background-color: red; */
@@ -24,38 +24,56 @@ body {
   grid-row-start: 2;
   height: 400px;
   width: auto;
-  max-width: 100%;
+  max-width: 90%;
 }
 
 .formCont {
   grid-gap: 10%;
   margin-top: 5%;
   display: grid;
-  grid-template-columns: [margin-left] 0.5fr [form] 1fr [spc] 1fr [photo] 1fr;
+  grid-template-columns: [margin-left] 0.4fr [form] 2fr [photo] 3fr;
   /* grid-template-rows: 1; */
-  grid-template-rows: [margin-top] 0.2fr [picture] 2fr;
+  grid-template-rows: [margin-top] 0.2fr [picture] 1fr;
   align-content: center;
   justify-content: center;
 }
 
 .inpText {
-  padding: 5px;
+  padding: 8px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
   font-family: "Arial", Times, serif;
   margin: 20px;
   border: 2px solid gray;
   font-size: 18px;
-  background-color: transparent;
+  background-color: rgb(224, 223, 223);
   border-radius: 15px;
   font-weight: bold;
 }
 
 .inpSub {
-  border-radius: 10px;
-  margin: 10px;
-  border: 0 hidden black;
-  width: 50%;
+  background-color: #fff;
+  padding: 0.5rem;
+  color: #323232;
+  border: 0.1rem solid #3d3d3d;
+  width: 25%;
+  border-radius: 0.5rem;
   align-self: center;
+  transition-duration: 0.2s;
+  font-weight: bold;
+  font-size-adjust: 0.5rem;
+  outline: none;
+  margin: 0.3rem;
+  margin-top: 1.5rem;
+  overflow: auto;
+}
+
+.inpSub:hover {
+  background-color: #16425b;
+  color: #fff;
+  cursor: pointer;
+  border-color: #16425b;
 }
 
 .uplBut {
