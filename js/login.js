@@ -57,7 +57,7 @@ function makeLoginRequest(email,password) {
                 let authToken = xhttp.getResponseHeader('Authorization');
                 console.log(authToken);
                 localStorage.setItem('Authorization', authToken);
-                window.location.replace('http://localhost:5500/html/noutati.html');
+                window.location.replace('http://localhost:5500/index.html');
               }
         }
     };

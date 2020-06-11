@@ -7,9 +7,14 @@ window.onload = function makeContentRequest() {
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
   xhttp.setRequestHeader("Content-Type", "application/json");
+  const authToken = localStorage.getItem("Authorization");
   xhttp.setRequestHeader(
     "Authorization",
-    this.localStorage.getItem("Authorization")
+    authToken
   );
   xhttp.send();
 };
+
+function navigateToLogin() {
+  window.location.replace('http://localhost:5500/html/login.html');
+}

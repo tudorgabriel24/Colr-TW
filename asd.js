@@ -1,12 +1,7 @@
 const mysql = require("mysql");
 const crypto = require("crypto");
 
-var conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "colr",
-});
+var conn = require('./project-node-app/server').connection;
 
 function query(sql) {
     return new Promise((resolve, reject) => {

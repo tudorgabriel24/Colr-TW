@@ -15,8 +15,6 @@
     align-self: center;
     height: 400px;
     width: 500px;
-    max-width: 50%;
-    max-height: 60%;
     border-radius: 15px;
     -webkit-box-shadow: 4px 0px 21px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 0px 21px -7px rgba(0,0,0,0.75);
