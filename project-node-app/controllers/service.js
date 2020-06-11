@@ -100,15 +100,8 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  var jsonData = req.body;
-  var order;
-  if ('orderBy' in jsonData) {
-    order = jsonData['orderBy'];
-    delete jsonData['orderBy'];
-  } else {
-    order = 1;
-  }
-  db.getEntries('articles', jsonData, order).then(function(response) {
+  
+  db.getArticles().then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
