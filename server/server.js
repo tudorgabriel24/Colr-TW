@@ -73,6 +73,7 @@ const start = async () => {
           }
 
           res.setHeader("Content-Type", "application/json");
+          
           res.write(JSON.stringify({
             status: message
           }));
