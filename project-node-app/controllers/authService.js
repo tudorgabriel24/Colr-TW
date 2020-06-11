@@ -80,7 +80,6 @@ exports.loginRequest = async (req, resp, headers) => {
             success: true,
           };
           const token = createToken(userData);
-          resp.setHeader("Authorization", `Bearer ${token}`);
           headers = { ...headers, Authorization: `Bearer ${token}` };
         }
       }
