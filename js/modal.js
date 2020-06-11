@@ -1,14 +1,3 @@
-// function openPopup() {
-//   document.getElementById("popup_content").classList.add("overlay-display");
-// }
-
-// function closePopup() {
-//   document.getElementById("popup_content").classList.remove("overlay-display");
-// }
-// function showContent() {
-//     document.openContent("popup_content").
-// }
-
 const openModalButtons = document.querySelectorAll("[data-modal-target]");
 const closeModalButtons = document.querySelectorAll("[data-close-button]");
 const overlay = document.getElementById("overlay");

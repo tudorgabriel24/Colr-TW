@@ -186,8 +186,7 @@ header {
 .sticky-bar button {
   display: inline-block;
   border: none;
-  background-color: #637074;
-  color: #e5e5e5;
+  color: #566266;
   text-align: center;
   font-size: 1.7rem;
   padding: 1rem;
@@ -195,6 +194,7 @@ header {
   margin: 0.2rem;
   border-radius: 0.3rem;
   outline: none;
+  border-radius: 1rem;
 }
 .sticky-bar button span {
   cursor: pointer;
@@ -335,4 +335,26 @@ input {
   border-bottom: 0.15rem solid #3d3d3d;
   color: #3d3d3d;
   cursor: pointer;
+}
+#addButton {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #e5e5e5;
+  color: #202020;
+  opacity: 0.3;
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 1.1rem 1.4rem;
+  text-align: center;
+  transition: ease-in-out 300ms;
+  border-bottom-left-radius: 1.2rem;
+}
+#addButton:hover {
+  opacity: 1;
+  transition: ease-in-out 300ms;
 }
