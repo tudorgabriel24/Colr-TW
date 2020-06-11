@@ -1,10 +1,61 @@
 const http = require("http");
 const url = require("url");
 var mysql = require("mysql");
+var formidable = require('formidable');
+var util = require('util');
+const { parse } = require('querystring');
+const jwt = require('jsonwebtoken');
+const { brotliDecompress } = require("zlib");
 
 module.exports = http.createServer((req, res) => {
   var service = require("./service");
   const reqUrl = url.parse(req.url, true);
+  
+  // console.log(req.method);
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Request-Method', '*');
+  // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+  // res.setHeader('Access-Control-Allow-Headers', '*');
+
+  const headers = {
+    'Access-Control-Allow-Headers': '*', 
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, DELETE',
+    'Access-Control-Max-Age': 2592000, // 30 days
+    /** add other headers as per requirement */
+  };
+
+  if (req.method == "OPTIONS") {
+    // for(var key in req) {
+    //   console.log(key);
+    // }
+    res.writeHead(204, headers);
+    res.end();
+    return;
+  }
+
+
+  // const reqToken = req.headers.authorization;
+  // // console.log(req);
+  // try {
+  //   var decoded = jwt.verify(reqToken, 'secret');
+  //   req.session.id = decoded._id;
+  // } catch(err) {
+  //   console.log(err);
+  //   response = {
+  //     success: false,
+  //     message: err
+  //   };
+  //   res.statusCode = 401;
+  //   res.setHeader("Content-Type", "application/json");
+  
+  //   res.end(JSON.stringify(response));
+  // }
+
+  // if (req.method == 'GET') {
+  //   var query = reqUrl.
+  // }
+
 
   // Database connection
 
@@ -33,6 +84,103 @@ module.exports = http.createServer((req, res) => {
     console.log("Request Type:" + req.method + "Endpoint: " + reqUrl.pathname);
 
     service.testRequest(req, res);
+  }
+  
+  else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.getArticles(req, res);
+
+
+  } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
+    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        // body = body.split(`,"image":"`);
+        // console.log(body[0] + '}');
+        req.body = body;
+
+        
+        // req.param = body[1].substring(0, body[1].length - 2);
+        // console.log(req.body);
+        service.addArticle(req, res);
+    });
+  }
+    else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.updateArticle(req, res);
+    });
+    
+
+  } else if (reqUrl.pathname == "/articles" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.deleteArticle(req, res);
+    });
+    
+
+  } else if (reqUrl.pathname == "/cart" && req.method == "GET") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.getCart(req, res);
+    
+
+  } else if (reqUrl.pathname == "/cart" && req.method == "POST") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.addToCart(req, res);
+    });
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "GET") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.getUsers(req, res);
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "POST") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.addUser(req, res);
+    });
+    
+
+  } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+        service.updateUser(req, res);
+    });
+
+  } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.deleteUser(req, res);
+
+  } else {
+    console.log(
+      "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
+    );
+    service.invalidRequest(req, res);
+  }
+  
   } else {
     console.log(
       "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname

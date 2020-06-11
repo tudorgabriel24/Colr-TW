@@ -37,22 +37,66 @@
             </div>
         </header>
         <section class="formCont">
-            <form>
-                <div class="uplBut">
+            <div class="form">
                     <!-- <button class="btn">Upload a file</button> -->
-                    <input type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
-                </div>
-                <input class="inpText" type="text" placeholder="Name" id="phname" name="phname" maxlength="16" required><br>
+                <input class="uplBut" type="file" name="image" id="image" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
+                <input class="inpText" type="text" placeholder="Name" id="name" name="name" maxlength="16" required><br>
                 <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
                 <input class="inpText" type="text" placeholder="Brand" id="brand" name="brand" required><br>
-                <input class="inpText" type="text" placeholder="Weight" id="weight" name="weight" required><br>
+                <input class="inpText" type="text" id="alcoholic" name="alcoholic" required><br>
                 <input class="inpText" type="text" placeholder="Country" id="country" name="country" required><br>
                 <textarea class="inpText" type="text" placeholder="Description" id="description" name="description" rows="5" required></textarea><br>
-                <input class="inpText" type="text" placeholder="Usage" id="usage" name="usage"><br><br><br>
-                <input class="inpSub" type="submit"><br>
-            </form>
+                <input class="inpText" type="text" placeholder="Current State" id="currentState" name="currentState"><br><br><br>
+                <button class="inpSub" type="submit" id="inpsub">Send<br>
+            </div>
             <img id="blah"/><br>
         </section>
+        <script>
+            const form = {
+                name: document.getElementById('name'),
+                year: document.getElementById('year'),
+                brand: document.getElementById('brand'),
+                alcoholic: document.getElementById('alcoholic'),
+                country: document.getElementById('country'),
+                description: document.getElementById('description'),
+                currentState: document.getElementById('currentState'),
+                submit: document.getElementById('inpsub'),
+                image: document.getElementById('image')
+            };
+
+            // console.log(form);
+
+            form.submit.addEventListener('click', () => {
+                console.log(form.image.files);
+                var fr = new FileReader();
+                fr.onload = function() {
+                    console.log(fr.result);
+                    const request = new XMLHttpRequest();
+                    request.onload = () => {
+                        console.log(request.responseText);
+                        let respObj = JSON.parse(request.responseText);
+                        console.log(respObj);
+                        // location.href = 'noutati.html';
+                    };
+                    const requestData = {
+                        name: form.name.value,
+                        year: form.year.value,
+                        brand: form.brand.value,
+                        country: form.country.value,
+                        description: form.description.value,
+                        currentState: form.currentState.value
+                    };
+                    request.open('POST', 'http://localhost:3000/articles', true);
+                    
+                    request.getResponseHeader('Access-Control-Allow-Origin', '*');
+                    request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
+                    request.setRequestHeader('Content-Type', 'application/json');
+                    request.send(JSON.stringify(requestData));
+                };
+                fr.readAsBinaryString(form.image.files[0]);
+            });
+        </script>
     </body>
+
 
 </html>
