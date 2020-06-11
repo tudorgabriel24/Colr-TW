@@ -4,6 +4,7 @@ var utils = require('../../util.js');
 var db = require('../../asd.js');
 const crypto = require("crypto");
 const fs = require('fs');
+const { assert } = require("console");
 
 // exports.sampleRequest = function (req, res) {
 //   const reqUrl = url.parse(req.url, true);
@@ -19,22 +20,31 @@ const fs = require('fs');
 //   res.end(JSON.stringify(response));
 // };
 
-exports.addArticle = function (req, res) {
-  var body = req.body.split(`,"image":"`);
-  var jsonData = JSON.parse(body[0] + '}');
-  console.log(jsonData);
+exports.addArticle = function (req, res, files) {
+  var jsonData = req.body;
   const hash = crypto.createHash('md5');
   hash.update(Date.now().toString());
   jsonData['ID'] = hash.digest('hex');
   jsonData['user_id'] = 'f87330d93a88e085a5c9946d93c2bd9d';//req.session.id;
-  var imgBin = body[1].substring(0, body[1].length - 2);
+
+
   db.insertEntry('articles', jsonData).then(function(response) {
-      fs.writeFile(`./images/${jsonData['ID']}`, imgBin, function(err) {
-        console.log(err);
-      });
+    console.log('dsa');
+    for (var key in files.image) {
+      console.log(key);
+    }
+    console.log(files.image.write);
+    var destination = fs.createWriteStream(`./images/${jsonData['ID']}`);
+    destination.on('pipe', (src) => {
+      console.log('merge');
       utils.writeJson(res, {'code': 201, 'description': 'article added succesfuly'});
+    });
+
+    files.image.pipeTo(destination);
+  
+
   }).catch(function(response) {
-      utils.writeJson(res, response);
+    utils.writeJson(res, response);
   });
 };
 

@@ -93,17 +93,27 @@ module.exports = http.createServer((req, res) => {
 
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
-    let body = '';
-    req.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
-        // body = body.split(`,"image":"`);
-        // console.log(body[0] + '}');
-        req.body = body;
+    // let body = '';
+    // req.on('data', chunk => {
+    //     // body += chunk.toString(); // convert Buffer to string
+    //     // body = body.split(`,"image":"`);
+    //     // console.log(body[0] + '}');
+    //     // req.body = body;
+
+    //     // console.log(body);
+
 
         
-        // req.param = body[1].substring(0, body[1].length - 2);
-        // console.log(req.body);
-        service.addArticle(req, res);
+    //     // req.param = body[1].substring(0, body[1].length - 2);
+    //     // console.log(req.body);
+    //     service.addArticle(req, res);
+    // });
+    new formidable.IncomingForm().parse(req, function (err, fields, files) {
+      if (err) {
+        console.log(err);
+      }
+      req.body = fields;
+      service.addArticle(req, res, files);
     });
   }
     else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
@@ -178,14 +188,6 @@ module.exports = http.createServer((req, res) => {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
-    service.invalidRequest(req, res);
-  }
-  
-  } else {
-    console.log(
-      "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname
-    );
-
     service.invalidRequest(req, res);
   }
 });
