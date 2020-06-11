@@ -3,7 +3,7 @@ window.onload = function makeContentRequest() {
   xhttp.onreadystatechange = function () {
     console.log(xhttp.responseText);
   };
-  xhttp.open("GET", "http://localhost:3000/articles", true);
+  xhttp.open("GET", "http://localhost:3000/cart", true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
   xhttp.setRequestHeader("Content-Type", "application/json");
@@ -11,5 +11,5 @@ window.onload = function makeContentRequest() {
     "Authorization",
     this.localStorage.getItem("Authorization")
   );
-  xhttp.send();
+  xhttp.send(JSON.stringify({ name: "capac" }));
 };
