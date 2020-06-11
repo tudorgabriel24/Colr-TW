@@ -5,6 +5,7 @@ var db = require("../../asd.js");
 const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
+const util = require("util");
 
 // exports.sampleRequest = function (req, res) {
 //   const reqUrl = url.parse(req.url, true);
@@ -27,23 +28,31 @@ exports.addArticle = function (req, res, files) {
   jsonData["ID"] = hash.digest("hex");
   jsonData["user_id"] = "f87330d93a88e085a5c9946d93c2bd9d"; //req.session.id;
 
+  // console.log(jsonData);
+  console.log(files.image);
+  var asd = fs.readFile(files.image.path, function (err, data) {
+    fs.writeFile(`./images/${jsonData["ID"]}`, data, function () {
+      console.log("asddd");
+      utils.writeJson(res, { code: 200 });
+    });
+  });
+
   db.insertEntry("articles", jsonData)
     .then(function (response) {
-      console.log("dsa");
-      for (var key in files.image) {
-        console.log(key);
-      }
-      console.log(files.image.write);
-      var destination = fs.createWriteStream(`./images/${jsonData["ID"]}`);
-      destination.on("pipe", (src) => {
-        console.log("merge");
-        utils.writeJson(res, {
-          code: 201,
-          description: "article added succesfuly",
+      fs.readFile(files.image.path, function (err, data) {
+        fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
+          if (err) {
+            utils.writeJson(res, {
+              code: 405,
+              description: "unkown file type",
+            });
+          }
+          utils.writeJson(res, {
+            code: 201,
+            description: "article added with success",
+          });
         });
       });
-
-      files.image.pipeTo(destination);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -109,15 +118,7 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  var jsonData = req.body;
-  var order;
-  if ("orderBy" in jsonData) {
-    order = jsonData["orderBy"];
-    delete jsonData["orderBy"];
-  } else {
-    order = 1;
-  }
-  db.getEntries("articles", jsonData, order)
+  db.getArticles()
     .then(function (response) {
       utils.writeJson(res, response);
     })

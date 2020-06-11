@@ -156,29 +156,26 @@
               };
           fr.readAsDataURL(form.image.files[0]);
 
-          const request = new XMLHttpRequest();
-          request.onload = () => {
-              console.log(request.responseText);
-              let respObj = JSON.parse(request.responseText);
-              console.log(respObj);
-              // location.href = 'noutati.html';
-          };
-          const requestData = {
-              name: form.name.value,
-              year: form.year.value,
-              brand: form.brand.value,
-              country: form.country.value,
-              description: form.description.value,
-              currentState: form.currentState.value
-          };
+                var fd = new FormData();
+                for (var key in requestData) {
+                    fd.append(key, requestData[key]);
+                }
+                fd.append('image', form.image.files[0]);
+                request.open('POST', 'http://localhost:3000/articles', true);
+                
+                request.getResponseHeader('Access-Control-Allow-Origin', '*');
+                request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
+                // request.setRequestHeader('Content-Type', 'application/json');
+                // console.log(requestData.image.length);
+                request.send(fd);
 
-          var fd = new FormData();
-          for (var key in requestData) {
-              fd.append(key, requestData[key]);
-          }
-          fd.append('image', form.image.files[0]);
-          };
-          request.open('POST', 'http://localhost:3000/articles', true);
+                
+                // request.setRequestHeader('Content-Type', 'application/json');
+                // request.send(JSON.stringify(requestData));
+            
+            });
+        </script>
+    </body>
 
           request.getResponseHeader('Access-Control-Allow-Origin', '*');
           request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
