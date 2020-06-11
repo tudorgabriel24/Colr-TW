@@ -10,7 +10,7 @@ const { brotliDecompress } = require("zlib");
 module.exports = http.createServer((req, res) => {
   var service = require("./service");
   const reqUrl = url.parse(req.url, true);
-
+  
   // console.log(req.method);
   // res.setHeader('Access-Control-Allow-Origin', '*');
   // res.setHeader('Access-Control-Request-Method', '*');
@@ -55,7 +55,6 @@ module.exports = http.createServer((req, res) => {
   // if (req.method == 'GET') {
   //   var query = reqUrl.
   // }
-
 
 
   // Database connection
@@ -181,6 +180,12 @@ module.exports = http.createServer((req, res) => {
     );
     service.invalidRequest(req, res);
   }
+  
+  } else {
+    console.log(
+      "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname
+    );
 
-
+    service.invalidRequest(req, res);
+  }
 });
