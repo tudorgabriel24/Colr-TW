@@ -319,14 +319,11 @@ input {
   margin: 2rem;
 }
 .mybutton {
-  background-color: #fff;
   padding: 0.5rem;
   color: #323232;
-  border: 0.1rem solid #3d3d3d;
   width: 10%;
-  border-radius: 0.5rem;
   align-self: center;
-  transition-duration: 0.2s;
+  transition: ease-in-out 100ms;
   font-weight: bold;
   font-size: 1.4rem;
   font-size-adjust: 0.5rem;
@@ -334,8 +331,8 @@ input {
   margin: 0.8rem;
 }
 .mybutton:hover {
-  background-color: #16425b;
-  border: 0.1rem solid #16425b;
-  color: #fff;
+  padding-top: 0.01rem;
+  border-bottom: 0.15rem solid #3d3d3d;
+  color: #3d3d3d;
   cursor: pointer;
 }
