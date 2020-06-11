@@ -1,27 +1,47 @@
-
-var loginSwitch = document.querySelector(".switch-login");
-var registerSwitch = document.querySelector(".switch-register");
 var activeForm = "login";
 
-loginSwitch.addEventListener('click', (event) => {
+function onClickLogin(event) {
+    let loginSwitch = document.querySelector(".switch-login");
+    let registerSwitch = document.querySelector(".switch-register");
+    let fullNameGroup = document.querySelectorAll(".full-name-group");
     event.preventDefault();
     if(activeForm === "register") {
         loginSwitch.classList.add('active-form');
         registerSwitch.classList.remove('active-form');
-        registerSwitch.setAttribute("style","border-bottom-left-radius: 15px;");
+        for (let index=0; index < fullNameGroup.length; index++) {
+            fullNameGroup[index].classList.add('hide');
+        }
         activeForm = "login";
-        // alert(`${loginSwitch.classList} ${registerSwitch.classList} `);
     } 
+}
 
-});
-
-registerSwitch.addEventListener('click', (event) => {
+function onClickRegister(event) {
+    let loginSwitch = document.querySelector(".switch-login");
+    let registerSwitch = document.querySelector(".switch-register");
+    let fullNameGroup = document.querySelectorAll(".full-name-group");
     event.preventDefault();
     if(activeForm === "login") {
         registerSwitch.classList.add('active-form');
         loginSwitch.classList.remove('active-form');
         activeForm = "register";
-        registerSwitch.setAttribute("style","border-bottom-left-radius: 0px;");
-        // alert(`${loginSwitch.classList} ${registerSwitch.classList} `);
+        for (var index=0; index < fullNameGroup.length; index++) {
+            fullNameGroup[index].classList.remove('hide');
+        }
     }
-});
+}
+
+function onSubmit(event) {
+    event.preventDefault();
+    let emailInput = document.querySelector("#email-input").value;
+    let passwordInput = document.querySelector("#password-input").value;
+    let fullNameInput = document.querySelector("#full-name-input").value;
+    console.log(emailInput," ", passwordInput, " ", fullNameInput);
+
+    if(activeForm === "login") {
+
+    } else {
+        // if(activeForm === "register") {
+
+        // }
+    }
+}

@@ -1,14 +1,19 @@
 const http = require("http");
 const url = require("url");
+<<<<<<< HEAD
+
+=======
 var mysql = require("mysql");
 var formidable = require('formidable');
 var util = require('util');
 const { parse } = require('querystring');
 const jwt = require('jsonwebtoken');
 const { brotliDecompress } = require("zlib");
+>>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 
 module.exports = http.createServer((req, res) => {
-  var service = require("./service");
+  var articleService = require("./articleService");
+  var authService = require("./authService");
   const reqUrl = url.parse(req.url, true);
   
   // console.log(req.method);
@@ -17,6 +22,24 @@ module.exports = http.createServer((req, res) => {
   // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
   // res.setHeader('Access-Control-Allow-Headers', '*');
 
+<<<<<<< HEAD
+  console.log("REQ AICI " + reqUrl.pathname);
+  // Database connection
+
+  //LOGIN REQUEST
+  if(reqUrl.pathname == '/login' && req.method === "POST") {
+    console.log('login request');
+    authService.loginRequest(req, res);
+  }
+  else 
+  //REGISTER REQUEST
+
+  if(reqUrl.pathname == '/register' && req.method === "POST") {
+    console.log('register request');
+    authService.registerRequest(req,res);
+  }
+  else
+=======
   const headers = {
     'Access-Control-Allow-Headers': '*', 
     'Access-Control-Allow-Origin': '*',
@@ -72,17 +95,21 @@ module.exports = http.createServer((req, res) => {
   //   console.log("Connected!");
 
   // });
+>>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 
   // GET Endpoint
   if (reqUrl.pathname == "/sample" && req.method === "GET") {
     console.log("Request Type:" + req.method + " Endpoint: " + reqUrl.pathname);
 
-    service.sampleRequest(req, res);
+    articleService.sampleRequest(req, res);
   }
   //POST Endpoint
   else if (reqUrl.pathname == "/test" && req.method === "POST") {
     console.log("Request Type:" + req.method + "Endpoint: " + reqUrl.pathname);
 
+<<<<<<< HEAD
+    articleService.testRequest(req, res);
+=======
     service.testRequest(req, res);
   }
   
@@ -174,11 +201,18 @@ module.exports = http.createServer((req, res) => {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.deleteUser(req, res);
 
+>>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
   } else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
+<<<<<<< HEAD
+
+    articleService.invalidRequest(req, res);
+  }
+=======
     service.invalidRequest(req, res);
 
   } 
+>>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 });
