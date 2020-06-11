@@ -6,36 +6,39 @@
     <title>Export</title>
     <link rel="stylesheet" href="../css/export.css" />
   </head>
-  <header>
-    <div>
-      <div id="mySidenav" class="sidenav">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <div style="margin-top: 200px ;">
-          <a href="../index.html">Home</a>
-          <a href="../html/export.html">Export</a>
-          <a href="../html/upload.html">Upload article</a>
+  <body>
+    >
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
+            <a href="../index.html">Home</a>
+            <a href="../html/export.html">Export</a>
+            <a href="../html/upload.html">Upload article</a>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/logo.svg" id="miniLogo" alt="" />
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
         </div>
       </div>
-      <div>
-          <img src="../assets/logo.svg" id="miniLogo"></img>
-      </div> 
-      <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
-          <div class="hamburger"></div>
-          <div class="hamburger"></div>
-          <div class="hamburger"></div>
-      </div>        
-  </div>
-  </header>
-  <body>
+    </header>
     <div class="page">
-      <div class="container">
-      </div>
+      <div class="container"></div>
       <div class="export_buttons">
         <button id="CSV" onclick="exportCSV()">Export CSV</button>
         <button id="DOC">Export DocBook</button>
-      </div>  
-      </div>
-        </div>
       </div>
     </div>
 

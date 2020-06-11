@@ -11,40 +11,45 @@
     <header>
       <div>
         <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          <div style="margin-top: 200px ;">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
             <a href="./index.html">Home</a>
             <a href="./html/export.html">Export</a>
             <a href="./html/upload.html">Upload article</a>
           </div>
         </div>
         <div>
-            <img src="./assets/logo.svg" id="miniLogo"></img>
+          <img src="./assets/logo.svg" id="miniLogo" alt="" />
         </div>
         <div id="userLogin">
-                <span>
-                    <div>Login</div>
-                    <img src="./assets/user.svg" alt="Login"></img>
-                </span>
-        </div> 
-        <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
-            <div class="hamburger"></div>
-            <div class="hamburger"></div>
-            <div class="hamburger"></div>
-        </div>        
-    </div>
+          <div class="cnt">
+            <div>Login</div>
+            <img src="./assets/user.svg" alt="Login" />
+          </div>
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
     </header>
-
 
     <div class="PageHeader">
       <p id="headerTitle">Articles</p>
       <div class="sticky-bar">
         <button onclick="dropdown()"><span>Filters</span></button>
-        
+
         <!-- <div id="filters"></div> -->
-        
+
         <div id="myDropdown" class="dropdown-content">
-          <form action="">
+          <form>
             <input
               list="europe-countries"
               placeholder="Cauta tara de origine..."
@@ -79,7 +84,9 @@
               <option value="Ireland">Ireland</option>
               <option value="Croatia">Croatia</option>
               <option value="Moldova">Moldova</option>
-              <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+              <option value="Bosnia and Herzegovina"
+                >Bosnia and Herzegovina</option
+              >
               <option value="Albania">Albania</option>
               <option value="Lithuania">Lithuania</option>
               <option value="North Macedonia">North Macedonia</option>
@@ -101,12 +108,16 @@
               <option value="Dop">Dop</option>
               <option value="Eticheta">Eticheta</option>
             </datalist>
-            <input list="price-range" placeholder="Cauta pretul..." class="inputs" />
+            <input
+              list="price-range"
+              placeholder="Cauta pretul..."
+              class="inputs"
+            />
             <datalist id="price-range">
               <option value="Sub 100"></option>
               <option value="100-200"></option>
               <option value="200-500"></option>
-              <option value="500-1.000"</option>
+              <option value="500-1.000"></option>
               <option value="1.000-1.500"></option>
               <option value="1.500-2.000"></option>
               <option value="2.000-3.000"></option>
@@ -114,79 +125,44 @@
               <option value="4.000-5.000"></option>
               <option value="Peste 5.000"></option>
             </datalist>
-            <input list="state" placeholder="Cauta starea curenta..." class="inputs" />
+            <input
+              list="state"
+              placeholder="Cauta starea curenta..."
+              class="inputs"
+            />
             <datalist id="state">
               <option value="Intact">Intact</option>
               <option value="Degradat">Degradat</option>
             </datalist>
           </form>
         </div>
-        
       </div>
+    </div>
+
+    <div class="basic-grid">
+      <div class="container">
+        <img src="./assets/krumbach.jpeg" alt="" />
+        <button class="addbtn">Add</button>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+          excepturi ducimus iste consectetur praesentium sed expedita rem error
+          illum commodi.
+          <span class="pop_button" data-modal-target="#modal">Show more</span>
+          <!-- De unde se apeleaza modalul-->
+        </p>
       </div>
-      
-      <div class="basic-grid">
-        <div class="container">
-          <img src="./assets/krumbach.jpeg" />
-          <button id="addButton">Add</button>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            excepturi ducimus iste consectetur praesentium sed expedita rem error
-            illum commodi.
-            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
-            
-          </p>
-          
-        </div>
-        
 
-        <div class="container">
-          <img src="./assets/coca.jpeg" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            excepturi ducimus iste consectetur praesentium sed expedita rem error
-            illum commodi.
-            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
-
-          </p>
-          <button id="addButton">Add</button>
-        </div>
-        
-        <div class="container">
-          <img src="./assets/coca.jpeg" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            excepturi ducimus iste consectetur praesentium sed expedita rem error
-            illum commodi.
-            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
-
-          </p>
-          <button id="addButton">Add</button>
-        </div>
-        <div class="container">
-          <img src="./assets/jhonniewalker.jpeg" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            excepturi ducimus iste consectetur praesentium sed expedita rem error
-            illum commodi.
-            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
-
-          </p>
-        </div>
-
-        <div class="container">
-          <img src="./assets/lotofcaps.jpeg" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            excepturi ducimus iste consectetur praesentium sed expedita rem error
-            illum commodi.
-            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
-
-          </p>
-        </div>
-
+      <div class="container">
+        <img src="./assets/coca.jpeg" alt="" />
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+          excepturi ducimus iste consectetur praesentium sed expedita rem error
+          illum commodi.
+          <span class="pop_button" data-modal-target="#modal">Show more</span>
+          <!-- De unde se apeleaza modalul-->
+        </p>
+        <button class="addbtn">Add</button>
       </div>
-      
     </div>
 
     <!--MODAL -->
@@ -196,8 +172,17 @@
         <button data-close-button class="close-button">&times;</button>
       </div>
       <div class="modal-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, nulla praesentium. Quia velit amet maxime magni. Illo impedit placeat quae.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis accusantium nam veniam nulla quo similique cupiditate odio aut laboriosam autem modi perspiciatis, rem numquam, animi fugiat ipsa officiis. Perspiciatis reiciendis quisquam impedit voluptatem, repellat aperiam error expedita illum debitis dolor in suscipit ipsa totam quo doloribus hic libero laboriosam harum unde magnam incidunt? Reprehenderit doloribus cupiditate, facere laborum rerum aliquam ipsam sit quam eos fuga vel deleniti aut earum quod sed veritatis, fugit optio, iste delectus nulla itaque commodi accusantium?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, nulla
+        praesentium. Quia velit amet maxime magni. Illo impedit placeat quae.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis
+        accusantium nam veniam nulla quo similique cupiditate odio aut
+        laboriosam autem modi perspiciatis, rem numquam, animi fugiat ipsa
+        officiis. Perspiciatis reiciendis quisquam impedit voluptatem, repellat
+        aperiam error expedita illum debitis dolor in suscipit ipsa totam quo
+        doloribus hic libero laboriosam harum unde magnam incidunt?
+        Reprehenderit doloribus cupiditate, facere laborum rerum aliquam ipsam
+        sit quam eos fuga vel deleniti aut earum quod sed veritatis, fugit
+        optio, iste delectus nulla itaque commodi accusantium?
       </div>
     </div>
     <div id="overlay"></div>
@@ -207,12 +192,10 @@
       <a class="mybutton" onclick="">Previous</a>
       <a class="mybutton" onclick="">Next</a>
     </div>
-
+    <script src="./js/HamburgerMenu.js"></script>
+    <script src="./js/dropdown.js"></script>
+    <script src="./js/shrinkHeaderTitle.js"></script>
+    <script src="./js/modal.js"></script>
+    <script src="./index.js"></script>
   </body>
-  <!-- <script src="./js/ajax/ajax_content_loader.js"></script> -->
-  <script src="./js/HamburgerMenu.js"></script>
-  <script src="./js/dropdown.js"></script>
-  <script src="./js/shrinkHeaderTitle.js"></script>
-  <script src="./js/modal.js"></script>
-  <script src="./js/index.js"></script>
 </html>

@@ -91,7 +91,7 @@ header {
   top: 0; /* Stay at the top */
   right: 0;
 }
-#userLogin span {
+.cnt {
   display: flex;
   flex-wrap: wrap;
 }
@@ -336,7 +336,7 @@ input {
   color: #3d3d3d;
   cursor: pointer;
 }
-#addButton {
+.addbtn {
   position: absolute;
   top: 20px;
   right: -30px;
@@ -354,7 +354,7 @@ input {
   transition: ease-in-out 300ms;
   border-bottom-left-radius: 1.2rem;
 }
-#addButton:hover {
+.addbtn:hover {
   opacity: 1;
   transition: ease-in-out 300ms;
 }
