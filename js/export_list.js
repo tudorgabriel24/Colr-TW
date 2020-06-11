@@ -42,3 +42,6 @@ class item {
 new item("Descriere/Titlu", "../assets/coca.jpeg");
 new item("Descriere/Titlu", "../assets/coca.jpeg");
 new item("Descriere/Titlu", "../assets/coca.jpeg");
+new item("Descriere/Titlu", "../assets/coca.jpeg");
+new item("Descriere/Titlu", "../assets/coca.jpeg");
+new item("Descriere/Titlu", "../assets/coca.jpeg");
