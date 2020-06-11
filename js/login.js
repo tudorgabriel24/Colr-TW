@@ -1,4 +1,5 @@
 var activeForm = "login";
+myStorage = window.localStorage;
 
 function onClickLogin(event) {
     let loginSwitch = document.querySelector(".switch-login");
@@ -53,12 +54,11 @@ function makeLoginRequest(email,password) {
         if(this.readyState == 4) {
             if (this.status == 200) {
                 console.log(xhttp.responseText);
-                let headers = xhttp.getResponseHeader('Authorization');
-                console.log(headers);
+                let authToken = xhttp.getResponseHeader('Authorization');
+                console.log(authToken);
+                localStorage.setItem('Authorization', authToken);
+                window.location.replace('http://localhost:5500/html/noutati.html');
               }
- 
-        // let respObj = JSON.parse(xhttp.responseText);
-        // console.log(respObj);
         }
     };
     const requestData = {
