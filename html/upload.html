@@ -64,6 +64,19 @@
                 image: document.getElementById('image')
             };
 
+            window.onload = function () {
+                var asd = new XMLHttpRequest();
+                console.log('asd');
+                asd.onload = () => {
+                    console.log(asd.responseText);
+                };
+                asd.open('GET', `http://localhost:3000/cart`);
+                asd.getResponseHeader('Access-Control-Allow-Origin', '*');
+                asd.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
+                asd.send();
+            }
+            
+
             // console.log(form);
 
             form.submit.addEventListener('click', () => {

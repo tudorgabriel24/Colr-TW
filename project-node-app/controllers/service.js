@@ -148,10 +148,13 @@ exports.deleteUser = function (req, res) {
 
 exports.getCart = function (req, res) {
   var jsonData = {
-    'id_user': req.session.id
+    'id_user': '67da518fa8d4bfcefaae7a4a3b30828d'
   };
   db.getEntries('user_articles', jsonData, 1).then(function(response) {
-    db.getEntries('articles', {'id_user': response.id_user}).then(function(rezponze) {
+    for (var key in response) {
+      console.log(key, response[key]);
+    }
+    db.getEntries('articles', {'ID': response[0].id_article}).then(function(rezponze) {
       utils.writeJson(res, rezponze);
     }).catch(function (rezponze) {
       utils.writeJson(res, rezponze);

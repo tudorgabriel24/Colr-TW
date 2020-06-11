@@ -10,13 +10,13 @@ var conn = mysql.createConnection({
 
 function query(sql) {
     return new Promise((resolve, reject) => {
+        console.log(sql);
         conn.query(sql, function(err, results, fields) {
             if (err) {
                 reject({'status': 404, 'description': err});
 
                 // throw err;
             }
-            console.log(results, fields);
             resolve(results);
         });
     });
