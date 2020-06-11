@@ -1,4 +1,19 @@
 {
+    "users": [
+      {
+        "username": "test1",
+        "password": "parola1"
+      },
+      {
+        "username": "tudor",
+        "password": "tudor"
+      },
+      {
+        "username": "tudora",
+        "password": "tudor"
+      }
+    ]
+  }
   "users": [
     {
       "username": "test1",
