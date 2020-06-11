@@ -12,91 +12,94 @@ body {
   justify-content: center;
 }
 .container {
-  justify-content: center;
   text-align: center;
   background-color: #e6e6e6;
   display: flex;
   flex-direction: column;
   width: 30rem;
+  height: auto;
   margin: auto;
   margin-top: 5rem;
   margin-bottom: 5rem;
-  padding-bottom: 2rem;
-  border: #637074 solid 0.05rem;
-  border-radius: 0.3rem;
-  box-shadow: 0.01rem 0.01rem 0.08rem 0.033rem grey;
-}
-ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0em;
-}
-li {
-  border-bottom: 0.01rem solid black;
-  font-size: large;
-  font-weight: bold;
-  color: #3d3d3d;
-  display: flex;
-  margin-top: 1rem;
-}
-ul li:last-child {
-  border-bottom: 0;
-}
-
-ul li.checked {
-  color: #16425b;
-  text-decoration: line-through;
-  transition: 2s;
-}
-ul li.checked::before {
-  content: "";
-  position: absolute;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 10px;
-  left: 16px;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
-}
-
-.size {
-  padding-left: 1rem;
   padding-bottom: 1rem;
-  width: 5rem;
-  height: 7rem;
-  margin-left: 3rem;
-  pointer-events: none;
+  border: #637074 solid 0.05rem;
+  border-radius: 0.15rem;
+  box-shadow: 0.001rem 0.001rem 0.008rem 0.033rem grey;
+  overflow: auto;
 }
-.description {
-  justify-content: center;
-  text-align: center;
-  margin-left: 3rem;
+.item {
+  margin-top: 1rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 2rem;
-  pointer-events: none;
 }
-.btn {
+.item_input {
+  margin-right: 3rem;
+  overflow: hidden;
+  width: 10rem;
+  height: 2.5rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-weight: bold;
+  font-size-adjust: 0.5rem;
+  align-self: center;
+  outline: none;
+  color: #323232;
+}
+.removeButton {
   background-color: #fff;
   padding: 0.5rem;
   color: #323232;
   border: 0.1rem solid #3d3d3d;
-  width: 50%;
+  width: 15%;
   border-radius: 0.5rem;
   align-self: center;
   transition-duration: 0.2s;
   font-weight: bold;
-  font-size: 1, 2rem;
   font-size-adjust: 0.5rem;
   outline: none;
-  margin-bottom: 2rem;
+  margin: 0.3rem;
+  margin-top: 1.5rem;
 }
-.btn:hover {
+.removeButton:hover {
   background-color: #16425b;
   border: 0.1rem solid #16425b;
   color: #fff;
   cursor: pointer;
+}
+.size {
+  width: 4rem;
+  height: 6rem;
+  margin-right: 1rem;
+  margin-left: 2rem;
+  border: #323232 solid 0.01rem;
+}
+.export_buttons {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.export_buttons button {
+  background-color: #fff;
+  padding: 0.5rem;
+  color: #323232;
+  border: 0.1rem solid #3d3d3d;
+  width: 15%;
+  border-radius: 0.5rem;
+  align-self: center;
+  transition-duration: 0.2s;
+  font-weight: bold;
+  font-size-adjust: 0.5rem;
+  outline: none;
+  margin: 0.3rem;
+  margin-top: 1.5rem;
+  overflow: auto;
+}
+.export_buttons button:hover {
+  background-color: #16425b;
+  color: #fff;
+  cursor: pointer;
+  border-color: #16425b;
+}
+@media (max-width: 450px) {
+  .export_buttons button {
+    width: 10%;
+  }
 }

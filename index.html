@@ -1,18 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COLWR</title>
-  <link rel="stylesheet" href="./index.css">
-  <link rel="stylesheet" href="./css/login.css">
-  <script type="text/javascript" src='./js/login.js'></script>
-</head>
-<body>
-  <div id="app-content">
-    <div id="navigation"></div>
-    <div id="content"></div>
-  </div>
-  <script src="./index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <link rel="stylesheet" href="./css/modal.css" />
+    <link rel="stylesheet" href="./css/noutati.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <div style="margin-top: 200px ;">
+            <a href="#">News</a>
+            <a href="./html/export.html">Export</a>
+            <a href="#">My articles</a>
+          </div>
+        </div>
+        <div>
+            <img src="./assets/logo.svg" id="miniLogo"></img>
+        </div>
+        <div id="userLogin">
+                <span>
+                    <div>Login</div>
+                    <img src="./assets/user.svg" alt="Login"></img>
+                </span>
+        </div> 
+        <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
+            <div class="hamburger"></div>
+            <div class="hamburger"></div>
+            <div class="hamburger"></div>
+        </div>        
+    </div>
+    </header>
+
+
+    <div class="PageHeader">
+      <p id="headerTitle">News</p>
+      <div class="sticky-bar">
+        <button onclick="dropdown()"><span>Filters</span></button>
+        
+        <!-- <div id="filters"></div> -->
+        
+        <div id="myDropdown" class="dropdown-content">
+          <form action="">
+            <input
+              list="europe-countries"
+              placeholder="Cauta tara de origine..."
+              class="inputs"
+            />
+            <datalist id="europe-countries">
+              <option value="Russia">Russia</option>
+              <option value="Germany">Germany</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="France">France</option>
+              <option value="Italy">Italy</option>
+              <option value="Spain">Spain</option>
+              <option value="Ukraine">Ukraine</option>
+              <option value="Poland">Poland</option>
+              <option value="Romania">Romania</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="Belgium">Belgium</option>
+              <option value="Czech Republic">Czech Republic</option>
+              <option value="Greece">Greece</option>
+              <option value="Portugal">Portugal</option>
+              <option value="Sweden">Sweden</option>
+              <option value="Hungary">Hungary</option>
+              <option value="Belarus">Belarus</option>
+              <option value="Austria">Austria</option>
+              <option value="Serbia">Serbia</option>
+              <option value="Switzerland">Switzerland</option>
+              <option value="Bulgaria">Bulgaria</option>
+              <option value="Denmark">Denmark</option>
+              <option value="Finland">Finland</option>
+              <option value="Slovakia">Slovakia</option>
+              <option value="Norway">Norway</option>
+              <option value="Ireland">Ireland</option>
+              <option value="Croatia">Croatia</option>
+              <option value="Moldova">Moldova</option>
+              <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+              <option value="Albania">Albania</option>
+              <option value="Lithuania">Lithuania</option>
+              <option value="North Macedonia">North Macedonia</option>
+              <option value="Slovenia">Slovenia</option>
+              <option value="Latvia">Latvia</option>
+              <option value="Estonia">Estonia</option>
+              <option value="Montenegro">Montenegro</option>
+              <option value="Luxembourg">Luxembourg</option>
+              <option value="Malta">Malta</option>
+              <option value="Iceland">Iceland</option>
+            </datalist>
+            <input
+              list="post-type"
+              placeholder="Cauta tipul de colectie..."
+              class="inputs"
+            />
+            <datalist id="post-type">
+              <option value="Capac">Capac</option>
+              <option value="Dop">Dop</option>
+              <option value="Eticheta">Eticheta</option>
+            </datalist>
+            <input list="price-range" placeholder="Cauta pretul..." class="inputs" />
+            <datalist id="price-range">
+              <option value="Sub 100"></option>
+              <option value="100-200"></option>
+              <option value="200-500"></option>
+              <option value="500-1.000"</option>
+              <option value="1.000-1.500"></option>
+              <option value="1.500-2.000"></option>
+              <option value="2.000-3.000"></option>
+              <option value="3.000-4.000"></option>
+              <option value="4.000-5.000"></option>
+              <option value="Peste 5.000"></option>
+            </datalist>
+            <input list="state" placeholder="Cauta starea curenta..." class="inputs" />
+            <datalist id="state">
+              <option value="Intact">Intact</option>
+              <option value="Degradat">Degradat</option>
+            </datalist>
+          </form>
+        </div>
+        
+      </div>
+      </div>
+      
+      <div class="basic-grid">
+        <div class="container">
+          <img src="./assets/krumbach.jpeg" />
+          <button id="addButton">Add</button>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            excepturi ducimus iste consectetur praesentium sed expedita rem error
+            illum commodi.
+            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
+            
+          </p>
+          
+        </div>
+        
+
+        <div class="container">
+          <img src="./assets/coca.jpeg" />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            excepturi ducimus iste consectetur praesentium sed expedita rem error
+            illum commodi.
+            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
+
+          </p>
+          <button id="addButton">Add</button>
+        </div>
+        
+        <div class="container">
+          <img src="./assets/coca.jpeg" />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            excepturi ducimus iste consectetur praesentium sed expedita rem error
+            illum commodi.
+            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
+
+          </p>
+          <button id="addButton">Add</button>
+        </div>
+        <div class="container">
+          <img src="./assets/jhonniewalker.jpeg" />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            excepturi ducimus iste consectetur praesentium sed expedita rem error
+            illum commodi.
+            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
+
+          </p>
+        </div>
+
+        <div class="container">
+          <img src="./assets/lotofcaps.jpeg" />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            excepturi ducimus iste consectetur praesentium sed expedita rem error
+            illum commodi.
+            <span class="pop_button" data-modal-target="#modal">Show more</span> <!-- De unde se apeleaza modalul-->
+
+          </p>
+        </div>
+
+      </div>
+      
+    </div>
+
+    <!--MODAL -->
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="title">Title</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, nulla praesentium. Quia velit amet maxime magni. Illo impedit placeat quae.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis accusantium nam veniam nulla quo similique cupiditate odio aut laboriosam autem modi perspiciatis, rem numquam, animi fugiat ipsa officiis. Perspiciatis reiciendis quisquam impedit voluptatem, repellat aperiam error expedita illum debitis dolor in suscipit ipsa totam quo doloribus hic libero laboriosam harum unde magnam incidunt? Reprehenderit doloribus cupiditate, facere laborum rerum aliquam ipsam sit quam eos fuga vel deleniti aut earum quod sed veritatis, fugit optio, iste delectus nulla itaque commodi accusantium?
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+    <!--MODAL -->
+    <div class="button_container">
+      <a class="mybutton" onclick="">Previous</a>
+      <a class="mybutton" onclick="">Next</a>
+    </div>
+
+  </body>
+  <!-- <script src="./js/ajax/ajax_content_loader.js"></script> -->
+  <script src="./js/HamburgerMenu.js"></script>
+  <script src="./js/dropdown.js"></script>
+  <script src="./js/shrinkHeaderTitle.js"></script>
+  <script src="./js/modal.js"></script>
+  <script src="./js/index.js"></script>
 </html>
