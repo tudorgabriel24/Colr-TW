@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1"
   }

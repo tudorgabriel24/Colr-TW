@@ -1,15 +1,12 @@
 const http = require("http");
 const url = require("url");
-<<<<<<< HEAD
 
-=======
 var mysql = require("mysql");
 var formidable = require('formidable');
 var util = require('util');
 const { parse } = require('querystring');
 const jwt = require('jsonwebtoken');
 const { brotliDecompress } = require("zlib");
->>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
@@ -22,29 +19,12 @@ module.exports = http.createServer((req, res) => {
   // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
   // res.setHeader('Access-Control-Allow-Headers', '*');
 
-<<<<<<< HEAD
-  console.log("REQ AICI " + reqUrl.pathname);
-  // Database connection
-
-  //LOGIN REQUEST
-  if(reqUrl.pathname == '/login' && req.method === "POST") {
-    console.log('login request');
-    authService.loginRequest(req, res);
-  }
-  else 
-  //REGISTER REQUEST
-
-  if(reqUrl.pathname == '/register' && req.method === "POST") {
-    console.log('register request');
-    authService.registerRequest(req,res);
-  }
-  else
-=======
   const headers = {
     'Access-Control-Allow-Headers': '*', 
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, DELETE',
-    'Access-Control-Max-Age': 2592000, // 30 days
+    'Access-Control-Max-Age': 2592000,
+    'Access-Control-Expose-Headers': 'Authorization'
     /** add other headers as per requirement */
   };
 
@@ -55,8 +35,19 @@ module.exports = http.createServer((req, res) => {
     res.writeHead(204, headers);
     res.end();
     return;
+  } else 
+  if(reqUrl.pathname == '/login' && req.method === "POST") {
+    console.log('login request');
+    authService.loginRequest(req, res, headers);
   }
+  else 
+  //REGISTER REQUEST
 
+  if(reqUrl.pathname == '/register' && req.method === "POST") {
+    console.log('register request');
+    authService.registerRequest(req,res,headers);
+  }
+  else
 
   // const reqToken = req.headers.authorization;
   // // console.log(req);
@@ -95,7 +86,6 @@ module.exports = http.createServer((req, res) => {
   //   console.log("Connected!");
 
   // });
->>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 
   // GET Endpoint
   if (reqUrl.pathname == "/sample" && req.method === "GET") {
@@ -107,9 +97,6 @@ module.exports = http.createServer((req, res) => {
   else if (reqUrl.pathname == "/test" && req.method === "POST") {
     console.log("Request Type:" + req.method + "Endpoint: " + reqUrl.pathname);
 
-<<<<<<< HEAD
-    articleService.testRequest(req, res);
-=======
     service.testRequest(req, res);
   }
   
@@ -201,18 +188,11 @@ module.exports = http.createServer((req, res) => {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.deleteUser(req, res);
 
->>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
   } else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
-<<<<<<< HEAD
-
-    articleService.invalidRequest(req, res);
-  }
-=======
     service.invalidRequest(req, res);
 
   } 
->>>>>>> 3ec8fe7cb547b4efc74e1922895023f360c131f7
 });

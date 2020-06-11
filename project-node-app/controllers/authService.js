@@ -38,9 +38,7 @@ function query(sql) {
 function insertUser(fullName, email, password) {
   const idHash = crypto.createHash("md5");
   idHash.update(Date.now().toString());
-  const passHash = crypto.createHash("sha256");
-  passHash.update(password);
-  let userSQL = `INSERT INTO users(ID, fullName, email, password) VALUES('${idHash.digest('hex')}', '${fullName}', '${email}', '${passHash.digest('hex')}')`;
+  let userSQL = `INSERT INTO users(ID, fullName, email, password) VALUES('${idHash.digest('hex')}', '${fullName}', '${email}', '${password}')`;
   console.log(userSQL);
   query(userSQL);
   idHash.end();
@@ -57,7 +55,7 @@ function createToken(userData) {
   return token;
 }
 
-exports.loginRequest = async(req, resp) => {
+exports.loginRequest = async(req, resp, headers) => {
   // const reqUrl = url.parse(req.url, true);
   let response = {
     success: false,
@@ -75,17 +73,23 @@ exports.loginRequest = async(req, resp) => {
     try {
       body = JSON.parse(body);
       let userData = await userExist(body,"login");
+      const passHash = crypto.createHash("sha256");
+      console.log(body.password);
+      passHash.update(body.password);
+      const hashedPassword = passHash.digest('hex');
+      console.log(hashedPassword , userData.password);
       if(userData !== null) {
-        response = {
-          success: true,
-        };
-        const token = createToken(userData);
-        resp.setHeader("Authorization",`Bearer ${token}`);
+        if(hashedPassword === userData.password) {
+          response = {
+            success: true,
+          };
+          const token = createToken(userData);
+          resp.setHeader("Authorization",`Bearer ${token}`);
+          headers = {...headers,"Authorization" :`Bearer ${token}`}
+        }
       }
-        resp.setHeader("Content-Type","application/json");
- 
-      resp.statusCode = response.success ? 200 : 404;
- 
+
+      resp.writeHead(response.success ? 200 : 404,headers)
       resp.write(JSON.stringify(response));
       resp.end();
     }
@@ -95,7 +99,7 @@ exports.loginRequest = async(req, resp) => {
   });
 }
 
-exports.registerRequest = function(req, res) {
+exports.registerRequest = function(req, res, headers) {
   let body = ''
   req.on('data', data => {
     body += data
@@ -107,14 +111,12 @@ exports.registerRequest = function(req, res) {
     let exist = await userExist(body, "register");
     let message = "user created!";
     if(exist) {
-      res.statusCode = 409;
       message = "user already exist!";
     } else {
-      res.statusCode = 201;
       insertUser(body.fullName, body.email, body.password);
     }
+    res.writeHead(exist ? 409 : 201, headers);
 
-    res.setHeader("Content-Type", "application/json");
     res.write(JSON.stringify({
       status: message
     }));
