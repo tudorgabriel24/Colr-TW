@@ -17,6 +17,12 @@ function query(sql) {
     });
 }
 
+async function getArticles() {
+    return await query(`SELECT * FROM articles ORDER BY vies`);
+}
+
+exports.getArticles = getArticles;
+
 async function insertEntry(table, jsonData) {
     var insert = [];
     var columns = []
@@ -61,6 +67,8 @@ function deleteAllArticles() {
         }
     });
 }
+
+
 
 async function getEntries(table, jsonData, orderColumn) {
     var get = [];
