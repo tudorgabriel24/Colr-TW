@@ -2,6 +2,8 @@
 const url = require("url");
 var utils = require('../../util.js');
 var db = require('../../asd.js');
+const crypto = require("crypto");
+const fs = require('fs');
 
 // exports.sampleRequest = function (req, res) {
 //   const reqUrl = url.parse(req.url, true);
@@ -17,15 +19,24 @@ var db = require('../../asd.js');
 //   res.end(JSON.stringify(response));
 // };
 
-// exports.addArticle = function (req, res) {
-//   var jsonData = req.body;
-//   jsonData['user_id'] = req.session.id;
-//   db.insertEntry('articles', jsonData).then(function(response) {
-//       utils.writeJson(res, {'code': 201, 'description': 'article added succesfuly'});
-//   }).catch(function(response) {
-//       utils.writeJson(res, response);
-//   });
-// };
+exports.addArticle = function (req, res) {
+  var body = req.body.split(`,"image":"`);
+  var jsonData = JSON.parse(body[0] + '}');
+  console.log(jsonData);
+  const hash = crypto.createHash('md5');
+  hash.update(Date.now().toString());
+  jsonData['ID'] = hash.digest('hex');
+  jsonData['user_id'] = 'f87330d93a88e085a5c9946d93c2bd9d';//req.session.id;
+  var imgBin = body[1].substring(0, body[1].length - 2);
+  db.insertEntry('articles', jsonData).then(function(response) {
+      fs.writeFile(`./images/${jsonData['ID']}`, imgBin, function(err) {
+        console.log(err);
+      });
+      utils.writeJson(res, {'code': 201, 'description': 'article added succesfuly'});
+  }).catch(function(response) {
+      utils.writeJson(res, response);
+  });
+};
 
 exports.addUser = function (req, res) {
   var jsonData = {

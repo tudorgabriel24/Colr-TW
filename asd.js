@@ -16,6 +16,7 @@ function query(sql) {
 
                 // throw err;
             }
+            console.log(results, fields);
             resolve(results);
         });
     });
