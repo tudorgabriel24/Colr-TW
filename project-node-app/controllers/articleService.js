@@ -1,8 +1,8 @@
 //API
 const url = require("url");
 const jwt = require('jsonwebtoken');
-
-exports.sampleRequest = function (req, res) {
+const verifyJwt = require('./jwtMiddleware').verifyJwt;
+exports.sampleRequest = async function (req, res) {
   const reqUrl = url.parse(req.url, true);
   var name = "World";
   let response;
@@ -12,13 +12,18 @@ exports.sampleRequest = function (req, res) {
   const reqToken = req.headers.authorization;
   // console.log(req);
   try {
-    var decoded = jwt.verify(reqToken, 'secret');
-    response = {
-      success: true,
-      text: "Hello" + decoded._id
-    };
-    res.statusCode = 200;
-    res.setHeader("Authorization", reqToken);
+    let decoded = await verifyJwt(req,res);
+    if(decoded !== undefined) {
+      console.log(decoded.id);
+      response = {
+        success: true,
+        text: "Hello " + decoded.id
+      };
+      res.statusCode = 200;
+      res.setHeader("Authorization", reqToken);
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(response));
+    }
   } catch(err) {
     console.log(err);
     response = {
@@ -26,10 +31,10 @@ exports.sampleRequest = function (req, res) {
       message: err
     };
     res.statusCode = 401;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(response));
   }
-  res.setHeader("Content-Type", "application/json");
-  
-  res.end(JSON.stringify(response));
+
 };
 
 exports.testRequest = function (req, res) {

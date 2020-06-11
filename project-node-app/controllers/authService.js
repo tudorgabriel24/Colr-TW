@@ -35,16 +35,26 @@ function query(sql) {
   });
 }
 
-function insertUser(admin, fullName, email, password) {
+function insertUser(fullName, email, password) {
   const idHash = crypto.createHash("md5");
   idHash.update(Date.now().toString());
   const passHash = crypto.createHash("sha256");
   passHash.update(password);
-  let userSQL = `INSERT INTO users(ID, admin, fullName, email, password) VALUES('${idHash.digest('hex')}', ${admin}, '${fullName}', '${email}', '${passHash.digest('hex')}')`;
+  let userSQL = `INSERT INTO users(ID, fullName, email, password) VALUES('${idHash.digest('hex')}', '${fullName}', '${email}', '${passHash.digest('hex')}')`;
   console.log(userSQL);
   query(userSQL);
   idHash.end();
   passHash.end();
+}
+
+function createToken(userData) {
+  const jwtExpirySeconds = (60 * 60) * 24;
+  console.log("USERDATA= ", userData);
+  const token = jwt.sign({id: userData.ID}, "secret", {
+    algorithm: "HS256",
+    expiresIn: jwtExpirySeconds,
+  });
+  return token;
 }
 
 exports.loginRequest = async(req, resp) => {
@@ -69,9 +79,8 @@ exports.loginRequest = async(req, resp) => {
         response = {
           success: true,
         };
-        const token = jwt.sign({_id: userData.ID}, "secret");
-        console.log(token);
-        resp.setHeader("Authorization",token);
+        const token = createToken(userData);
+        resp.setHeader("Authorization",`Bearer ${token}`);
       }
         resp.setHeader("Content-Type","application/json");
  
@@ -94,14 +103,15 @@ exports.registerRequest = function(req, res) {
 
   req.on('end', async () => {
     body = JSON.parse(body);
+    console.log(body);
     let exist = await userExist(body, "register");
-    let message = "user created!"
+    let message = "user created!";
     if(exist) {
       res.statusCode = 409;
-      message = "user already exist!"
+      message = "user already exist!";
     } else {
       res.statusCode = 201;
-      insertUser(0,body.fullName, body.email, body.password);
+      insertUser(body.fullName, body.email, body.password);
     }
 
     res.setHeader("Content-Type", "application/json");

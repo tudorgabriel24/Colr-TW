@@ -1,32 +1,32 @@
-var page = "login";
-var activeForm = "login";
+// var page = "login";
+// var activeForm = "login";
 
-window.onload = function() {
-  console.log("DOM HAS LOADED");
+// window.onload = function() {
+//   console.log("DOM HAS LOADED");
 
-  var Router = function(name, routes) {
+//   var Router = function(name, routes) {
 
-    return {
-      name: name,
-      routes
-    }
+//     return {
+//       name: name,
+//       routes
+//     }
 
-  };
+//   };
 
-  var mainRouter = new Router('mainRouter', [
-    {
-      path: '/login',
-      name: 'login'
-    },
-    {
-      path: '/news',
-      name: 'news'
-    }
-  ]);
-  console.log('mainRouter = ' + mainRouter);
-  var currentPath = window.location.pathname;
-  console.log('currentPath = '+ currentPath);
-}
+//   var mainRouter = new Router('mainRouter', [
+//     {
+//       path: '/login',
+//       name: 'login'
+//     },
+//     {
+//       path: '/news',
+//       name: 'news'
+//     }
+//   ]);
+//   console.log('mainRouter = ' + mainRouter);
+//   var currentPath = window.location.pathname;
+//   console.log('currentPath = '+ currentPath);
+// }
 
 // window.onpopstate = () =>  fetchLoginPage();
 
