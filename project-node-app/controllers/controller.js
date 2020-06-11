@@ -179,13 +179,6 @@ module.exports = http.createServer((req, res) => {
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
     service.invalidRequest(req, res);
-  }
-  
-  } else {
-    console.log(
-      "Request Type:" + req.method + "Invalid Endpoint: " + reqUrl.pathname
-    );
 
-    service.invalidRequest(req, res);
-  }
+  } 
 });
