@@ -3,36 +3,35 @@ const url = require("url");
 var utils = require('../../util.js');
 var db = require('../../asd.js');
 
-exports.sampleRequest = function (req, res) {
-  const reqUrl = url.parse(req.url, true);
-  var name = "World";
-  if (reqUrl.query.name) {
-    name = reqUrl.query.name;
-  }
-  var response = {
-    text: "Hello" + name,
-  };
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify(response));
-};
+// exports.sampleRequest = function (req, res) {
+//   const reqUrl = url.parse(req.url, true);
+//   var name = "World";
+//   if (reqUrl.query.name) {
+//     name = reqUrl.query.name;
+//   }
+//   var response = {
+//     text: "Hello" + name,
+//   };
+//   res.statusCode = 200;
+//   res.setHeader("Content-Type", "application/json");
+//   res.end(JSON.stringify(response));
+// };
 
-exports.addArticle = function (req, res) {
-  console.log('asd');
-  var jsonData = req.body;
-  jsonData['user_id'] = 'f87330d93a88e085a5c9946d93c2bd9d';
-  db.insertEntry('articles', jsonData).then(function(response) {
-      utils.writeJson(res, response);
-  }).catch(function(response) {
-      utils.writeJson(res, response);
-  });
-};
+// exports.addArticle = function (req, res) {
+//   var jsonData = req.body;
+//   jsonData['user_id'] = req.session.id;
+//   db.insertEntry('articles', jsonData).then(function(response) {
+//       utils.writeJson(res, {'code': 201, 'description': 'article added succesfuly'});
+//   }).catch(function(response) {
+//       utils.writeJson(res, response);
+//   });
+// };
 
 exports.addUser = function (req, res) {
   var jsonData = {
 
   };
-  db.insertEntry(`'users'`, jsonData).then(function(response) {
+  db.insertEntry('users', jsonData).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -41,20 +40,19 @@ exports.addUser = function (req, res) {
 
 exports.addToCart = function (req, res) {
   var jsonData = {
-    
+    'id_user': req.session.id,
+    'id_article': req.body.articleId
   };
-  db.insertEntry(`'user_articles'`, jsonData).then(function(response) {
-      utils.writeJson(res, response);
+  db.insertEntry('user_articles', jsonData).then(function(response) {
+      utils.writeJson(res, {'code': 201, 'description': 'article succesfully added to cart'});
   }).catch(function(response) {
       utils.writeJson(res, response);
   });
 };
 
 exports.updateUser = function (req, res) {
-  var jsonData = {
-
-  };
-  db.updateEntry(`'users'`, req.body, req.session.id).then(function(response) {
+  var jsonData = req.body;
+  db.updateEntry('users', req.body, req.session.id).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -63,10 +61,13 @@ exports.updateUser = function (req, res) {
 
 exports.updateArticle = function (req, res) {
 
-  var jsonData = {
-
-  };
-  db.updateEntry(`'articles'`, req.body, req.params.articleId).then(function(response) {
+  var jsonData = req.body;
+  var articleId = jsonData.articleId;
+  delete jsonData['articleId'];
+  if (jsonData['user_id'] != req.session.id) {
+    utils.writeJson(res, {'code': 402, 'description': `trying to modify other people's articles`})
+  }
+  db.updateEntry('articles', jsonData, articleId).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -74,12 +75,15 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  // for (var key in req) {
-  //   console.log(key);
-  // }
-  // console.log(req.query);
   var jsonData = req.body;
-  db.getEntries('articles', jsonData, 1).then(function(response) {
+  var order;
+  if ('orderBy' in jsonData) {
+    order = jsonData['orderBy'];
+    delete jsonData['orderBy'];
+  } else {
+    order = 1;
+  }
+  db.getEntries('articles', jsonData, order).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -87,10 +91,15 @@ exports.getArticles = function (req, res) {
 };
 
 exports.getUsers = function (req, res) {
-  var jsonData = {
-
-  };
-  db.getEntries(`'users'`, jsonData, req.params.order).then(function(response) {
+  var jsonData = req.body;
+  var order;
+  if ('orderBy' in jsonData) {
+    order = jsonData['orderBy'];
+    delete jsonData['orderBy'];
+  } else {
+    order = 1;
+  }
+  db.getEntries(`'users'`, jsonData, order).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -98,7 +107,10 @@ exports.getUsers = function (req, res) {
 };
 
 exports.deleteArticle = function (req, res) {
-  db.deleteEntry(`'articles'`, req.body.articleId).then(function(response) {
+  if (req.body.user_id != req.session.id) {
+    utils.writeJson(res, {'code': 400, 'description': `can't delete what's not yours`});
+  } 
+  db.deleteEntry('articles', req.body.articleId).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -106,7 +118,7 @@ exports.deleteArticle = function (req, res) {
 }
 
 exports.deleteUser = function (req, res) {
-  db.deleteEntry(`'users'`, req.session.id).then(function(response) {
+  db.deleteEntry('users', req.session.id).then(function(response) {
       utils.writeJson(res, response);
   }).catch(function(response) {
       utils.writeJson(res, response);
@@ -115,12 +127,17 @@ exports.deleteUser = function (req, res) {
 
 exports.getCart = function (req, res) {
   var jsonData = {
-
+    'id_user': req.session.id
   };
-  db.getEntries(`'user_articles'`, jsonData, 1).then(function(response) {
-      utils.writeJson(res, response);
+  db.getEntries('user_articles', jsonData, 1).then(function(response) {
+    db.getEntries('articles', {'id_user': response.id_user}).then(function(rezponze) {
+      utils.writeJson(res, rezponze);
+    }).catch(function (rezponze) {
+      utils.writeJson(res, rezponze);
+    });
+
   }).catch(function(response) {
-      utils.writeJson(res, response);
+    utils.writeJson(res, response);
   });
 }
 

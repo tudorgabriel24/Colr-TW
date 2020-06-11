@@ -12,9 +12,9 @@ function query(sql) {
     return new Promise((resolve, reject) => {
         conn.query(sql, function(err, results, fields) {
             if (err) {
-                resolve({'status': 404, 'description': `can't create article if you are not logged`});
-                // reject('asd');
-                throw err;
+                reject({'status': 404, 'description': err});
+
+                // throw err;
             }
             resolve(results);
         });
