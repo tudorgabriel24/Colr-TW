@@ -2,7 +2,6 @@ const http = require("http");
 const url = require("url");
 const service = require("./service");
 
-var mysql = require("mysql");
 var formidable = require("formidable");
 var util = require("util");
 const { parse } = require("querystring");

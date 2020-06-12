@@ -1,5 +1,6 @@
 // const url = require("url");
 const crypto = require("crypto");
+const mysql = require("mysql");
 const connection = require("../server").connection;
 const jwt = require("jsonwebtoken");
 
