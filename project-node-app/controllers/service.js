@@ -28,15 +28,6 @@ exports.addArticle = function (req, res, files) {
   jsonData["ID"] = hash.digest("hex");
   jsonData["user_id"] = "f87330d93a88e085a5c9946d93c2bd9d"; //req.session.id;
 
-  // console.log(jsonData);
-  console.log(files.image);
-  var asd = fs.readFile(files.image.path, function (err, data) {
-    fs.writeFile(`./images/${jsonData["ID"]}`, data, function () {
-      console.log("asddd");
-      utils.writeJson(res, { code: 200 });
-    });
-  });
-
   db.insertEntry("articles", jsonData)
     .then(function (response) {
       fs.readFile(files.image.path, function (err, data) {
@@ -177,7 +168,18 @@ exports.getCart = function (req, res) {
   };
   db.getEntries("user_articles", jsonData, 1)
     .then(function (response) {
-      db.getEntries("articles", { id_user: response.id_user })
+      console.log(response);
+      if (response.length == 0) {
+        utils.writeJson(res, {'code': 204, 'description': 'user has no items in cart'});
+      }
+      var chek = [];
+      for(var key in response) {
+        
+        chek.push(`'${response[key]['id_article']}'`);
+      }
+      chek = chek.join(',');
+      console.log(chek);
+      db.getCart(chek)
         .then(function (rezponze) {
           utils.writeJson(res, rezponze);
         })
