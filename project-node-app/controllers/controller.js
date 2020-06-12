@@ -25,7 +25,7 @@ module.exports = http.createServer((req, res) => {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS, POST, GET, PUT, DELETE",
     "Access-Control-Max-Age": 2592000,
-    "Access-Control-Expose-Headers": "Authorization",
+    // "Access-Control-Expose-Headers": "Authorization",
     /** add other headers as per requirement */
   };
 
@@ -39,84 +39,22 @@ module.exports = http.createServer((req, res) => {
   } else if (reqUrl.pathname == "/login" && req.method === "POST") {
     console.log("login request");
     authService.loginRequest(req, res, headers);
-  }
-  //REGISTER REQUEST
-  else if (reqUrl.pathname == "/register" && req.method === "POST") {
+  } else if (reqUrl.pathname == "/register" && req.method === "POST") {
     console.log("register request");
     authService.registerRequest(req, res, headers);
-  }
-
-  // const reqToken = req.headers.authorization;
-  // // console.log(req);
-  // try {
-  //   var decoded = jwt.verify(reqToken, 'secret');
-  //   req.session.id = decoded._id;
-  // } catch(err) {
-  //   console.log(err);
-  //   response = {
-  //     success: false,
-  //     message: err
-  //   };
-  //   res.statusCode = 401;
-  //   res.setHeader("Content-Type", "application/json");
-
-  //   res.end(JSON.stringify(response));
-  // }
-
-  // if (req.method == 'GET') {
-  //   var query = reqUrl.
-  // }
-
-  // Database connection
-
-  // var connection = mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   password: "",
-  //   database: "colr",
-  //   charset: "utf8_general_ci",
-  // });
-
-  // connection.connect(function (err) {
-  //   if (err) throw err;
-  //   console.log("Connected!");
-
-  // });
-
-  // GET Endpoint
-  else if (reqUrl.pathname == "/sample" && req.method === "GET") {
-    console.log("Request Type:" + req.method + " Endpoint: " + reqUrl.pathname);
-
-    articleService.sampleRequest(req, res);
-  }
-  //POST Endpoint
-  else if (reqUrl.pathname == "/test" && req.method === "POST") {
-    console.log("Request Type:" + req.method + "Endpoint: " + reqUrl.pathname);
-
-    service.testRequest(req, res);
   } else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     service.getArticles(req, res);
+
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
-    // let body = '';
-    // req.on('data', chunk => {
-    //     // body += chunk.toString(); // convert Buffer to string
-    //     // body = body.split(`,"image":"`);
-    //     // console.log(body[0] + '}');
-    //     // req.body = body;
-
-    //     // console.log(body);
-
-    //     // req.param = body[1].substring(0, body[1].length - 2);
-    //     // console.log(req.body);
-    //     service.addArticle(req, res);
-    // });
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
       }
+      console.log('ddd');
       req.body = fields;
+      console.log('dddd');
       service.addArticle(req, res, files);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
@@ -148,18 +86,6 @@ module.exports = http.createServer((req, res) => {
       req.body = JSON.parse(body);
       console.log(req.body);
       service.addToCart(req, res);
-    });
-  } else if (reqUrl.pathname == "/users" && req.method == "GET") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    service.getUsers(req, res);
-  } else if (reqUrl.pathname == "/users" && req.method == "POST") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.addUser(req, res);
     });
   } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);

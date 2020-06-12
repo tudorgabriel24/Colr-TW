@@ -14,6 +14,12 @@ var connection = mysql.createConnection({
   database: "colr",
   charset: "utf8_general_ci",
 });
+// console.log(connection.state);
+// connection.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
+exports.connection = connection;
 
 server.listen(port, hostname, () => {
 

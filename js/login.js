@@ -115,5 +115,7 @@ function showNotification(notificationMessage) {
         loginPage.removeChild(notificationContainer);
         notificationContainer.removeChild(message);
     }, 2000);
-
 }
+// function clearInputs() {
+//     let emailInput = document.querySelector('#')
+// }

@@ -6,7 +6,7 @@ window.onload = function makeContentRequest() {
   xhttp.open("GET", "http://localhost:3000/articles", true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
-  xhttp.setRequestHeader("Content-Type", "application/json");
+  // xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   xhttp.setRequestHeader(
     "Authorization",
