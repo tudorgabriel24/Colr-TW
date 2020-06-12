@@ -1,6 +1,5 @@
 const http = require("http");
 const url = require("url");
-const service = require("./service");
 
 var mysql = require("mysql");
 var formidable = require("formidable");
@@ -12,6 +11,7 @@ const { brotliDecompress } = require("zlib");
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
   var authService = require("./authService");
+  const service = require("./service");
   const reqUrl = url.parse(req.url, true);
 
   // console.log(req.method);
