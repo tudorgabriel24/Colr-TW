@@ -5,6 +5,8 @@ const port = 3000;
 const server = require("./controllers/controller");
 var mysql = require("mysql");
 
+
+
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -12,6 +14,7 @@ var connection = mysql.createConnection({
   database: "colr",
   charset: "utf8_general_ci",
 });
+exports.connection = connection;
 
 server.listen(port, hostname, () => {
 
@@ -19,8 +22,6 @@ server.listen(port, hostname, () => {
   connection.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
-    module.exports = {
-      connection
-    }
   });
+  
 });
