@@ -9,6 +9,7 @@ window.onload = function makeContentRequest() {
   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
   // xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
+<<<<<<< HEAD
   console.log(authToken);
   xhttp.setRequestHeader(
     "Authorization",
@@ -88,3 +89,34 @@ function renderGalleryItems(object) {
 
   articlesLoaded = true;
 }
+=======
+  xhttp.setRequestHeader("Authorization", authToken);
+  xhttp.send();
+};
+
+// function renderHTML(data) {
+//   var htmlString = "";
+//   for (i = 0; i < data.lenght; i++) {
+//     htmlString += "<p>" + data[i].name + "</p>";
+//   }
+// }
+
+function navigateToLogin() {
+  window.location.replace("http://localhost:5500/html/login.html");
+}
+
+var btn = document.getElementsByClassName("addbtn");
+btn.addEventListener("click", () => {
+  const xhttp = XMLHttpRequest();
+  xhttp.onload = function () {
+    console.log("yay");
+  };
+  xhttp.open("POST", "http://localhost:3000/cart", true);
+
+  xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+  request.setRequestHeader("Content-Type", "application/json");
+  // console.log(requestData.image.length);
+  xhttp.send({ id_article: btn.id });
+});
+>>>>>>> 4def81dd51d53cb3835423c4fb10bc957d384f81

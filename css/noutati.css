@@ -233,7 +233,28 @@ input {
   font-size: 1.7rem;
   color: #202020;
 }
-
+.dropdown-content label {
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding-left: 0.5rem;
+  padding-top: 0.2rem;
+  color: rgb(99, 112, 116);
+  transition: ease-in 200ms;
+}
+.dropdown-content select {
+  border: none;
+  outline: none;
+  background: none;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #202020;
+}
+#search {
+  transition: 1s;
+}
+#search:hover {
+  color: #3a7ca5;
+}
 @media (max-width: 450px) {
   .PageHeader p {
     padding-left: 5rem;
@@ -287,7 +308,7 @@ input {
   cursor: pointer;
 }
 .container p {
-  display: block;
+  /* display: block; */
   justify-content: center;
   text-align: center;
   position: relative;
@@ -346,7 +367,7 @@ input {
   outline: none;
   background-color: #e5e5e5;
   color: #202020;
-  opacity: 0.3;
+  opacity: 0.5;
   font-weight: bold;
   font-size: 1.6rem;
   padding: 1.1rem 1.4rem;
