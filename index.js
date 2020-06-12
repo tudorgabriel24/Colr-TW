@@ -3,16 +3,16 @@ window.onload = function makeContentRequest() {
   xhttp.onreadystatechange = function () {
     console.log(xhttp.responseText);
   };
-  xhttp.open("GET", "http://localhost:3000/cart", true);
+  xhttp.open("GET", "http://localhost:3000/articles", true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
-  xhttp.setRequestHeader("Content-Type", "application/json");
+  // xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   xhttp.setRequestHeader(
     "Authorization",
     authToken
   );
-  xhttp.send(JSON.stringify({ name: "capac" }));
+  xhttp.send();
 };
 
 function navigateToLogin() {
