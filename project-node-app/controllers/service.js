@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
-
+const verifyJwt = require('./jwtMiddleware').verifyJwt;
 // exports.sampleRequest = function (req, res) {
 //   const reqUrl = url.parse(req.url, true);
 //   var name = "World";
@@ -31,11 +31,11 @@ exports.addArticle = function (req, res, files) {
   db.insertEntry("articles", jsonData)
     .then(function (response) {
       fs.readFile(files.image.path, function (err, data) {
-        fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
+        fs.writeFile(`../images/${jsonData["ID"]}.png`, data, function (err) {
           if (err) {
             utils.writeJson(res, {
               code: 405,
-              description: "unkown file type",
+              description: err,
             });
           }
           utils.writeJson(res, {
@@ -61,10 +61,12 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = function (req, res) {
+exports.addToCart = async function (req, res) {
+  let decoded = await verifyJwt(req,res);
+
   var jsonData = {
-    id_user: req.session.id,
-    id_article: req.body.articleId,
+    id_user: decoded.id,
+    id_article: req.body.id_article,
   };
   db.insertEntry("user_articles", jsonData)
     .then(function (response) {
@@ -164,10 +166,12 @@ exports.deleteUser = function (req, res) {
     });
 };
 
-exports.getCart = function (req, res) {
+exports.getCart = async function (req, res) {
+  let decoded = await verifyJwt(req,res);
   var jsonData = {
-    id_user: "f87330d93a88e085a5c9946d93c2bd9d",
+    id_user: decoded.id
   };
+
   db.getEntries("user_articles", jsonData, 1)
     .then(function (response) {
       console.log(response);
