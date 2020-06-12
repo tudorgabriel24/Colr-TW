@@ -118,9 +118,11 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
+  console.log("aici");
   db.getArticles()
     .then(function (response) {
       utils.writeJson(res, response);
+      console.log(response);
     })
     .catch(function (response) {
       utils.writeJson(res, response);

@@ -77,6 +77,14 @@ function makeRegisterRequest(fullName,email,password) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         console.log(xhttp.responseText);
+        if(this.readyState == 4) {
+            if (this.status == 201) {
+                showNotification("User created!");
+            }
+            else {
+                showNotification("User already exist!");
+            }
+        }
         // let respObj = JSON.parse(xhttp.responseText);
         // console.log(respObj);
     };
@@ -91,4 +99,21 @@ function makeRegisterRequest(fullName,email,password) {
     xhttp.setRequestHeader('Content-Type', 'application/json');
 
     xhttp.send(JSON.stringify(requestData));
+}
+
+function showNotification(notificationMessage) {
+    let loginPage = document.querySelector(".login-page");
+    let notificationContainer = document.createElement("DIV");
+    notificationContainer.classList.add("notification");
+    let message = document.createElement("SPAN");
+    message.innerHTML = notificationMessage;
+
+    loginPage.appendChild(notificationContainer);
+    notificationContainer.appendChild(message);
+
+    setTimeout(function(){ 
+        loginPage.removeChild(notificationContainer);
+        notificationContainer.removeChild(message);
+    }, 2000);
+
 }

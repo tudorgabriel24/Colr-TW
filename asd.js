@@ -1,6 +1,3 @@
-const mysql = require("mysql");
-const crypto = require("crypto");
-
 var conn = require('./project-node-app/server').connection;
 
 function query(sql) {
@@ -11,14 +8,14 @@ function query(sql) {
 
                 // throw err;
             }
-            console.log(results, fields);
+            console.log("AICI", results, fields);
             resolve(results);
         });
     });
 }
 
 async function getArticles() {
-    return await query(`SELECT * FROM articles ORDER BY vies`);
+    return await query(`SELECT * FROM articles ORDER BY views`);
 }
 
 exports.getArticles = getArticles;
