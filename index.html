@@ -24,17 +24,21 @@
           <img src="./assets/logo.svg" id="miniLogo" alt="" />
         </div>
         <div id="userLogin" onclick="navigateToLogin()">
-                <span>
-                    <div>Login</div>
-                    <img src="./assets/user.svg" alt="Login"></img>
-                </span>
-        </div> 
-        <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
-            <div class="hamburger"></div>
-            <div class="hamburger"></div>
-            <div class="hamburger"></div>
-        </div>        
-    </div>
+          <span style="display: flex;">
+            <div>Login</div>
+            <img src="./assets/user.svg" alt="Login" />
+          </span>
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
     </header>
 
     <div class="PageHeader">
@@ -42,16 +46,10 @@
       <div class="sticky-bar">
         <button onclick="dropdown()"><span>Filters</span></button>
 
-        <!-- <div id="filters"></div> -->
-
         <div id="myDropdown" class="dropdown-content">
           <form>
-            <input
-              list="europe-countries"
-              placeholder="Cauta tara de origine..."
-              class="inputs"
-            />
-            <datalist id="europe-countries">
+            <label for="country">Country:</label>
+            <select name="Countries" id="countries">
               <option value="Russia">Russia</option>
               <option value="Germany">Germany</option>
               <option value="United Kingdom">United Kingdom</option>
@@ -93,43 +91,36 @@
               <option value="Luxembourg">Luxembourg</option>
               <option value="Malta">Malta</option>
               <option value="Iceland">Iceland</option>
-            </datalist>
-            <input
-              list="post-type"
-              placeholder="Cauta tipul de colectie..."
-              class="inputs"
-            />
-            <datalist id="post-type">
+            </select>
+
+            <label for="type">Collection type:</label>
+            <select name="Collection type" id="post_type">
               <option value="Capac">Capac</option>
               <option value="Dop">Dop</option>
               <option value="Eticheta">Eticheta</option>
-            </datalist>
-            <input
-              list="price-range"
-              placeholder="Cauta pretul..."
-              class="inputs"
-            />
-            <datalist id="price-range">
-              <option value="Sub 100"></option>
-              <option value="100-200"></option>
-              <option value="200-500"></option>
-              <option value="500-1.000"></option>
-              <option value="1.000-1.500"></option>
-              <option value="1.500-2.000"></option>
-              <option value="2.000-3.000"></option>
-              <option value="3.000-4.000"></option>
-              <option value="4.000-5.000"></option>
-              <option value="Peste 5.000"></option>
-            </datalist>
-            <input
-              list="state"
-              placeholder="Cauta starea curenta..."
-              class="inputs"
-            />
-            <datalist id="state">
+            </select>
+
+            <label for="value">Value:</label>
+            <select name="Value" id="price_range">
+              <option value="50">50</option>
+              <option value="100-200">100-200</option>
+              <option value="100-200">100-200</option>
+              <option value="500-1.000">500-1.000</option>
+              <option value="1.000-1.500">1.000-1.500</option>
+              <option value="1.500-2.000">1.500-2.000</option>
+              <option value="2.000-3.000">2.000-3.000</option>
+              <option value="3.000-4.000">3.000-4.000</option>
+              <option value="4.000-5.000">4.000-5.000</option>
+              <option value="Peste 5.000">Peste 5.000</option>
+            </select>
+
+            <label for="state">Current state:</label>
+            <select name="Current state" id="stat">
               <option value="Intact">Intact</option>
               <option value="Degradat">Degradat</option>
-            </datalist>
+            </select>
+
+            <button id="search" onclick="searchFil(event)">Search</button>
           </form>
         </div>
       </div>
@@ -139,10 +130,8 @@
       <div class="container">
         <img src="./assets/krumbach.jpeg" alt="" />
         <button class="addbtn">Add</button>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-          excepturi ducimus iste consectetur praesentium sed expedita rem error
-          illum commodi.
+        <p id="desc">
+          Lorem ipsum dolor sit amet
           <span class="pop_button" data-modal-target="#modal">Show more</span>
           <!-- De unde se apeleaza modalul-->
         </p>
@@ -184,14 +173,15 @@
     <div id="overlay"></div>
 
     <!--MODAL -->
-    <div class="button_container">
+    <!-- <div class="button_container">
       <a class="mybutton" onclick="">Previous</a>
       <a class="mybutton" onclick="">Next</a>
-    </div>
+    </div> -->
     <script src="./js/HamburgerMenu.js"></script>
     <script src="./js/dropdown.js"></script>
     <script src="./js/shrinkHeaderTitle.js"></script>
     <script src="./js/modal.js"></script>
     <script src="./index.js"></script>
+    <script src="./js/filters.js"></script>
   </body>
 </html>
