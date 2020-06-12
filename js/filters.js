@@ -1,5 +1,3 @@
-var formData = new FormData();
-
 function searchFil(event) {
   event.preventDefault();
 
@@ -10,21 +8,22 @@ function searchFil(event) {
   var state = document.getElementById("stat").value;
   var price = document.getElementById("price_range").value;
   var type = document.getElementById("post_type").value;
+
+  var formData = {};
   // console.log(country);
   // console.log(state);
   // console.log(price);
   // console.log(type);
-  formData.append("country", country);
-  formData.append("currentState", state);
-  // formData.append("price", `${price}`);
-  formData.append("price", price);
-  formData.append("type", type);
+  formData = {
+    country: country,
+    currentState: state,
+    price: price,
+    type: type,
+  };
+  formData = JSON.stringify(formData);
+  console.log(formData);
 
-  for (var value of formData.values()) {
-    console.log(value);
-  }
-
-  // var xhttp = new XMLHttpRequest();
-  // xhttp.open("GET", "http://localhost:3000/articles", true);
-  // xhttp.send(formData);
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "http://localhost:3000/articles", true);
+  xhttp.send(formData);
 }
