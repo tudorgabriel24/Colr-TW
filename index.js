@@ -12,6 +12,13 @@ window.onload = function makeContentRequest() {
   xhttp.send();
 };
 
+// function renderHTML(data) {
+//   var htmlString = "";
+//   for (i = 0; i < data.lenght; i++) {
+//     htmlString += "<p>" + data[i].name + "</p>";
+//   }
+// }
+
 function navigateToLogin() {
   window.location.replace("http://localhost:5500/html/login.html");
 }

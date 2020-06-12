@@ -27,7 +27,7 @@ function query(sql) {
 }
 
 async function getArticles() {
-  return await query(`SELECT * FROM articles ORDER BY views`);
+  return await query(`SELECT * FROM articles`);
 }
 
 async function getCart(articles) {
