@@ -1,7 +1,7 @@
 //API
 const url = require("url");
 var utils = require("../../util.js");
-var db = require("../../asd.js");
+var db = require("./asd.js");
 const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");

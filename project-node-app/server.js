@@ -6,7 +6,6 @@ const server = require("./controllers/controller");
 var mysql = require("mysql");
 
 
-
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
