@@ -308,11 +308,11 @@ input {
   cursor: pointer;
 }
 .container p {
-  display: block;
+  /* display: block; */
   justify-content: center;
   text-align: center;
   position: relative;
-  width: auto;
+  width: 97%;
   padding: 5rem 1rem 5rem 1rem;
   font-size: 1.8rem;
   margin: 0rem;
