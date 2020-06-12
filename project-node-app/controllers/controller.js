@@ -1,19 +1,19 @@
 const http = require("http");
 const url = require("url");
 
-var mysql = require("mysql");
+
 var formidable = require("formidable");
 var util = require("util");
 const { parse } = require("querystring");
 const jwt = require("jsonwebtoken");
 const { brotliDecompress } = require("zlib");
+var mysql = require("mysql");
 
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
   var authService = require("./authService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-
   // console.log(req.method);
   // res.setHeader('Access-Control-Allow-Origin', '*');
   // res.setHeader('Access-Control-Request-Method', '*');
@@ -25,7 +25,7 @@ module.exports = http.createServer((req, res) => {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS, POST, GET, PUT, DELETE",
     "Access-Control-Max-Age": 2592000,
-    // "Access-Control-Expose-Headers": "Authorization",
+    "Access-Control-Expose-Headers": "Authorization",
     /** add other headers as per requirement */
   };
 

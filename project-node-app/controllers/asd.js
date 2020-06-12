@@ -2,8 +2,7 @@ const mysql = require("mysql");
 const crypto = require("crypto");
 
 const conn = require('../server').connection;
-console.log(conn);
-console.log('asd')
+console.log('asd');
 // var conn = mysql.createConnection({
 //     host: "localhost",
 //     user: "root",
@@ -27,7 +26,7 @@ function query(sql) {
 }
 
 async function getArticles() {
-    return await query(`SELECT * FROM articles ORDER BY views`);
+    return await query(`SELECT * FROM articles`);
 }
 
 async function getCart(articles) {

@@ -1,10 +1,11 @@
 // const url = require("url");
 const crypto = require("crypto");
+const mysql = require("mysql");
 const connection = require("../server").connection;
-console.log(connection);
 const jwt = require("jsonwebtoken");
 
 let userExist = async (user) => {
+  console.log(user);
   let userQuery = `SELECT * FROM USERS WHERE EMAIL= '${user.email}';`;
   let connectionPromise = new Promise((resolve, reject) => {
     connection.query(userQuery, (err, result) => {
@@ -44,7 +45,6 @@ function insertUser(fullName, email, password) {
   console.log(userSQL);
   query(userSQL);
   idHash.end();
-  passHash.end();
 }
 
 function createToken(userData) {
@@ -75,8 +75,11 @@ exports.loginRequest = async (req, resp, headers) => {
       body = JSON.parse(body);
       let userData = await userExist(body, "login");
       console.log(userData);
+      const passHash = crypto.createHash("sha256");
+      passHash.update(body.password);
+      const hashPass = passHash.digest('hex');
       if (userData !== null) {
-        if (body.password === userData.password) {
+        if (hashPass === userData.password) {
           response = {
             success: true,
           };
