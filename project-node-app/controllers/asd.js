@@ -2,7 +2,6 @@ const mysql = require("mysql");
 const crypto = require("crypto");
 
 const conn = require("../server").connection;
-console.log(conn);
 console.log("asd");
 // var conn = mysql.createConnection({
 //     host: "localhost",
