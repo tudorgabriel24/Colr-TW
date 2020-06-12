@@ -46,16 +46,10 @@
       <div class="sticky-bar">
         <button onclick="dropdown()"><span>Filters</span></button>
 
-        <!-- <div id="filters"></div> -->
-
         <div id="myDropdown" class="dropdown-content">
           <form>
-            <input
-              list="europe-countries"
-              placeholder="Cauta tara de origine..."
-              class="inputs"
-            />
-            <datalist id="europe-countries">
+            <label for="country">Country:</label>
+            <select name="Countries" id="countries">
               <option value="Russia">Russia</option>
               <option value="Germany">Germany</option>
               <option value="United Kingdom">United Kingdom</option>
@@ -97,43 +91,36 @@
               <option value="Luxembourg">Luxembourg</option>
               <option value="Malta">Malta</option>
               <option value="Iceland">Iceland</option>
-            </datalist>
-            <input
-              list="post-type"
-              placeholder="Cauta tipul de colectie..."
-              class="inputs"
-            />
-            <datalist id="post-type">
+            </select>
+
+            <label for="type">Collection type:</label>
+            <select name="Collection type" id="post_type">
               <option value="Capac">Capac</option>
               <option value="Dop">Dop</option>
               <option value="Eticheta">Eticheta</option>
-            </datalist>
-            <input
-              list="price-range"
-              placeholder="Cauta pretul..."
-              class="inputs"
-            />
-            <datalist id="price-range">
-              <option value="Sub 100"></option>
-              <option value="100-200"></option>
-              <option value="200-500"></option>
-              <option value="500-1.000"></option>
-              <option value="1.000-1.500"></option>
-              <option value="1.500-2.000"></option>
-              <option value="2.000-3.000"></option>
-              <option value="3.000-4.000"></option>
-              <option value="4.000-5.000"></option>
-              <option value="Peste 5.000"></option>
-            </datalist>
-            <input
-              list="state"
-              placeholder="Cauta starea curenta..."
-              class="inputs"
-            />
-            <datalist id="state">
+            </select>
+
+            <label for="price">Price range:</label>
+            <select name="Price range" id="price_range">
+              <option value="Sub 100">Sub 100</option>
+              <option value="100-200">100-200</option>
+              <option value="100-200">100-200</option>
+              <option value="500-1.000">500-1.000</option>
+              <option value="1.000-1.500">1.000-1.500</option>
+              <option value="1.500-2.000">1.500-2.000</option>
+              <option value="2.000-3.000">2.000-3.000</option>
+              <option value="3.000-4.000">3.000-4.000</option>
+              <option value="4.000-5.000">4.000-5.000</option>
+              <option value="Peste 5.000">Peste 5.000</option>
+            </select>
+
+            <label for="state">Current state:</label>
+            <select name="Current state" id="stat">
               <option value="Intact">Intact</option>
               <option value="Degradat">Degradat</option>
-            </datalist>
+            </select>
+
+            <button id="search" onclick="searchFil(event)">Search</button>
           </form>
         </div>
       </div>
@@ -197,5 +184,6 @@
     <script src="./js/shrinkHeaderTitle.js"></script>
     <script src="./js/modal.js"></script>
     <script src="./index.js"></script>
+    <script src="./js/filters.js"></script>
   </body>
 </html>
