@@ -26,7 +26,7 @@
     <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
       <h2>Abstract</h2>
       <p>
-        Sa se realizeze o aplicatie Web privind managementul tezelor de licenta/master la nivelul unei facultati. Din punctul de vedere al profesorului, sistemul va oferi posibilitatea gestionarii temelor propuse si a studentilor arondati, inclusiv crearea unei planificari a celor mai importante etape pana la momentul sustinerii. Pentru studenti, aplicatia va fi capabila sa listeze/filtreze subiectele de interes pentru fiecare profesor in parte si sa permita inscrierea unei persoane in vederea indrumarii, eventual conform unor cerinte prelabile. Sistemul va verifica indeplinirea acestor cerinte, inclusiv va notifica -- via un flux Atom sau prin e-mail -- profesorul/studentul atunci cand survin intarzieri in efectuarea unor activitati (e.g., transmiterea unui raport preliminar) sau daca apar actualizari -- de pilda, profesorul a plasat o lista de lecturi recomandate. De asemenea, aplicatia va semnala posibile probleme privind variantele intermediare ale documentelor intocmite de student referitoare la format sau standarde de redactare. Progresul implementarii tezei va putea fi monitorizat automat prin intermermediul unui sistem online de management de cod-sursa precum Github.
+        Sa se realize o aplicatie Web destinata colectionarilor de capace, dopuri si etichete specifice recipientelor folosite pentru inmagazinarea bauturilor (ne)alcoolice. Pe baza facilitatilor de cautare multi-criteriala implementate, utilizatorii autentificati vor putea crea, inventaria si partaja informatii privind artefactele detinute in functie de diverse caracteristici: atribute fizice, imagine, valoare, tara de provenienta, istoric al folosirii efective etc. Se va oferi suport pentru import/export de date. Se vor genera statistici diverse disponibile in formate deschise – minimal, CSV si DocBook. Se va realiza, de asemenea, un clasament al celor mai populare obiecte colectate, disponibil si ca flux de date RSS.
       </p>
     </section>
 
@@ -39,14 +39,15 @@
       	<li>Baze de date: MySQL</li>
       	<li>Prototip: HTML + CSS</li>
       	<li>Backend: NodeJS</li>
-      	<li>Server: Apache</li>
+        <li>Server: Apache</li>
+        <li>AJAX</li>
       </ul>
     </section>
 <section id="arhitecturaaplicatie">
 	<h2>Arhiterctura aplicatie</h2>
-	<p>Am folosit o arhitectura de baza, adica Clientul trimite o cerere Serverului, Serverul apeleaza Baza de Date, iar raspunsul este trimis catre Client tot prin intermediul Serverului</p>
+	<p>Am folosit o arhitectura de baza, adica Clientul trimite o cerere Serverului, Serverul apeleaza Baza de Date, iar raspunsul este trimis catre Client tot prin intermediul Serverului.</p>
 	<section id="diagramaarhitecturala">
-      <h3>Diagrama arhitecturala</h3>
+      <h3>Diagrama workflow</h3>
        <img src="../documentatie/assets/project.png" alt="Diagrama arhitecturala" width="125%"> 
     </section>
     <section id="diagramaarhitecturala">
@@ -55,10 +56,8 @@
        <ul>
        	<li>Autentificare</li>
        	<li>Adaugare articol</li>
-         <li>Modificare Articol</li>
          <li>Adaugarea de articole in propriul cart</li>
-       	<li>Exportarea 'cartului' propriu</li>
-       	<li>Editare profil</li>
+       	<li>Exportare sub format CSV ale aricolelor</li>
        </ul>
     </section>
     <section id="descrierefunctionalitati">
@@ -91,7 +90,7 @@
       <p>
        Schema baze de date
       </p>
-<img src="diagrame/Database.jpg" alt="database" width="100%"> 
+<img src="../documentatie/assets/database.png" alt="database" width="100%"> 
     </section>
 
   	<section id="tasks">
@@ -102,7 +101,9 @@
        	<li>
        	Mindrisoru Tudor:
        	<ul>
-       	<li>Autentificare - sistem de login, register, partea de Front si Back end</li>
+         <li>Autentificare - sistem de login, register, partea de Front si Back end</li>
+         <li>Integrare pagina cu API</li>
+         <li>Creare token</li>
        	</ul>
        </li>
        <li>
@@ -110,6 +111,7 @@
         <ul>
         	<li>Incarcarea articolelor: Front End si Back End</li>
         	<li>Gestionare baza de date: crearea bazei de date si functiile care lucreaza direct cu aceasta</li>
+          <li>Gestionare API</li>
         </ul>
     	</li>
     <li>
@@ -117,6 +119,8 @@
     	<ul>
         <li>Pagina principala: afisarea articolelor pe pagina principala, primite de la server</li>
         <li>Export: exportarea cartului in format CSV</li>
+        <li>Initializare AJAX</li>
+        <li>Design Front End</li>
     		
     	</ul>
     </li>
@@ -128,7 +132,15 @@
     <section id="user case">
     </section>
 
-  	<section id="references"><h2><span> </span>References</h2><dl></dl>
+    <section id="references"><h2><span> </span>References</h2><dl></dl>
+      <ul>
+        <li>https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side</li>
+        <li>https://www.w3schools.com/xml/ajax_intro.asp</li>
+        <li>draw.io</li>
+        <li>https://www.npmjs.com/package/mysql#introduction</li>
+        <li>https://stackoverflow.com/</li>
+        <li>https://www.w3schools.com/</li>
+      </ul>
 </section>
    
 
