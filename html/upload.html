@@ -1,156 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Upload</title>
-        <script src="../js/HamburgerMenu.js"></script>
-        <link rel="stylesheet" href="../css/upload.css">
-        <link rel="stylesheet" href="../css/noutati.css">
-    </head>
-    <body>
-        <header>
-            <div>
-                <div id="mySidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="#">Noutati</a>
-                    <a href="#">Postari</a>
-                    <a href="#">Statistici</a>
-                    <a href="#">Contact</a>
-                </div>
-                <div>
-                    <img src="../assets/logo.svg" id="miniLogo"></img>
-                </div>
-                <div>
-                    <a href="#" id="userLogin">
-                        <span>
-                            <div>Login</div>
-                            <img src="../assets/user.svg" alt="Login"></img>
-                        </span>
-                    </a>
-                </div> 
-                <div class="headerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                </div>        
-            </div>
-        </header>
-        <section class="formCont">
-            <div class="form">
-                    <!-- <button class="btn">Upload a file</button> -->
-                <input class="uplBut" type="file" name="image" id="image" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"><br>
-                <input class="inpText" type="text" placeholder="Name" id="name" name="name" maxlength="16" required><br>
-                <input class="inpText" type="text" placeholder="Year" id="year" name="year" maxlength="4" required><br>
-                <input class="inpText" type="text" placeholder="Brand" id="brand" name="brand" required><br>
-                <input class="inpText" type="text" id="alcoholic" name="alcoholic" required><br>
-                <input class="inpText" type="text" placeholder="Country" id="country" name="country" required><br>
-                <textarea class="inpText" type="text" placeholder="Description" id="description" name="description" rows="5" required></textarea><br>
-                <input class="inpText" type="text" placeholder="Current State" id="currentState" name="currentState"><br><br><br>
-                <button class="inpSub" type="submit" id="inpsub">Send<br>
-            </div>
-            <img id="blah"/><br>
-        </section>
-        <script>
-            const form = {
-                name: document.getElementById('name'),
-                year: document.getElementById('year'),
-                brand: document.getElementById('brand'),
-                alcoholic: document.getElementById('alcoholic'),
-                country: document.getElementById('country'),
-                description: document.getElementById('description'),
-                currentState: document.getElementById('currentState'),
-                submit: document.getElementById('inpsub'),
-                image: document.getElementById('image')
-            };
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload</title>
+    <script src="../js/HamburgerMenu.js"></script>
+    <link rel="stylesheet" href="../css/upload.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
+            <a href="../index.html">Home</a>
+            <a href="../html/export.html">Export</a>
+            <a href="../html/upload.html">Upload article</a>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/logo.svg" id="miniLogo" alt="" />
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+    <section class="formCont">
+      <div class="form">
+        <!-- <button class="btn">Upload a file</button> -->
+        <input
+          class="uplBut"
+          type="file"
+          name="image"
+          id="image"
+          onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
+        /><br />
+        <input
+          class="inpText"
+          type="text"
+          placeholder="Name"
+          id="name"
+          name="name"
+          maxlength="16"
+          required
+        /><br />
+        <input
+          class="inpText"
+          type="text"
+          placeholder="Year"
+          id="year"
+          name="year"
+          maxlength="4"
+          required
+        /><br />
+        <input
+          class="inpText"
+          type="text"
+          placeholder="Brand"
+          id="brand"
+          name="brand"
+          required
+        /><br />
+        <input
+          class="inpText"
+          type="text"
+          id="alcoholic"
+          name="alcoholic"
+          required
+        /><br />
+        <input
+          class="inpText"
+          type="text"
+          placeholder="Country"
+          id="country"
+          name="country"
+          required
+        /><br />
+        <textarea
+          class="inpText"
+          placeholder="Description"
+          id="description"
+          name="description"
+          rows="5"
+          required
+        ></textarea
+        ><br />
+        <input
+          class="inpText"
+          type="text"
+          placeholder="Current State"
+          id="currentState"
+          name="currentState"
+        /><br /><br /><br />
+        <button class="inpSub" type="submit" id="inpsub">Send</button><br />
+      </div>
+      <img id="blah" src="#" alt="" /><br />
+    </section>
+    <script>
+      const form = {
+          name: document.getElementById('name'),
+          year: document.getElementById('year'),
+          brand: document.getElementById('brand'),
+          alcoholic: document.getElementById('alcoholic'),
+          country: document.getElementById('country'),
+          description: document.getElementById('description'),
+          currentState: document.getElementById('currentState'),
+          submit: document.getElementById('inpsub'),
 
-            window.onload = function () {
-                var asd = new XMLHttpRequest();
-                console.log('asd');
-                asd.onload = () => {
-                    console.log(asd.responseText);
-                };
-                asd.open('GET', `http://localhost:3000/cart`);
-                asd.getResponseHeader('Access-Control-Allow-Origin', '*');
-                asd.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
-                asd.send();
-            }
-            
+          image: document.getElementById('image')
+      };
 
-            // console.log(form);
+      // console.log(form);
 
             form.submit.addEventListener('click', () => {
-                var fr = new FileReader();
-                fr.onload = function () {
-                    // const request = new XMLHttpRequest();
-                    // request.onload = () => {
-                    //     console.log(request.responseText);
-                    //     let respObj = JSON.parse(request.responseText);
-                    //     console.log(respObj);
-                    //     // location.href = 'noutati.html';
-                    // };
-                    // const requestData = {
-                    //     name: form.name.value,
-                    //     year: form.year.value,
-                    //     brand: form.brand.value,
-                    //     country: form.country.value,
-                    //     description: form.description.value,
-                    //     currentState: form.currentState.value,
-                    //     image: fr.result.split(`;base64,`)[1]
-                    // }; 
+                var request = new XMLHttpRequest();
 
-                    // // var fd = new FormData();
-                    // // for (var key in requestData) {
-                    // //     fd.append(key, requestData[key]);
-                    // // }
-                    // // fd.append('image', form.image.files[0]);
-                    // request.open('POST', 'http://localhost:3000/articles', true);
-                    
-                    // request.getResponseHeader('Access-Control-Allow-Origin', '*');
-                    // request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
-                    // request.setRequestHeader('Content-Type', 'application/json');
-                    // console.log(requestData.image.length);
-                    // request.send(JSON.stringify(requestData));
-                    };
-                fr.readAsDataURL(form.image.files[0]);
+                var requestData = {
+                    'name': form.name.value,
+                    'year': form.year.value,
+                    'brand': form.brand.value,
+                    'alcoholic': form.alcoholic.value,
+                    'country': form.country.value,
+                    'description': form.description.value,
+                    'currentState': form.currentState.value,
+                }
 
-                const request = new XMLHttpRequest();
-                request.onload = () => {
+                request.onload = function () {
+                    console.log('we got response');
                     console.log(request.responseText);
-                    let respObj = JSON.parse(request.responseText);
-                    console.log(respObj);
-                    // location.href = 'noutati.html';
                 };
-                const requestData = {
-                    name: form.name.value,
-                    year: form.year.value,
-                    brand: form.brand.value,
-                    country: form.country.value,
-                    description: form.description.value,
-                    currentState: form.currentState.value
-                }; 
 
                 var fd = new FormData();
                 for (var key in requestData) {
                     fd.append(key, requestData[key]);
+
                 }
                 fd.append('image', form.image.files[0]);
-                };
-                request.open('POST', 'http://localhost:3000/articles', true);
+                request.open('GET', 'http://localhost:3000/articles', true);
                 
                 request.getResponseHeader('Access-Control-Allow-Origin', '*');
                 request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
                 // request.setRequestHeader('Content-Type', 'application/json');
                 // console.log(requestData.image.length);
-                request.send(fd);
+                request.send();
 
                 
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.send(JSON.stringify(requestData));
+                // request.setRequestHeader('Content-Type', 'application/json');
+                // request.send(JSON.stringify(requestData));
             
             });
-        </script>
-    </body>
-
-
+      </script>
+    <!-- <script src="../js/shrinkHeaderTitle.js"></script> -->
+    <script src="../js/HamburgerMenu.js"></script>
+  </body>
 </html>

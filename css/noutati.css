@@ -91,7 +91,7 @@ header {
   top: 0; /* Stay at the top */
   right: 0;
 }
-#userLogin span {
+.cnt {
   display: flex;
   flex-wrap: wrap;
 }
@@ -107,6 +107,7 @@ header {
   color: #16425b;
   transition: 0.3s;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 #userLogin img {
   width: 3.7rem;
@@ -185,8 +186,7 @@ header {
 .sticky-bar button {
   display: inline-block;
   border: none;
-  background-color: #637074;
-  color: #e5e5e5;
+  color: #566266;
   text-align: center;
   font-size: 1.7rem;
   padding: 1rem;
@@ -194,6 +194,7 @@ header {
   margin: 0.2rem;
   border-radius: 0.3rem;
   outline: none;
+  border-radius: 1rem;
 }
 .sticky-bar button span {
   cursor: pointer;
@@ -308,4 +309,52 @@ input {
 .container a:hover {
   color: #215cb4;
   transition: 0.35s;
+}
+.button_container {
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin: 2rem;
+}
+.mybutton {
+  padding: 0.5rem;
+  color: #323232;
+  width: 10%;
+  align-self: center;
+  transition: ease-in-out 100ms;
+  font-weight: bold;
+  font-size: 1.4rem;
+  font-size-adjust: 0.5rem;
+  outline: none;
+  margin: 0.8rem;
+}
+.mybutton:hover {
+  padding-top: 0.01rem;
+  border-bottom: 0.15rem solid #3d3d3d;
+  color: #3d3d3d;
+  cursor: pointer;
+}
+.addbtn {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #e5e5e5;
+  color: #202020;
+  opacity: 0.3;
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 1.1rem 1.4rem;
+  text-align: center;
+  transition: ease-in-out 300ms;
+  border-bottom-left-radius: 1.2rem;
+}
+.addbtn:hover {
+  opacity: 1;
+  transition: ease-in-out 300ms;
 }
