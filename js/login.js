@@ -1,6 +1,16 @@
 var activeForm = "login";
 myStorage = window.localStorage;
 
+window.onload = function makeContentRequest() {
+    if(this.localStorage.getItem('Authorization') !== null) {
+        navigateToGallery();
+    }
+}
+
+function navigateToGallery() {
+    window.location.replace('http://localhost:5500/index.html');
+  }
+
 function onClickLogin(event) {
     let loginSwitch = document.querySelector(".switch-login");
     let registerSwitch = document.querySelector(".switch-register");
@@ -55,7 +65,7 @@ function makeLoginRequest(email,password) {
             if (this.status == 200) {
                 console.log(xhttp.responseText);
                 let authToken = xhttp.getResponseHeader('Authorization');
-                console.log(authToken);
+                console.log("AUTH",authToken);
                 localStorage.setItem('Authorization', authToken);
                 window.location.replace('http://localhost:5500/index.html');
               }
