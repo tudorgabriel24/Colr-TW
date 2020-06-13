@@ -198,6 +198,20 @@ exports.getCart = async function (req, res) {
     });
 };
 
+exports.deletFromCart = async function (req, res) {
+  var jsonData = req.body;
+  console.log("JSON",jsonData);
+  let decoded = await verifyJwt(req, res);
+  jsonData['id_user'] = decoded.id;
+  db.deleteFromCart(jsonData['id_user'], jsonData['id_article'])
+    .then(function (response) {
+      utils.writeJson(response, {'code': 205, 'description': 'article successfuly removed from cart'});
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 exports.invalidRequest = function (req, res) {
   res.statusCode = 404;
   res.setHeader = ("Content-Type", "text/plain");
