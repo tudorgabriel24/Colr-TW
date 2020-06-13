@@ -1,14 +1,14 @@
 const http = require("http");
 const url = require("url");
 
-var mysql = require("mysql");
+
 var formidable = require("formidable");
 var util = require("util");
 const { parse } = require("querystring");
 const jwt = require("jsonwebtoken");
 const { brotliDecompress } = require("zlib");
 var utils = require("../../util.js");
-
+var mysql = require("mysql");
 
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
@@ -28,9 +28,6 @@ module.exports = http.createServer((req, res) => {
   };
 
   if (req.method == "OPTIONS") {
-    // for(var key in req) {
-    //   console.log(key);
-    // }
     res.writeHead(204, headers);
     res.end();
     return;

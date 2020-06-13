@@ -8,7 +8,7 @@ const { assert } = require("console");
 const util = require("util");
 const { verifyJwt } = require("./jwtMiddleware.js");
 const jwtVerify = require('./jwtMiddleware').verifyJwt;
-
+const verifyJwt = require('./jwtMiddleware').verifyJwt;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
@@ -54,11 +54,12 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = async function (req, res) {
-  const decoded = await verifyJwt(req, res);
+exports.addToCart = async function (req, res) {le: req.body.articleId,
+  let decoded = await verifyJwt(req,res);
+
   var jsonData = {
-    id_user: decoded,
-    id_article: req.body.articleId,
+    id_user: decoded.id,
+    id_article: req.body.id_article,
   };
   db.insertEntry("user_articles", jsonData)
     .then(function (response) {
@@ -125,6 +126,7 @@ exports.getArticles = function (req, res) {
   db.getEntries('articles', jsonData, order)
     .then(function (response) {
       utils.writeJson(res, response);
+      console.log(response);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -177,10 +179,12 @@ exports.deleteUser = function (req, res) {
     });
 };
 
-exports.getCart = function (req, res) {
+exports.getCart = async function (req, res) {
+  let decoded = await verifyJwt(req,res);
   var jsonData = {
-    id_user: "f87330d93a88e085a5c9946d93c2bd9d",
+    id_user: decoded.id
   };
+
   db.getEntries("user_articles", jsonData, 1)
     .then(function (response) {
       console.log(response);

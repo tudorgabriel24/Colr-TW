@@ -1,11 +1,11 @@
-function exportCSV() {
-  let csvContent = "data:text/csv;charset=utf-8,";
 
-  rows.forEach(function (rowArray) {
-    let row = rowArray.join(",");
-    csvContent += row + "\r\n";
-  });
 
+<<<<<<< HEAD
+
+
+
+// function exportCSV() {}
+=======
   console.log(csvContent);
   var encodedUri = encodeURI(csvContent);
   var csv = document.createElement("a");
@@ -18,5 +18,4 @@ const rows = [
   ["name1", "city1", "some other info"],
   ["name2", "city2", "more info"],
 ];
-
-// function exportCSV() {}
+>>>>>>> 4def81dd51d53cb3835423c4fb10bc957d384f81

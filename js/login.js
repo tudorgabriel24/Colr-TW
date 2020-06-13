@@ -1,6 +1,16 @@
 var activeForm = "login";
 myStorage = window.localStorage;
 
+window.onload = function makeContentRequest() {
+    if(this.localStorage.getItem('Authorization') !== null) {
+        navigateToGallery();
+    }
+}
+
+function navigateToGallery() {
+    window.location.replace('http://localhost:5500/index.html');
+  }
+
 function onClickLogin(event) {
     let loginSwitch = document.querySelector(".switch-login");
     let registerSwitch = document.querySelector(".switch-register");
@@ -55,7 +65,7 @@ function makeLoginRequest(email,password) {
             if (this.status == 200) {
                 console.log(xhttp.responseText);
                 let authToken = xhttp.getResponseHeader('Authorization');
-                console.log(authToken);
+                console.log("AUTH",authToken);
                 localStorage.setItem('Authorization', authToken);
                 window.location.replace('http://localhost:5500/index.html');
               }
@@ -77,6 +87,14 @@ function makeRegisterRequest(fullName,email,password) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         console.log(xhttp.responseText);
+        if(this.readyState == 4) {
+            if (this.status == 201) {
+                showNotification("User created!");
+            }
+            else {
+                showNotification("User already exist!");
+            }
+        }
         // let respObj = JSON.parse(xhttp.responseText);
         // console.log(respObj);
     };
@@ -92,3 +110,22 @@ function makeRegisterRequest(fullName,email,password) {
 
     xhttp.send(JSON.stringify(requestData));
 }
+
+function showNotification(notificationMessage) {
+    let loginPage = document.querySelector(".login-page");
+    let notificationContainer = document.createElement("DIV");
+    notificationContainer.classList.add("notification");
+    let message = document.createElement("SPAN");
+    message.innerHTML = notificationMessage;
+
+    loginPage.appendChild(notificationContainer);
+    notificationContainer.appendChild(message);
+
+    setTimeout(function(){ 
+        loginPage.removeChild(notificationContainer);
+        notificationContainer.removeChild(message);
+    }, 2000);
+}
+// function clearInputs() {
+//     let emailInput = document.querySelector('#')
+// }
