@@ -136,6 +136,8 @@ exports.getUsers = function (req, res) {
     });
 };
 
+console.log('asd');
+
 exports.deleteArticle = function (req, res) {
   if (req.body.user_id != req.session.id) {
     utils.writeJson(res, {
