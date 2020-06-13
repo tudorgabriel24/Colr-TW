@@ -54,7 +54,7 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = async function (req, res) {le: req.body.articleId,
+exports.addToCart = async function (req, res) {
   let decoded = await verifyJwt(req,res);
 
   var jsonData = {
