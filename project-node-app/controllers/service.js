@@ -6,36 +6,29 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
+const { verifyJwt } = require("./jwtMiddleware.js");
+const jwtVerify = require('./jwtMiddleware').verifyJwt;
 
-// exports.sampleRequest = function (req, res) {
-//   const reqUrl = url.parse(req.url, true);
-//   var name = "World";
-//   if (reqUrl.query.name) {
-//     name = reqUrl.query.name;
-//   }
-//   var response = {
-//     text: "Hello" + name,
-//   };
-//   res.statusCode = 200;
-//   res.setHeader("Content-Type", "application/json");
-//   res.end(JSON.stringify(response));
-// };
 
-exports.addArticle = function (req, res, files) {
+exports.addArticle = async function (req, res) {
   var jsonData = req.body;
+  const decoded = await jwtVerify(req, res);
+  if (decoded == null) {
+    utils.writeJson(res, {'code': 403, 'description': `can't upload articles if you are not logged in`});
+  }
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = "f87330d93a88e085a5c9946d93c2bd9d"; //req.session.id;
+  jsonData["user_id"] = decoded;
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
-      fs.readFile(files.image.path, function (err, data) {
+      fs.readFile(jsonData.imagePath, function (err, data) {
         fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
           if (err) {
             utils.writeJson(res, {
               code: 405,
-              description: "unkown file type",
+              description: err,
             });
           }
           utils.writeJson(res, {
@@ -61,9 +54,10 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = function (req, res) {
+exports.addToCart = async function (req, res) {
+  const decoded = await verifyJwt(req, res);
   var jsonData = {
-    id_user: req.session.id,
+    id_user: decoded,
     id_article: req.body.articleId,
   };
   db.insertEntry("user_articles", jsonData)
@@ -109,7 +103,26 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  db.getArticles()
+  var jsonData = req.body;
+  if (jsonData == undefined) {
+    db.getArticles()
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  }
+  var order;
+  if (jsonData.hasOwnProperty('order')) {
+    order = jsonData['order'];
+    delete jsonData['order'];
+  }
+  else {
+    order = 'views'
+  }
+
+  db.getEntries('articles', jsonData, order)
     .then(function (response) {
       utils.writeJson(res, response);
     })

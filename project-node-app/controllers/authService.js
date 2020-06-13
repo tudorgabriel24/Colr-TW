@@ -1,7 +1,6 @@
 // const url = require("url");
 const crypto = require("crypto");
 const connection = require("../server").connection;
-console.log(connection);
 const jwt = require("jsonwebtoken");
 
 let userExist = async (user) => {
