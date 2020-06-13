@@ -21,16 +21,16 @@ window.onload = function getCartData() {
 
 function insertInCart(object) {
   for(let index = 0; index < object.length;index++) {
-    new item(object[index].name, `../project-node-app/images/${object[index].ID}.png`);
+    new item(object[index].name, `../project-node-app/images/${object[index].ID}.png`, object[index].id_article);
   }
   exportList(object);
 }
 
 class item {
-  constructor(itemName, image_url) {
-    this.createDiv(itemName, image_url);
+  constructor(itemName, image_url, ID) {
+    this.createDiv(itemName, image_url, ID);
   }
-  createDiv(itemName, image_url) {
+  createDiv(itemName, image_url, ID) {
     let input = document.createElement("p");
     input.value = itemName;
     // input.disabled = true;
@@ -49,6 +49,8 @@ class item {
     let removeButton = document.createElement("button");
     removeButton.innerHTML = "remove";
     removeButton.classList.add("removeButton");
+    removeButton.id = ID;
+    
 
     container.appendChild(itemBox);
 
@@ -56,13 +58,29 @@ class item {
     itemBox.appendChild(input);
     itemBox.appendChild(removeButton);
 
-    removeButton.addEventListener("click", () => this.remove(itemBox));
+    removeButton.addEventListener("click", () => this.removeItem(itemBox, removeButton.id));
   }
 
-  remove(item) {
+  removeItem(item,id) {
     container.removeChild(item);
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function() {
+        console.log('yay');
+      }
+      xhttp.open('DELETE', 'http://localhost:3000/cart', true);
+    
+      xhttp.getResponseHeader('Access-Control-Allow-Origin', '');
+      xhttp.getAllResponseHeaders('Access-Control-Allow-Origin', '');
+      xhttp.setRequestHeader('Content-Type', 'application/json');
+      const authToken = localStorage.getItem("Authorization");
+      xhttp.setRequestHeader(
+        "Authorization",
+        authToken
+      );
+      xhttp.send({'id_article':  `${id}`});
   }
 }
+
 
 
 function exportCSV() {

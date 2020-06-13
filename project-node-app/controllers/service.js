@@ -54,7 +54,7 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = async function (req, res) {le: req.body.articleId,
+exports.addToCart = async function (req, res) {
   let decoded = await verifyJwt(req,res);
 
   var jsonData = {
@@ -205,6 +205,20 @@ exports.getCart = async function (req, res) {
         .catch(function (rezponze) {
           utils.writeJson(res, rezponze);
         });
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+exports.deletFromCart = async function (req, res) {
+  var jsonData = req.body;
+  console.log("JSON",jsonData);
+  let decoded = await verifyJwt(req, res);
+  jsonData['id_user'] = decoded.id;
+  db.deleteFromCart(jsonData['id_user'], jsonData['id_article'])
+    .then(function (response) {
+      utils.writeJson(response, {'code': 205, 'description': 'article successfuly removed from cart'});
     })
     .catch(function (response) {
       utils.writeJson(res, response);
