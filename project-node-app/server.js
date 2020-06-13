@@ -19,9 +19,4 @@ exports.connection = connection;
 server.listen(port, hostname, () => {
 
   console.log(`Server running at http://${hostname}:${port}/`);
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-  
 });

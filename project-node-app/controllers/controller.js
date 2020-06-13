@@ -7,6 +7,7 @@ var util = require("util");
 const { parse } = require("querystring");
 const jwt = require("jsonwebtoken");
 const { brotliDecompress } = require("zlib");
+var utils = require("../../util.js");
 var mysql = require("mysql");
 
 module.exports = http.createServer((req, res) => {
@@ -14,11 +15,8 @@ module.exports = http.createServer((req, res) => {
   var authService = require("./authService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  // console.log(req.method);
-  // res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.setHeader('Access-Control-Request-Method', '*');
-  // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-  // res.setHeader('Access-Control-Allow-Headers', '*');
+
+  console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
 
   const headers = {
     "Access-Control-Allow-Headers": "*",
@@ -30,32 +28,37 @@ module.exports = http.createServer((req, res) => {
   };
 
   if (req.method == "OPTIONS") {
-    // for(var key in req) {
-    //   console.log(key);
-    // }
     res.writeHead(204, headers);
     res.end();
     return;
-  } else if (reqUrl.pathname == "/login" && req.method === "POST") {
+  } 
+
+  if (reqUrl.pathname == "/login" && req.method === "POST") {
     console.log("login request");
     authService.loginRequest(req, res, headers);
   } else if (reqUrl.pathname == "/register" && req.method === "POST") {
     console.log("register request");
     authService.registerRequest(req, res, headers);
+  } else if (reqUrl.pathname == "/" && req.method === "GET") {
+    res.end('asddd');
   } else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
-    service.getArticles(req, res);
-
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.getArticle(req, res);
+    });
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
+        utils.writeJson({'code': 402, 'description': 'error on uploading form'});
       }
-      console.log('ddd');
       req.body = fields;
-      console.log('dddd');
-      service.addArticle(req, res, files);
+      req.body.imagePath = files.image.path;
+      service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
@@ -75,7 +78,11 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteArticle(req, res);
     });
-  } else if (reqUrl.pathname == "/cart" && req.method == "GET") {
+  } 
+  
+  
+  
+  else if (reqUrl.pathname == "/cart" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.getCart(req, res);
   } else if (reqUrl.pathname == "/cart" && req.method == "POST") {
