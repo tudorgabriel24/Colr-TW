@@ -6,32 +6,25 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
+const { verifyJwt } = require("./jwtMiddleware.js");
+const jwtVerify = require('./jwtMiddleware').verifyJwt;
 const verifyJwt = require('./jwtMiddleware').verifyJwt;
-// exports.sampleRequest = function (req, res) {
-//   const reqUrl = url.parse(req.url, true);
-//   var name = "World";
-//   if (reqUrl.query.name) {
-//     name = reqUrl.query.name;
-//   }
-//   var response = {
-//     text: "Hello" + name,
-//   };
-//   res.statusCode = 200;
-//   res.setHeader("Content-Type", "application/json");
-//   res.end(JSON.stringify(response));
-// };
 
-exports.addArticle = function (req, res, files) {
+exports.addArticle = async function (req, res) {
   var jsonData = req.body;
+  const decoded = await jwtVerify(req, res);
+  if (decoded == null) {
+    utils.writeJson(res, {'code': 403, 'description': `can't upload articles if you are not logged in`});
+  }
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = "f87330d93a88e085a5c9946d93c2bd9d"; //req.session.id;
+  jsonData["user_id"] = decoded;
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
-      fs.readFile(files.image.path, function (err, data) {
-        fs.writeFile(`../images/${jsonData["ID"]}.png`, data, function (err) {
+      fs.readFile(jsonData.imagePath, function (err, data) {
+        fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
           if (err) {
             utils.writeJson(res, {
               code: 405,
@@ -61,7 +54,7 @@ exports.addUser = function (req, res) {
     });
 };
 
-exports.addToCart = async function (req, res) {
+exports.addToCart = async function (req, res) {le: req.body.articleId,
   let decoded = await verifyJwt(req,res);
 
   var jsonData = {
@@ -111,8 +104,26 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  console.log("aici");
-  db.getArticles()
+  var jsonData = req.body;
+  if (jsonData == undefined) {
+    db.getArticles()
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  }
+  var order;
+  if (jsonData.hasOwnProperty('order')) {
+    order = jsonData['order'];
+    delete jsonData['order'];
+  }
+  else {
+    order = 'views'
+  }
+
+  db.getEntries('articles', jsonData, order)
     .then(function (response) {
       utils.writeJson(res, response);
       console.log(response);
@@ -139,6 +150,8 @@ exports.getUsers = function (req, res) {
       utils.writeJson(res, response);
     });
 };
+
+console.log('asd');
 
 exports.deleteArticle = function (req, res) {
   if (req.body.user_id != req.session.id) {

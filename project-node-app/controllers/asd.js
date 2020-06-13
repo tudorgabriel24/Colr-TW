@@ -1,29 +1,20 @@
 const mysql = require("mysql");
 const crypto = require("crypto");
 
-const conn = require("../server").connection;
-console.log("asd");
-// var conn = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "colr",
-//     charset: "utf8_general_ci",
-//   });
+const conn = require('../server').connection;
 
 function query(sql) {
-  return new Promise((resolve, reject) => {
-    // console.log(conn);
-    conn.query(sql, function (err, results, fields) {
-      if (err) {
-        reject({ status: 404, description: err });
+    return new Promise((resolve, reject) => {
+        console.log(sql);
+        conn.query(sql, function(err, results, fields) {
+            if (err) {
+                reject({'status': 404, 'description': err});
 
-        // throw err;
-      }
-      resolve(results);
-    });
-  });
-}
+                // throw err;
+            }
+            resolve(results);
+        });
+    }
 
 async function getArticles() {
   return await query(`SELECT * FROM articles`);
