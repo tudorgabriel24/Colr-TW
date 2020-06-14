@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const { brotliDecompress } = require("zlib");
 var utils = require("../../util.js");
 var mysql = require("mysql");
+const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
@@ -27,6 +28,7 @@ module.exports = http.createServer((req, res) => {
     /** add other headers as per requirement */
   };
 
+
   if (req.method == "OPTIONS") {
     res.writeHead(204, headers);
     res.end();
@@ -41,7 +43,9 @@ module.exports = http.createServer((req, res) => {
     authService.registerRequest(req, res, headers);
   } else if (reqUrl.pathname == "/" && req.method === "GET") {
     res.end('asddd');
-  } else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+  }
+  
+  else if (reqUrl.pathname == "/articles" && req.method == "GET") {
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
@@ -50,11 +54,10 @@ module.exports = http.createServer((req, res) => {
       service.getArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
-    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
-        utils.writeJson({'code': 402, 'description': 'error on uploading form'});
+        utils.writeJson({'code': 402, 'description': err});
       }
       req.body = fields;
       req.body.imagePath = files.image.path;

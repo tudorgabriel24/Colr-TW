@@ -5,8 +5,8 @@ exports.verifyJwt = async function(req,res) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
   let decoded = null;
-  console.log(token);
-  if (token == null) {
+  console.log(`Toke is ${token}`);
+  if (token == null || token == undefined) {
     res.statusCode = 401;
     res.end();
     return decoded;

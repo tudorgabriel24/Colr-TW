@@ -6,20 +6,24 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
-const { verifyJwt } = require("./jwtMiddleware.js");
-const jwtVerify = require('./jwtMiddleware').verifyJwt;
 const verifyJwt = require('./jwtMiddleware').verifyJwt;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
-  const decoded = await jwtVerify(req, res);
+  res.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+  const decoded = await verifyJwt(req, res);
+  res.end('asd');
+  return;
   if (decoded == null) {
-    utils.writeJson(res, {'code': 403, 'description': `can't upload articles if you are not logged in`});
+    console.log('utilizator nelogat');
+    utils.writeJson(res, 1, 1);
+    return;
   }
+  console.log('decoded');
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = decoded;
+  jsonData["user_id"] = decoded.id;
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
