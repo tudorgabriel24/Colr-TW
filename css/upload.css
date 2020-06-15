@@ -183,7 +183,6 @@ header {
   font-size: 18px;
   background-color: rgb(224, 223, 223);
   border-radius: 15px;
-  font-weight: bold;
 }
 
 .inpSub {
@@ -195,11 +194,22 @@ header {
   border-radius: 0.5rem;
   align-self: center;
   transition-duration: 0.2s;
-  font-weight: bold;
   font-size-adjust: 0.5rem;
   outline: none;
   margin-top: 1rem;
+  font-weight: bold;
   overflow: auto;
+}
+
+label {
+  margin-left: 30px;
+  font-family: "Arial", Times, serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.checkInp {
+  margin-left: 20px;
 }
 
 .inpSub:hover {

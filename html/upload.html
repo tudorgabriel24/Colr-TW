@@ -63,7 +63,7 @@
           name="year"
           required
         /><br />
-        <!-- <input
+        <input
           class="inpText"
           type="text"
           placeholder="Brand"
@@ -71,13 +71,14 @@
           name="brand"
           required
         /><br />
-        <input
-          class="inpText"
-          type="text"
+        <label for="alcoholic" class="checkLab">Is alcoholic: <input
+          type="checkbox"
           id="alcoholic"
           name="alcoholic"
+          class="checkInp"
           required
-        /><br />
+        /></label>
+        <br />
         <input
           class="inpText"
           type="text"
@@ -95,24 +96,35 @@
           required
         ></textarea
         ><br />
-        <input
-          class="inpText"
-          type="text"
-          placeholder="Current State"
-          id="currentState"
-          name="currentState"
-        /><br />
-        <select id="states" class="inpText">
+        <label for="currState">Current State: </label>
+        <select id="currState" name="currState" class="inpText">
           <option>Brand New</option>
           <option>Slighty Damaged</option>
+          <option>Damaged</option>
         </select>
         <br />
 
-        <select id="types" class="inpText">
+        <label for="priceRange">Price range: </label>
+
+        <select id="priceRange" name="priceRange" class="inpText">
+          <option>50</option>
+          <option>100-200</option>
+          <option>200-500</option>
+          <option>500-1000</option>
+          <option>1.000-1.500</option>
+          <option>1.500-2.000</option>
+          <option>2.000-3.000</option>
+          <option>3.000-5.00</option>
+          <option>4.000-5.000</option>
+          <option>Peste 5.000</option>
+        </select>
+
+        <label for="type">Type: </label>
+        <select id="type" name="type" class="inpText">
           <option>Cap</option>
           <option>Etiquette</option>
           <option>Bottle</option>
-        </select> -->
+        </select>
 
         <br /><br />
         
@@ -130,7 +142,7 @@
           };
           var fd = new FormData(form);
           request.open('POST', 'http://localhost:3000/articles', true);
-          // request.getAllResponseHeaders("Access-Control-Allow-Headers: *");
+          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
           request.send(fd);
         }
         const form = document.getElementById( "uplForm" );

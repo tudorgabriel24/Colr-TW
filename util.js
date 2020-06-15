@@ -10,9 +10,6 @@ var ResponsePayload = function(code, payload) {
   var writeJson = exports.writeJson = function(res, arg1, arg2) {
     var code;
     var payload;
-    res.writeHead(200, {"Access-Control-Allow-Origin": "*"});
-    res.end('asd');
-    return;
   
     if(arg1 && arg1 instanceof ResponsePayload) {
       writeJson(response, arg1.payload, arg1.code);
