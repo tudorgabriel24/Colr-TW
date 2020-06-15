@@ -14,7 +14,8 @@ function query(sql) {
             }
             resolve(results);
         });
-    }
+    });
+  }
 
 async function getArticles() {
   return await query(`SELECT * FROM articles`);

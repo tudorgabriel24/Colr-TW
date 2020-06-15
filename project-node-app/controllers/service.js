@@ -6,9 +6,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
-const { verifyJwt } = require("./jwtMiddleware.js");
 const jwtVerify = require('./jwtMiddleware').verifyJwt;
-const verifyJwt = require('./jwtMiddleware').verifyJwt;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
@@ -55,7 +53,7 @@ exports.addUser = function (req, res) {
 };
 
 exports.addToCart = async function (req, res) {
-  let decoded = await verifyJwt(req,res);
+  let decoded = await jwtVerify(req,res);
 
   var jsonData = {
     id_user: decoded.id,
@@ -180,7 +178,7 @@ exports.deleteUser = function (req, res) {
 };
 
 exports.getCart = async function (req, res) {
-  let decoded = await verifyJwt(req,res);
+  let decoded = await jwtVerify(req,res);
   var jsonData = {
     id_user: decoded.id
   };
@@ -214,7 +212,7 @@ exports.getCart = async function (req, res) {
 exports.deletFromCart = async function (req, res) {
   var jsonData = req.body;
   console.log("JSON",jsonData);
-  let decoded = await verifyJwt(req, res);
+  let decoded = await jwtVerify(req, res);
   jsonData['id_user'] = decoded.id;
   db.deleteFromCart(jsonData['id_user'], jsonData['id_article'])
     .then(function (response) {
