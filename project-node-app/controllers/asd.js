@@ -46,6 +46,11 @@ async function insertEntry(table, jsonData) {
   return await query(insSQL);
 }
 
+async function deleteFromCart(id_user, id_article) {
+    return await query(`SELECT * FROM users_articles WHERE id_user = ${id_user} AND id_article = ${id_article}`);
+}
+exports.deleteFromCart = deleteFromCart;
+
 exports.insertEntry = insertEntry;
 
 async function updateEntry(table, jsonData, entryId) {

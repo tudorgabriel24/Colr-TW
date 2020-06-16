@@ -99,7 +99,21 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteUser(req, res);
     });
-  } else {
+  } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    service.deleteUser(req, res);
+  }
+  else if (reqUrl.pathname == "/cart" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.deleteFromCart(req, res);
+    });
+  }
+   else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
