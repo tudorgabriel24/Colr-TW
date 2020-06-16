@@ -89,3 +89,4 @@ async function getEntries(table, jsonData, orderColumn) {
 }
 
 exports.getEntries = getEntries;
+

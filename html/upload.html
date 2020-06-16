@@ -35,7 +35,7 @@
       </div>
     </header>
     <section class="formCont">
-      <div class="form">
+      <form id="uplForm" enctype="multipart/form-data">
         <!-- <button class="btn">Upload a file</button> -->
         <input
           class="uplBut"
@@ -55,11 +55,12 @@
         /><br />
         <input
           class="inpText"
-          type="text"
+          type="number"
+          min="1600"
+          max="2021"
           placeholder="Year"
           id="year"
           name="year"
-          maxlength="4"
           required
         /><br />
         <input
@@ -70,13 +71,14 @@
           name="brand"
           required
         /><br />
-        <input
-          class="inpText"
-          type="text"
+        <label for="alcoholic" class="checkLab">Is alcoholic: <input
+          type="checkbox"
           id="alcoholic"
           name="alcoholic"
+          class="checkInp"
           required
-        /><br />
+        /></label>
+        <br />
         <input
           class="inpText"
           type="text"
@@ -94,71 +96,63 @@
           required
         ></textarea
         ><br />
-        <input
-          class="inpText"
-          type="text"
-          placeholder="Current State"
-          id="currentState"
-          name="currentState"
-        /><br /><br /><br />
-        <button class="inpSub" type="submit" id="inpsub">Send</button><br />
-      </div>
+        <label for="currState">Current State: </label>
+        <select id="currState" name="currState" class="inpText">
+          <option>Brand New</option>
+          <option>Slighty Damaged</option>
+          <option>Damaged</option>
+        </select>
+        <br />
+
+        <label for="priceRange">Price range: </label>
+
+        <select id="priceRange" name="priceRange" class="inpText">
+          <option>50</option>
+          <option>100-200</option>
+          <option>200-500</option>
+          <option>500-1000</option>
+          <option>1.000-1.500</option>
+          <option>1.500-2.000</option>
+          <option>2.000-3.000</option>
+          <option>3.000-5.00</option>
+          <option>4.000-5.000</option>
+          <option>Peste 5.000</option>
+        </select>
+
+        <label for="type">Type: </label>
+        <select id="type" name="type" class="inpText">
+          <option>Cap</option>
+          <option>Etiquette</option>
+          <option>Bottle</option>
+        </select>
+
+        <br /><br />
+        
+        <input class="inpSub" type="submit" id="inpsub"><br />
+      </form>
       <img id="blah" src="#" alt="" /><br />
     </section>
     <script>
-      const form = {
-          name: document.getElementById('name'),
-          year: document.getElementById('year'),
-          brand: document.getElementById('brand'),
-          alcoholic: document.getElementById('alcoholic'),
-          country: document.getElementById('country'),
-          description: document.getElementById('description'),
-          currentState: document.getElementById('currentState'),
-          submit: document.getElementById('inpsub'),
-
-          image: document.getElementById('image')
-      };
-
-      // console.log(form);
-
-            form.submit.addEventListener('click', () => {
-                var request = new XMLHttpRequest();
-
-                var requestData = {
-                    'name': form.name.value,
-                    'year': form.year.value,
-                    'brand': form.brand.value,
-                    'alcoholic': form.alcoholic.value,
-                    'country': form.country.value,
-                    'description': form.description.value,
-                    'currentState': form.currentState.value,
-                }
-
-                request.onload = function () {
-                    console.log('we got response');
-                    console.log(request.responseText);
-                };
-
-                var fd = new FormData();
-                for (var key in requestData) {
-                    fd.append(key, requestData[key]);
-
-                }
-                fd.append('image', form.image.files[0]);
-                request.open('POST', 'http://localhost:3000/articles', true);
-                
-                request.getResponseHeader('Access-Control-Allow-Origin', '*');
-                request.getAllResponseHeaders('Access-Control-Allow-Origin', '*');
-                // request.setRequestHeader('Content-Type', 'application/json');
-                // console.log(requestData.image.length);
-                request.send(fd);
-
-                
-                // request.setRequestHeader('Content-Type', 'application/json');
-                // request.send(JSON.stringify(requestData));
-            
-            });
-      </script>
+      window.addEventListener('load', function () {
+        function sendForm () {
+          var request = new XMLHttpRequest();
+          request.onload = function () {
+              console.log('we got response');
+              console.log(request.responseText);
+          };
+          var fd = new FormData(form);
+          request.open('POST', 'http://localhost:3000/articles', true);
+          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
+          request.send(fd);
+        }
+        const form = document.getElementById( "uplForm" );
+        form.addEventListener( "submit", function ( event ) {
+          event.preventDefault();
+          console.log(event);
+          sendForm();
+        });
+      });
+    </script>
     <!-- <script src="../js/shrinkHeaderTitle.js"></script> -->
     <script src="../js/HamburgerMenu.js"></script>
   </body>
