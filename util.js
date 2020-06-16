@@ -7,7 +7,7 @@ var ResponsePayload = function(code, payload) {
     return new ResponsePayload(code, payload);
   }
   
-  var writeJson = exports.writeJson = function(response, arg1, arg2) {
+  var writeJson = exports.writeJson = function(res, arg1, arg2) {
     var code;
     var payload;
   
@@ -38,6 +38,7 @@ var ResponsePayload = function(code, payload) {
     if(typeof payload === 'object') {
       payload = JSON.stringify(payload, null, 2);
     }
-    response.writeHead(code, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
-    response.end(payload);
+    response.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+    response.end('asd');
+    return;
   }

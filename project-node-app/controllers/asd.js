@@ -14,7 +14,12 @@ function query(sql) {
             }
             resolve(results);
         });
-    }
+    });
+  }
+
+async function getUserPosts(user_id) {
+  return query(`SELECT COUNT(*) FROM articles WHERE user_id = '${user_id}'`);
+}
 
 async function getArticles() {
   return await query(`SELECT * FROM articles`);
@@ -88,3 +93,4 @@ async function getEntries(table, jsonData, orderColumn) {
 }
 
 exports.getEntries = getEntries;
+

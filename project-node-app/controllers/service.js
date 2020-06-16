@@ -6,20 +6,22 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
-const { verifyJwt } = require("./jwtMiddleware.js");
-const jwtVerify = require('./jwtMiddleware').verifyJwt;
 const verifyJwt = require('./jwtMiddleware').verifyJwt;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
-  const decoded = await jwtVerify(req, res);
+  res.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+  console.log('before decoding');
+  var decoded = await verifyJwt(req, res);
   if (decoded == null) {
-    utils.writeJson(res, {'code': 403, 'description': `can't upload articles if you are not logged in`});
+    console.log('utilizator nelogat');
+    return;
   }
+  console.log('decoded');
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = decoded;
+  jsonData["user_id"] = decoded.id;
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
@@ -73,7 +75,7 @@ exports.addToCart = async function (req, res) {
     });
 };
 
-exports.updateUser = function (req, res) {
+exports.updateUser = async function (req, res) {
   var jsonData = req.body;
   db.updateEntry("users", req.body, req.session.id)
     .then(function (response) {
@@ -84,11 +86,15 @@ exports.updateUser = function (req, res) {
     });
 };
 
-exports.updateArticle = function (req, res) {
+exports.updateArticle = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (decoded == null) {
+    return;
+  }
   var jsonData = req.body;
   var articleId = jsonData.articleId;
   delete jsonData["articleId"];
-  if (jsonData["user_id"] != req.session.id) {
+  if (jsonData["user_id"] != decoded.id && decoded.admin == false) {
     utils.writeJson(res, {
       code: 402,
       description: `trying to modify other people's articles`,
@@ -120,7 +126,7 @@ exports.getArticles = function (req, res) {
     delete jsonData['order'];
   }
   else {
-    order = 'views'
+    order = 'views';
   }
 
   db.getEntries('articles', jsonData, order)
@@ -153,8 +159,9 @@ exports.getUsers = function (req, res) {
 
 console.log('asd');
 
-exports.deleteArticle = function (req, res) {
-  if (req.body.user_id != req.session.id) {
+exports.deleteArticle = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (req.body.user_id != decoded.id && decoded.admin == false) {
     utils.writeJson(res, {
       code: 400,
       description: `can't delete what's not yours`,
@@ -169,8 +176,19 @@ exports.deleteArticle = function (req, res) {
     });
 };
 
-exports.deleteUser = function (req, res) {
-  db.deleteEntry("users", req.session.id)
+exports.deleteUser = async function (req, res) {
+  var decode = await verifyJwt(req, res);
+  if (decode.id == null) {
+    return;
+  }
+  var idToDelete = null;
+  if (req.body != undefined && decode.admin == true) {
+    idToDelete = req.body.ID;
+  }
+  else {
+    idToDelete = decode.id;
+  }
+  db.deleteEntry("users", idToDelete)
     .then(function (response) {
       utils.writeJson(res, response);
     })

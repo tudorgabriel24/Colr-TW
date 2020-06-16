@@ -5,11 +5,11 @@ exports.verifyJwt = async function(req,res) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
   let decoded = null;
-  console.log(token);
-  if (token == null) {
+  console.log(`Token is ${token}`);
+  if (token == null || token == undefined) {
     res.statusCode = 401;
-    res.end();
-    return decoded;
+    res.writeHead(401, {'Content-type': 'application/json', "Access-Control-Allow-Origin": "*"});
+    res.end(JSON.stringify({'code': 401, 'description': 'user needs to be logged in'}));
   }
   else {
     let decoded = new Promise((resolve, reject) => {
@@ -22,6 +22,6 @@ exports.verifyJwt = async function(req,res) {
         return data;
       }));
     });
-    return decoded; 
-}
+  }
+  return decoded;
 }
