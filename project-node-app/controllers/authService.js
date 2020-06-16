@@ -7,10 +7,11 @@ const jwt = require("jsonwebtoken");
 let userExist = async (user) => {
   console.log(user);
   let userQuery = `SELECT * FROM USERS WHERE EMAIL= '${user.email}';`;
-  let connectionPromise = new Promise((resolve, reject) => {
+  let userQueryPromise = new Promise((resolve, reject) => {
     connection.query(userQuery, (err, result) => {
       if (err) reject(err);
       let dbUser = null;
+      console.log(result);
       if (result[0] === undefined) {
         console.log("user doesn t exist");
       } else {
@@ -19,13 +20,39 @@ let userExist = async (user) => {
           email: result[0].email,
           fullName: result[0].fullName,
           password: result[0].password,
+          admin: false
         };
       }
       resolve(dbUser);
     });
   });
-  return connectionPromise;
+
+  return userQueryPromise;
 };
+
+let adminExist = async (admin) => {
+  console.log(admin);
+  let adminDataQuery = `SELECT * FROM ADMINS WHERE EMAIL = '${admin.email}'`;
+  let adminQueryPromise = new Promise((resolve, reject) => {
+    connection.query(adminDataQuery, (err, result) => {
+      if (err) reject(err);
+      let dbAdminData = null;
+      if (result[0] === undefined) {
+        console.log("admin doesn t exist");
+      } else {
+        dbAdminData = {
+          ID: result[0].ID,
+          email: result[0].email,
+          fullName: result[0].fullName,
+          password: result[0].password,
+          admin: true
+        };
+      }
+      resolve(dbAdminData);
+    });
+  });
+  return adminQueryPromise;
+}
 
 function query(sql) {
   connection.query(sql, function (err, results, fields) {
@@ -37,20 +64,15 @@ function query(sql) {
 }
 
 function insertUser(fullName, email, password) {
-  const idHash = crypto.createHash("md5");
-  idHash.update(Date.now().toString());
-  let userSQL = `INSERT INTO users(ID, fullName, email, password) VALUES('${idHash.digest(
-    "hex"
-  )}', '${fullName}', '${email}', '${password}')`;
+  let userSQL = `INSERT INTO users(fullName, email, password) VALUES('${fullName}', '${email}', '${password}')`;
   console.log(userSQL);
   query(userSQL);
-  idHash.end();
 }
 
 function createToken(userData) {
   const jwtExpirySeconds = 60 * 60 * 24;
   console.log("USERDATA= ", userData);
-  const token = jwt.sign({ id: userData.ID }, "secret", {
+  const token = jwt.sign({ id: userData.ID, admin: userData.admin }, "secret", {
     algorithm: "HS256",
     expiresIn: jwtExpirySeconds,
   });
@@ -69,25 +91,43 @@ exports.loginRequest = async (req, resp, headers) => {
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
+  
+  const encodePassword = (password) => {
+      const hash = crypto.createHash("sha256");
+      hash.update(password);
+      return hash.digest('hex');
+  }
+
+  let setHeaderLogin = (userData, headers) => {
+    response = {
+      success: true,
+      admin: userData.admin
+    };
+    const token = createToken(userData);
+    return { ...headers, Authorization: `Bearer ${token}` };
+
+  }
 
   req.on("end", async () => {
     try {
       body = JSON.parse(body);
-      let userData = await userExist(body, "login");
-      console.log(userData);
-      const passHash = crypto.createHash("sha256");
-      passHash.update(body.password);
-      const hashPass = passHash.digest('hex');
-      if (userData !== null) {
-        if (hashPass === userData.password) {
-          response = {
-            success: true,
-          };
-          const token = createToken(userData);
-          headers = { ...headers, Authorization: `Bearer ${token}` };
+      let userSearch = await userExist(body);
+      console.log(userSearch);
+      const passwordEncoded = encodePassword(body.password)
+      if (userSearch !== null && userSearch !== undefined) {
+        if (passwordEncoded === userSearch.password) {
+          headers = setHeaderLogin(userSearch);
         }
       }
-
+      else {
+        let adminSearch = await adminExist(body);
+        if(adminSearch !== null && adminSearch !== undefined) {
+          if (passwordEncoded === adminSearch.password) {
+            headers = setHeaderLogin(adminSearch);
+          }
+        }
+      }
+      console.log(response);
       resp.writeHead(response.success ? 200 : 404, headers);
       resp.write(JSON.stringify(response));
       resp.end();

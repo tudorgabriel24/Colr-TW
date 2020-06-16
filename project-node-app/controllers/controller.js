@@ -11,8 +11,9 @@ var utils = require("../../util.js");
 var mysql = require("mysql");
 
 module.exports = http.createServer((req, res) => {
-  var articleService = require("./articleService");
-  var authService = require("./authService");
+  const articleService = require("./articleService");
+  const authService = require("./authService");
+  const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
 
@@ -41,15 +42,17 @@ module.exports = http.createServer((req, res) => {
     authService.registerRequest(req, res, headers);
   } else if (reqUrl.pathname == "/" && req.method === "GET") {
     res.end('asddd');
-  } else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+  } else 
+    if (reqUrl.pathname == "/articles" && req.method == "GET") {
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
       req.body = JSON.parse(body);
       console.log(req.body);
-      service.getArticle(req, res);
     });
-  } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
+    service.getArticles(req, res);
+  } 
+  else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
@@ -79,9 +82,6 @@ module.exports = http.createServer((req, res) => {
       service.deleteArticle(req, res);
     });
   } 
-  
-  
-  
   else if (reqUrl.pathname == "/cart" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.getCart(req, res);
@@ -94,7 +94,13 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.addToCart(req, res);
     });
-  } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
+ 
+  } 
+  else if (reqUrl.pathname == "/users" && req.method == "GET") {
+     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+     adminService.getUsers(req,res,headers);
+  }
+  else if (reqUrl.pathname == "/users" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
     req.on("data", (chunk) => {
