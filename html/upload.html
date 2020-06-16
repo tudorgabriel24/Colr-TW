@@ -141,9 +141,9 @@
               console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open('POST', 'http://localhost:3000/articles', true);
+          request.open('GET', 'http://localhost:3000/articles', true);
           request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
-          request.send(fd);
+          request.send();
         }
         const form = document.getElementById( "uplForm" );
         form.addEventListener( "submit", function ( event ) {

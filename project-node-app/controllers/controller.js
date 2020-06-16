@@ -46,13 +46,16 @@ module.exports = http.createServer((req, res) => {
   }
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+    console.log('asd');
     let body = "";
     req.on("data", (chunk) => {
+      console.log('dsa');
       body += chunk.toString(); // convert Buffer to string
       req.body = JSON.parse(body);
       console.log(req.body);
       service.getArticle(req, res);
     });
+    service.getArticles(req, res);
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
