@@ -112,6 +112,7 @@ exports.updateArticle = async function (req, res) {
 exports.getArticles = function (req, res) {
   var jsonData = req.body;
   if (jsonData == undefined) {
+    console.log('no params');
     db.getArticles()
       .then(function (response) {
         utils.writeJson(res, response);
@@ -119,6 +120,7 @@ exports.getArticles = function (req, res) {
       .catch(function (response) {
         utils.writeJson(res, response);
       });
+    return;
   }
   var order;
   if (jsonData.hasOwnProperty('order')) {
