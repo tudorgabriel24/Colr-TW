@@ -146,7 +146,7 @@ exports.registerRequest = function (req, res, headers) {
   req.on("end", async () => {
     body = JSON.parse(body);
     console.log(body);
-    let exist = await userExist(body, "register");
+    let exist = await userExist(body);
     let message = "user created!";
     if (exist) {
       message = "user already exist!";

@@ -1,8 +1,9 @@
 
 const verifyJwt = require('./jwtMiddleware').verifyJwt;
+const connection = require('../server').connection;
 
 let getAllUsers = async function () {
-  let usersQuery = `SELECT ID,email,fullName FROM USERS`;
+  let usersQuery = `SELECT email,fullName FROM USERS`;
   let usersQueryPromise = new Promise((resolve, reject) => {
     connection.query(usersQuery, (err, result) => {
       if (err) reject(err);
@@ -11,13 +12,7 @@ let getAllUsers = async function () {
       if (result[0] === undefined) {
         console.log("there are no users saved in database");
       } else {
-        for(let index = 0; index < result.length; index++) {
-          dbUsers.push({
-            ID: result[0].ID,
-            email: result[0].email,
-            fullName: result[0].fullName,
-          })
-        }
+        dbUsers = result;
       }
       resolve(dbUsers);
     });
@@ -38,18 +33,19 @@ exports.getUsers = async function(req, res, headers) {
   
   req.on("end", async () => {
     try {
-      let responseBody = [];
-      let adminData = await verifyJwt(res,req);
+      let responseBody = {
+        users: [],
+        success: false
+      };
+      let adminData = await verifyJwt(req,res);
+      console.log(adminData);
       if(adminData !== null || adminData !== undefined) {
         if(adminData.admin === true) {
-          responseBody = await getAllUsers();
-          success = true;
+          responseBody.users = await getAllUsers();
+          responseBody.success = true;
         }
       }
       headers = {... headers, Authorization: `Bearer ${req.headers.authorization}` }
-      responseBody.push({
-        success: success
-      });
       console.log(responseBody);
       res.writeHead(success ? 200 : 401, headers);
       res.write(JSON.stringify(responseBody));
@@ -58,5 +54,4 @@ exports.getUsers = async function(req, res, headers) {
       console.log(err);
     }
   });
-
 }
