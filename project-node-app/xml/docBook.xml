@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<book>
+  <title>Statistics</title>
+  <chapter>
+    <title>Romania</title>
+    <para>Capac</para>
+    <para>200</para>
+  </chapter>
+  <chapter>
+    <title>Rusia</title>
+    <para>Dop</para>
+    <para>500</para>
+  </chapter>
+  <chapter>
+    <title>Franta</title>
+    <para>Eticheta</para>
+    <para>5000</para>
+  </chapter>
+</book>
