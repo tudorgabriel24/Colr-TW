@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin panel</title>
+    <script src="../js/HamburgerMenu.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css" >
+    <link rel="stylesheet" href="../css/upload.css" />
+    <link rel="stylesheet" href="../css/adminPanel.css">
+
+  </head>
+  <body>
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
+            <a href="../index.html">Home</a>
+            <a href="./export.html">Export</a>
+            <a href="./upload.html">Upload article</a>
+            <a href="./adminPanel.html">Admin panel</a>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/logo.svg" id="miniLogo" alt="" />
+        </div>
+        <div id="userLogin" onclick="navigateToLogin()">
+          <span style="display: flex;">
+            <div>Login</div>
+            <img src="../assets/user.svg" alt="Login" />
+          </span>
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+
+      <div class="PageHeader">
+        <p id="headerTitle">Admin panel</p>
+      </div>
+      <div id="admin-panel-section">
+        <div id="user-list-container">
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="user-information-container">
+            <i class="fas fa-times delete-user-icon"></i>
+            <img src="../assets/user.svg" alt="Login" class="user-image" />
+            <div class="user-details">
+              <p class="full-name">Mindrisoru Tudor</p>
+              <p class="email">tudorgabriel1398@gmail.com</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="users-pagination-controller">
+          <div class="previews-button">
+            <p>Previews</p>
+          </div>
+          <div class="next-button">
+            <p>Next</p>
+          </div>
+        </div>
+
+
+        <div id="articles-container">
+          <div id="chosen-user">
+            <p>Mindrisoru Tudor `s articles</p>
+          </div>
+          <div id="article-list">
+            <div class="article">
+              <img src="https://www.finestore.ro/image/cache/catalog/products/HB305-500x615.jpg" alt="">
+              <div class="article-details">
+                <p class="article-title">Jack Daniels Bottle</p>
+                <p class="article-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. At laudantium velit animi, aspernatur vel, assumenda adipisci quam, aliquid provident fugiat temporibus quia quis eius fuga eligendi est corrupti eaque earum!</p>
+                <div class="article-controllers">
+                  <div class="update-article-button">
+                    <i class="fas fa-edit"></i>
+                    <span>UPDATE</span>
+                  </div>
+                  <div class="delete-article-button">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>DELETE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="article">
+              <img src="https://www.finestore.ro/image/cache/catalog/products/HB305-500x615.jpg" alt="">
+              <div class="article-details">
+                <p class="article-title">Jack Daniels Bottle</p>
+                <p class="article-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. At laudantium velit animi, aspernatur vel, assumenda adipisci quam, aliquid provident fugiat temporibus quia quis eius fuga eligendi est corrupti eaque earum!</p>
+                <div class="article-controllers">
+                  <div class="update-article-button">
+                    <i class="fas fa-edit"></i>
+                    <span>UPDATE</span>
+                  </div>
+                  <div class="delete-article-button">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>DELETE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="article">
+              <img src="https://www.finestore.ro/image/cache/catalog/products/HB305-500x615.jpg" alt="">
+              <div class="article-details">
+                <p class="article-title">Jack Daniels Bottle</p>
+                <p class="article-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. At laudantium velit animi, aspernatur vel, assumenda adipisci quam, aliquid provident fugiat temporibus quia quis eius fuga eligendi est corrupti eaque earum!</p>
+                <div class="article-controllers">
+                  <div class="update-article-button">
+                    <i class="fas fa-edit"></i>
+                    <span>UPDATE</span>
+                  </div>
+                  <div class="delete-article-button">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>DELETE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="article">
+              <img src="https://www.finestore.ro/image/cache/catalog/products/HB305-500x615.jpg" alt="">
+              <div class="article-details">
+                <p class="article-title">Jack Daniels Bottle</p>
+                <p class="article-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. At laudantium velit animi, aspernatur vel, assumenda adipisci quam, aliquid provident fugiat temporibus quia quis eius fuga eligendi est corrupti eaque earum!</p>
+                <div class="article-controllers">
+                  <div class="update-article-button">
+                    <i class="fas fa-edit"></i>
+                    <span>UPDATE</span>
+                  </div>
+                  <div class="delete-article-button">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>DELETE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <script src="../js/adminPanel.js"></script>
+  </body>
+  </html>
