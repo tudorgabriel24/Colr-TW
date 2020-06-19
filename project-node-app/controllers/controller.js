@@ -7,18 +7,17 @@ var util = require("util");
 const { parse } = require("querystring");
 const jwt = require("jsonwebtoken");
 const { brotliDecompress } = require("zlib");
+var utils = require("../../util.js");
 var mysql = require("mysql");
+const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
   var articleService = require("./articleService");
   var authService = require("./authService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  // console.log(req.method);
-  // res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.setHeader('Access-Control-Request-Method', '*');
-  // res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-  // res.setHeader('Access-Control-Allow-Headers', '*');
+
+  console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
 
   const headers = {
     "Access-Control-Allow-Headers": "*",
@@ -29,33 +28,44 @@ module.exports = http.createServer((req, res) => {
     /** add other headers as per requirement */
   };
 
+
   if (req.method == "OPTIONS") {
-    // for(var key in req) {
-    //   console.log(key);
-    // }
     res.writeHead(204, headers);
     res.end();
     return;
-  } else if (reqUrl.pathname == "/login" && req.method === "POST") {
+  } 
+
+  if (reqUrl.pathname == "/login" && req.method === "POST") {
     console.log("login request");
     authService.loginRequest(req, res, headers);
   } else if (reqUrl.pathname == "/register" && req.method === "POST") {
     console.log("register request");
     authService.registerRequest(req, res, headers);
-  } else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
+  } else if (reqUrl.pathname == "/" && req.method === "GET") {
+    res.end('asddd');
+  }
+  
+  else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+    console.log('asd');
+    let body = "";
+    req.on("data", (chunk) => {
+      console.log('dsa');
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.getArticle(req, res);
+    });
     service.getArticles(req, res);
-
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
-    console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
+        utils.writeJson({'code': 402, 'description': err});
       }
-      console.log('ddd');
       req.body = fields;
-      console.log('dddd');
-      service.addArticle(req, res, files);
+      req.body.imagePath = files.image.path;
+      console.log(req.body);
+      service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
@@ -75,18 +85,6 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteArticle(req, res);
     });
-  } else if (reqUrl.pathname == "/cart" && req.method == "GET") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    service.getCart(req, res);
-  } else if (reqUrl.pathname == "/cart" && req.method == "POST") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.addToCart(req, res);
-    });
   } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
@@ -98,8 +96,27 @@ module.exports = http.createServer((req, res) => {
     });
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.deleteUser(req, res);
+    });
+  } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.deleteUser(req, res);
-  } else {
+  }
+  else if (reqUrl.pathname == "/cart" && req.method == "DELETE") {
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.deleteFromCart(req, res);
+    });
+  }
+   else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );

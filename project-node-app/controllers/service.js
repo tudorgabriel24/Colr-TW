@@ -7,31 +7,26 @@ const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
 const verifyJwt = require('./jwtMiddleware').verifyJwt;
-// exports.sampleRequest = function (req, res) {
-//   const reqUrl = url.parse(req.url, true);
-//   var name = "World";
-//   if (reqUrl.query.name) {
-//     name = reqUrl.query.name;
-//   }
-//   var response = {
-//     text: "Hello" + name,
-//   };
-//   res.statusCode = 200;
-//   res.setHeader("Content-Type", "application/json");
-//   res.end(JSON.stringify(response));
-// };
 
-exports.addArticle = function (req, res, files) {
+exports.addArticle = async function (req, res) {
   var jsonData = req.body;
+  res.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+  console.log('before decoding');
+  var decoded = await verifyJwt(req, res);
+  if (decoded == null) {
+    console.log('utilizator nelogat');
+    return;
+  }
+  console.log('decoded');
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = "f87330d93a88e085a5c9946d93c2bd9d"; //req.session.id;
+  jsonData["user_id"] = decoded.id;
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
-      fs.readFile(files.image.path, function (err, data) {
-        fs.writeFile(`../images/${jsonData["ID"]}.png`, data, function (err) {
+      fs.readFile(jsonData.imagePath, function (err, data) {
+        fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
           if (err) {
             utils.writeJson(res, {
               code: 405,
@@ -80,7 +75,7 @@ exports.addToCart = async function (req, res) {
     });
 };
 
-exports.updateUser = function (req, res) {
+exports.updateUser = async function (req, res) {
   var jsonData = req.body;
   db.updateEntry("users", req.body, req.session.id)
     .then(function (response) {
@@ -91,11 +86,15 @@ exports.updateUser = function (req, res) {
     });
 };
 
-exports.updateArticle = function (req, res) {
+exports.updateArticle = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (decoded == null) {
+    return;
+  }
   var jsonData = req.body;
   var articleId = jsonData.articleId;
   delete jsonData["articleId"];
-  if (jsonData["user_id"] != req.session.id) {
+  if (jsonData["user_id"] != decoded.id && decoded.admin == false) {
     utils.writeJson(res, {
       code: 402,
       description: `trying to modify other people's articles`,
@@ -111,8 +110,28 @@ exports.updateArticle = function (req, res) {
 };
 
 exports.getArticles = function (req, res) {
-  console.log("aici");
-  db.getArticles()
+  var jsonData = req.body;
+  if (jsonData == undefined) {
+    console.log('no params');
+    db.getArticles()
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+    return;
+  }
+  var order;
+  if (jsonData.hasOwnProperty('order')) {
+    order = jsonData['order'];
+    delete jsonData['order'];
+  }
+  else {
+    order = 'views';
+  }
+
+  db.getEntries('articles', jsonData, order)
     .then(function (response) {
       utils.writeJson(res, response);
       console.log(response);
@@ -140,8 +159,11 @@ exports.getUsers = function (req, res) {
     });
 };
 
-exports.deleteArticle = function (req, res) {
-  if (req.body.user_id != req.session.id) {
+console.log('asd');
+
+exports.deleteArticle = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (req.body.user_id != decoded.id && decoded.admin == false) {
     utils.writeJson(res, {
       code: 400,
       description: `can't delete what's not yours`,
@@ -156,8 +178,19 @@ exports.deleteArticle = function (req, res) {
     });
 };
 
-exports.deleteUser = function (req, res) {
-  db.deleteEntry("users", req.session.id)
+exports.deleteUser = async function (req, res) {
+  var decode = await verifyJwt(req, res);
+  if (decode.id == null) {
+    return;
+  }
+  var idToDelete = null;
+  if (req.body != undefined && decode.admin == true) {
+    idToDelete = req.body.ID;
+  }
+  else {
+    idToDelete = decode.id;
+  }
+  db.deleteEntry("users", idToDelete)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -192,6 +225,20 @@ exports.getCart = async function (req, res) {
         .catch(function (rezponze) {
           utils.writeJson(res, rezponze);
         });
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+exports.deletFromCart = async function (req, res) {
+  var jsonData = req.body;
+  console.log("JSON",jsonData);
+  let decoded = await verifyJwt(req, res);
+  jsonData['id_user'] = decoded.id;
+  db.deleteFromCart(jsonData['id_user'], jsonData['id_article'])
+    .then(function (response) {
+      utils.writeJson(response, {'code': 205, 'description': 'article successfuly removed from cart'});
     })
     .catch(function (response) {
       utils.writeJson(res, response);

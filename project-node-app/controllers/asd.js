@@ -1,28 +1,24 @@
 const mysql = require("mysql");
 const crypto = require("crypto");
 
-const conn = require("../server").connection;
-console.log("asd");
-// var conn = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "",
-//     database: "colr",
-//     charset: "utf8_general_ci",
-//   });
+const conn = require('../server').connection;
 
 function query(sql) {
-  return new Promise((resolve, reject) => {
-    // console.log(conn);
-    conn.query(sql, function (err, results, fields) {
-      if (err) {
-        reject({ status: 404, description: err });
+    return new Promise((resolve, reject) => {
+        console.log(sql);
+        conn.query(sql, function(err, results, fields) {
+            if (err) {
+                reject({'status': 404, 'description': err});
 
-        // throw err;
-      }
-      resolve(results);
+                // throw err;
+            }
+            resolve(results);
+        });
     });
-  });
+  }
+
+async function getUserPosts(user_id) {
+  return query(`SELECT COUNT(*) FROM articles WHERE user_id = '${user_id}'`);
 }
 
 async function getArticles() {
@@ -49,6 +45,11 @@ async function insertEntry(table, jsonData) {
   var insSQL = `INSERT INTO ${table}(${columns}) VALUES (${insert})`;
   return await query(insSQL);
 }
+
+async function deleteFromCart(id_user, id_article) {
+    return await query(`SELECT * FROM users_articles WHERE id_user = ${id_user} AND id_article = ${id_article}`);
+}
+exports.deleteFromCart = deleteFromCart;
 
 exports.insertEntry = insertEntry;
 
@@ -92,3 +93,4 @@ async function getEntries(table, jsonData, orderColumn) {
 }
 
 exports.getEntries = getEntries;
+
