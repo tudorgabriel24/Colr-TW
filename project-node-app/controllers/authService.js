@@ -80,6 +80,7 @@ function createToken(userData) {
 }
 
 exports.loginRequest = async (req, resp, headers) => {
+  console.log("HEADERS", headers);
   // const reqUrl = url.parse(req.url, true);
   let response = {
     success: false,
@@ -104,7 +105,13 @@ exports.loginRequest = async (req, resp, headers) => {
       admin: userData.admin
     };
     const token = createToken(userData);
-    return { ...headers, Authorization: `Bearer ${token}` };
+    console.log(headers);
+    headers = {
+      ...headers,
+      'Authorization': 'Bearer ' + token
+    }
+    console.log(headers);
+    return headers;
 
   }
 
@@ -116,20 +123,21 @@ exports.loginRequest = async (req, resp, headers) => {
       const passwordEncoded = encodePassword(body.password)
       if (userSearch !== null && userSearch !== undefined) {
         if (passwordEncoded === userSearch.password) {
-          headers = setHeaderLogin(userSearch);
+          headers = setHeaderLogin(userSearch, headers);
         }
       }
       else {
         let adminSearch = await adminExist(body);
         if(adminSearch !== null && adminSearch !== undefined) {
           if (passwordEncoded === adminSearch.password) {
-            headers = setHeaderLogin(adminSearch);
+            headers = setHeaderLogin(adminSearch, headers);
           }
         }
       }
       console.log(response);
       resp.writeHead(response.success ? 200 : 404, headers);
       resp.write(JSON.stringify(response));
+      console.log(headers);
       resp.end();
     } catch (err) {
       console.log(err);

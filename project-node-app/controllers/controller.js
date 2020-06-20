@@ -34,7 +34,7 @@ module.exports = http.createServer((req, res) => {
     res.writeHead(204, headers);
     res.end();
     return;
-  } 
+  } else
 
   if (reqUrl.pathname == "/login" && req.method === "POST") {
     console.log("login request");
@@ -47,15 +47,22 @@ module.exports = http.createServer((req, res) => {
   }
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log('asd');
-    let body = "";
-    req.on("data", (chunk) => {
-      console.log('dsa');
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-    });
-    service.getArticles(req, res);
+
+    if(reqUrl.query.email) {
+      console.log("get articles query email");
+      adminService.getUserArticles(req, res, headers);
+    } else {
+      console.log('asd');
+      let body = "";
+      req.on("data", (chunk) => {
+        console.log('dsa');
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+      });
+      service.getArticles(req, res);
+    }
+
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
@@ -103,12 +110,7 @@ module.exports = http.createServer((req, res) => {
   else if (reqUrl.pathname == "/users" && req.method == "PUT") {
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.deleteUser(req, res);
-    });
+    adminService.deleteUser(req, res, headers);
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     service.deleteUser(req, res);
