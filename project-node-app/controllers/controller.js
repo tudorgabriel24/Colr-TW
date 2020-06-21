@@ -12,6 +12,9 @@ var mysql = require("mysql");
 const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
+  req.on('data', () => {
+    console.log('ce are');
+  });
   var articleService = require("./articleService");
   var authService = require("./authService");
   const service = require("./service");
@@ -46,7 +49,7 @@ module.exports = http.createServer((req, res) => {
   }
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log('asd');
+    console.log('facem get pe articole');
     let body = "";
     req.on("data", (chunk) => {
       console.log('dsa');
@@ -55,7 +58,6 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.getArticle(req, res);
     });
-    service.getArticles(req, res);
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
@@ -68,7 +70,6 @@ module.exports = http.createServer((req, res) => {
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string

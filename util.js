@@ -38,7 +38,7 @@ var ResponsePayload = function(code, payload) {
     if(typeof payload === 'object') {
       payload = JSON.stringify(payload, null, 2);
     }
-    response.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+    response.writeHead(200, {"Content-type": "application/json", "Access-Control-Allow-Origin": "*"});
     response.end(payload);
     return;
   }

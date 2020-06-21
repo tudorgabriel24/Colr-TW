@@ -141,9 +141,12 @@
               console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open('GET', 'http://localhost:3000/articles', true);
+          request.open('POST', 'http://localhost:3000/articles', true);
           request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
-          request.send();
+          // request.setRequestHeader("Content-type", "application/json");
+          // var dataToSend = {'year': 2000};
+          // console.log('dataToSend');
+          request.send(fd);
         }
         const form = document.getElementById( "uplForm" );
         form.addEventListener( "submit", function ( event ) {
