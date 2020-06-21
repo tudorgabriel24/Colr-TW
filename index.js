@@ -67,17 +67,6 @@ function loadItem(image,description) {
 }
 var btn = document.getElementsByClassName('addbtn');
 
-{/* <div class="container">
-        <img src="./project-node-app/images/1d32a3d9ff33bd5ebcd4feaf0dd976da.png" alt="" />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-          excepturi ducimus iste consectetur praesentium sed expedita rem error
-          illum commodi.
-          <span class="pop_button" data-modal-target="#modal">Show more</span>
-        </p>
-        <button class="addbtn">Add</button>
-</div> */}
-
 function renderGalleryItems(object) {
   console.log("render1");
   if(!articlesLoaded) {
