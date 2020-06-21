@@ -86,6 +86,20 @@ let deleteUser = async function (email) {
   return deleteQueryPromise;
 }
 
+let deleteArticle = async function (id) {
+  console.log("DELETED ID = ", id);
+  let deleteQuery = `DELETE FROM articles WHERE id = '${id}'`;
+  let deleteQueryPromise = new Promise((resolve, reject) => {
+    connection.query(deleteQuery, (err, result) => {
+      if (err) resolve(false);
+      console.log(result);
+      resolve(true);
+    });
+  });
+
+  return deleteQueryPromise;
+}
+
 exports.getUsers = async function(req, res, headers) {
   let body = "";
 
@@ -199,4 +213,42 @@ exports.getUserArticles = async function(req ,res, headers) {
       console.log(err);
     }
   })
+}
+
+exports.deleteUserArticles = async function(req, res, headers) {
+  var body = "";
+  req.on("data", (data) => {
+    console.log("req daata");
+    body += data;
+    if (body.length > 1e6) req.connection.destroy();
+  });
+
+  req.on("end", async () => {
+    try {
+      const reqUrl = url.parse(req.url, true);
+      let id = reqUrl.query.id;
+      let responseBody = {
+        message: "Article cannot be deleted!",
+        success: false
+      };
+      let adminData = await verifyJwt(req,res);
+      console.log(adminData);
+      if(adminData !== null || adminData !== undefined) {
+        if(adminData.admin === true && (id !== undefined || id !== null)) {
+          let dbResponse = await deleteArticle(id);
+          if(dbResponse === true) {
+            responseBody.message = "Article has been deleted";
+            responseBody.success = true;
+          }
+        }
+      }
+      headers = {... headers, Authorization: `Bearer ${req.headers.authorization}` }
+      console.log(responseBody);
+      res.writeHead(responseBody.success ? 200 : 401, headers);
+      res.write(JSON.stringify(responseBody));
+      res.end();
+    } catch (err) {
+      console.log(err);
+    }
+  });
 }

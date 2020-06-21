@@ -11,6 +11,91 @@ function addEventsToCards() {
   );
 })}
 
+function renderDeleteUserDialog(question, email) {
+
+  let bodyPage = document.querySelector('body');
+
+  let dialog = document.createElement("DIV");
+  dialog.id = "delete-dialog";
+
+  let dialogQuestion = document.createElement("P");
+  dialogQuestion.id = "dialog-question";
+  dialogQuestion.innerHTML = question;
+
+  let dialogControllers = document.createElement("DIV");
+  dialogControllers.id = "dialog-controllers";
+
+  let yesButton = document.createElement("DIV");
+  yesButton.id = "yes-button";
+  let yesButtonText = document.createElement("P");
+  yesButtonText.innerHTML = "YES";
+  yesButton.addEventListener('click', function () {
+    deleteUserRequest(email);
+
+    dialog.remove();
+
+  })
+  let noButton = document.createElement("DIV");
+  noButton.id = "no-button";
+  let noButtonText = document.createElement("P");
+  noButtonText.innerHTML = "NO";
+
+  noButton.addEventListener('click', function () {
+    dialog.remove();
+  })
+
+  bodyPage.appendChild(dialog);
+  dialog.appendChild(dialogQuestion);
+  dialog.appendChild(dialogControllers);
+  dialogControllers.appendChild(yesButton);
+  yesButton.appendChild(yesButtonText);
+  dialogControllers.appendChild(noButton);
+  noButton.appendChild(noButtonText);
+
+}
+
+function renderDeleteArticleDialog(question, id) {
+
+  let bodyPage = document.querySelector('body');
+
+  let dialog = document.createElement("DIV");
+  dialog.id = "delete-dialog";
+
+  let dialogQuestion = document.createElement("P");
+  dialogQuestion.id = "dialog-question";
+  dialogQuestion.innerHTML = question;
+
+  let dialogControllers = document.createElement("DIV");
+  dialogControllers.id = "dialog-controllers";
+
+  let yesButton = document.createElement("DIV");
+  yesButton.id = "yes-button";
+  let yesButtonText = document.createElement("P");
+  yesButtonText.innerHTML = "YES";
+  yesButton.addEventListener('click', function () {
+    deleteArticle(id);
+    dialog.remove();
+
+  })
+  let noButton = document.createElement("DIV");
+  noButton.id = "no-button";
+  let noButtonText = document.createElement("P");
+  noButtonText.innerHTML = "NO";
+
+  noButton.addEventListener('click', function () {
+    dialog.remove();
+  })
+
+  bodyPage.appendChild(dialog);
+  dialog.appendChild(dialogQuestion);
+  dialog.appendChild(dialogControllers);
+  dialogControllers.appendChild(yesButton);
+  yesButton.appendChild(yesButtonText);
+  dialogControllers.appendChild(noButton);
+  noButton.appendChild(noButtonText);
+
+}
+
 function removeSelectedUser(userListContainers) {
   userListContainers.forEach(element => {
     element.classList.remove('selected-user');
@@ -22,6 +107,9 @@ async function deleteUserRequest(email) {
   xhttp.onload = function () {
     let responseBody = JSON.parse(xhttp.responseText);
     console.log(responseBody.success);
+    if(responseBody.success) {
+      location.reload();
+    }
     
   };
   xhttp.open("DELETE", "http://localhost:3000/users", true);
@@ -38,7 +126,32 @@ async function deleteUserRequest(email) {
     email: email
   }
   xhttp.send(JSON.stringify(sendData));
-} 
+}
+
+async function deleteArticle(id) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    let responseBody = JSON.parse(xhttp.responseText);
+    console.log(responseBody.success);
+    if(responseBody.success) {
+      // location.reload();
+      let deletedArticle = document.getElementById(id);
+      deletedArticle.remove();
+    }
+    
+  };
+  xhttp.open("DELETE", `http://localhost:3000/articles?id=${id}`, true);
+  xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  const authToken = localStorage.getItem("Authorization");
+  console.log(authToken);
+  xhttp.setRequestHeader(
+    "Authorization",
+    authToken
+  );
+  xhttp.send();
+}
 
 function renderArticles(object,fullName) {
   let sectionContainer = document.getElementById('admin-panel-section');
@@ -100,6 +213,10 @@ function renderArticles(object,fullName) {
     let deleteArticleText = document.createElement("SPAN");
     deleteArticleText.innerHTML = "DELETE";
 
+    deleteArticleButton.addEventListener('click', function () {
+      renderDeleteArticleDialog("Are you sure you want to delete this article?", object[index].ID);
+    });
+
     articleList.appendChild(article);
     article.appendChild(articleImage);
     article.appendChild(articleDetails);
@@ -115,24 +232,6 @@ function renderArticles(object,fullName) {
 
   }
 }
-
-// <div class="article">
-//               <img src="https://www.finestore.ro/image/cache/catalog/products/HB305-500x615.jpg" alt="">
-//               <div class="article-details">
-//                 <p class="article-title">Jack Daniels Bottle</p>
-//                 <p class="article-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. At laudantium velit animi, aspernatur vel, assumenda adipisci quam, aliquid provident fugiat temporibus quia quis eius fuga eligendi est corrupti eaque earum!</p>
-//                 <div class="article-controllers">
-//                   <div class="update-article-button">
-//                     <i class="fas fa-edit"></i>
-//                     <span>UPDATE</span>
-//                   </div>
-//                   <div class="delete-article-button">
-//                     <i class="fas fa-trash-alt"></i>
-//                     <span>DELETE</span>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
 
 function getUserArticles(email,fullName) {
   let userEmail = email;
@@ -164,7 +263,7 @@ function deleteUser(event) {
   console.log("DELETE ICON CLICKED ON ID ", event.path[1].id);
   let userEmailToDelete = event.path[1].childNodes[2].lastChild.innerText;
   console.log(userEmailToDelete);
-  deleteUserRequest(userEmailToDelete);
+  renderDeleteUserDialog("Are you sure you want to delete this user?", userEmailToDelete);
 }
 
 function createUserCards(users) {
