@@ -12,9 +12,17 @@ var mysql = require("mysql");
 const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
+<<<<<<< HEAD
   const articleService = require("./articleService");
   const authService = require("./authService");
   const adminService = require("./adminService");
+=======
+  req.on('data', () => {
+    console.log('ce are');
+  });
+  var articleService = require("./articleService");
+  var authService = require("./authService");
+>>>>>>> 7df9936e63b4ffd2efb1a4b313d219d480464faf
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
 
@@ -47,6 +55,7 @@ module.exports = http.createServer((req, res) => {
   }
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
+<<<<<<< HEAD
 
     if(reqUrl.query.email) {
       console.log("get articles query email");
@@ -63,6 +72,17 @@ module.exports = http.createServer((req, res) => {
       service.getArticles(req, res);
     }
 
+=======
+    console.log('facem get pe articole');
+    let body = "";
+    req.on("data", (chunk) => {
+      console.log('dsa');
+      body += chunk.toString(); // convert Buffer to string
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.getArticle(req, res);
+    });
+>>>>>>> 7df9936e63b4ffd2efb1a4b313d219d480464faf
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
@@ -75,7 +95,6 @@ module.exports = http.createServer((req, res) => {
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
