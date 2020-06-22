@@ -402,7 +402,7 @@ header {
   color: #637074;
 }
 
-#update-article-dialog {
+.update-article-dialog {
   position: fixed;
   width: 45rem;
   height: 47rem;
@@ -420,7 +420,7 @@ header {
 }
 
 @media (max-width: 450px) {
-  #update-article-dialog {
+  .update-article-dialog {
     width: 30rem;
     height: 50rem;
   }
@@ -458,7 +458,7 @@ header {
   align-self: flex-start;
 }
 
-.dialog-update-article-controllers {
+#dialog-update-article-controllers {
   width: 100%;
   height: 3rem;
   margin-top: 2rem;
