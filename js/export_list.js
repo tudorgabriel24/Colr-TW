@@ -12,16 +12,17 @@ window.onload = function getCartData() {
   // xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   console.log(authToken);
-  xhttp.setRequestHeader(
-    "Authorization",
-    authToken
-  );
+  xhttp.setRequestHeader("Authorization", authToken);
   xhttp.send();
-}
+};
 
 function insertInCart(object) {
-  for(let index = 0; index < object.length;index++) {
-    new item(object[index].name, `../project-node-app/images/${object[index].ID}.png`, object[index].id_article);
+  for (let index = 0; index < object.length; index++) {
+    new item(
+      object[index].name,
+      `../project-node-app/images/${object[index].ID}.png`,
+      object[index].id_article
+    );
   }
   exportList(object);
 }
@@ -50,7 +51,6 @@ class item {
     removeButton.innerHTML = "remove";
     removeButton.classList.add("removeButton");
     removeButton.id = ID;
-    
 
     container.appendChild(itemBox);
 
@@ -58,30 +58,27 @@ class item {
     itemBox.appendChild(input);
     itemBox.appendChild(removeButton);
 
-    removeButton.addEventListener("click", () => this.removeItem(itemBox, removeButton.id));
+    removeButton.addEventListener("click", () =>
+      this.removeItem(itemBox, removeButton.id)
+    );
   }
 
-  removeItem(item,id) {
+  removeItem(item, id) {
     container.removeChild(item);
-      const xhttp = new XMLHttpRequest();
-      xhttp.onload = function() {
-        console.log('yay');
-      }
-      xhttp.open('DELETE', 'http://localhost:3000/cart', true);
-    
-      xhttp.getResponseHeader('Access-Control-Allow-Origin', '');
-      xhttp.getAllResponseHeaders('Access-Control-Allow-Origin', '');
-      xhttp.setRequestHeader('Content-Type', 'application/json');
-      const authToken = localStorage.getItem("Authorization");
-      xhttp.setRequestHeader(
-        "Authorization",
-        authToken
-      );
-      xhttp.send({'id_article':  `${id}`});
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+      console.log("yay");
+    };
+    xhttp.open("DELETE", "http://localhost:3000/cart", true);
+
+    xhttp.getResponseHeader("Access-Control-Allow-Origin", "");
+    xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    const authToken = localStorage.getItem("Authorization");
+    xhttp.setRequestHeader("Authorization", authToken);
+    xhttp.send({ id_article: `${id}` });
   }
 }
-
-
 
 function exportCSV() {
   let csvContent = "data:text/csv;charset=utf-8,";
@@ -99,13 +96,48 @@ function exportCSV() {
   document.body.appendChild(csv);
   csv.click();
 }
+
+function exportDocBook() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    console.log(xhttp.responseText);
+    doc(xhttp.responseText);
+  };
+
+  xhttp.open("GET", "../project-node-app/xml/docBook.xml", true);
+
+  xhttp.getResponseHeader("Access-Control-Allow-Origin", "");
+  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "");
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  const authToken = localStorage.getItem("Authorization");
+  xhttp.setRequestHeader("Authorization", authToken);
+  xhttp.send();
+
+  function doc(object) {
+    let docContent = "data:text/plain;charset=utf-8,";
+    docContent += object;
+    //request pe server sa iei fisierul
+    var encoded = encodeURI(docContent);
+    var doc = document.createElement("a");
+    doc.setAttribute("href", encoded);
+    doc.setAttribute("download", "my_data.xml");
+    document.body.appendChild(doc);
+    doc.click();
+  }
+}
+
 function exportList(object) {
-  for(let index = 0; index < object.length; index++) {
-    rows.push([object[index].name,object[index].country,object[index].description, object[index].brand,object[index].currentState]);
+  for (let index = 0; index < object.length; index++) {
+    rows.push([
+      object[index].name,
+      object[index].country,
+      object[index].description,
+      object[index].brand,
+      object[index].currentState,
+    ]);
   }
   console.log(rows);
 }
-
 
 ///De testare, urmeaza sa fie luate din baza de date
 // new item("Descriere/Titlu", "../assets/coca.jpeg");
