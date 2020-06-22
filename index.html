@@ -19,7 +19,7 @@
             <a href="./html/export.html">Export</a>
             <a href="./html/upload.html">Upload article</a>
             <a href="../html/adminPanel.html">Admin panel</a>
-            <a href="../html/chart.html">Statistics</a>
+            <a href="../html/chart.html">Most popular</a>
           </div>
         </div>
         <div>
@@ -52,6 +52,7 @@
           <form>
             <label for="country">Country:</label>
             <select name="Countries" id="countries">
+              <option value="Any">Any</option>
               <option value="Russia">Russia</option>
               <option value="Germany">Germany</option>
               <option value="United Kingdom">United Kingdom</option>
@@ -97,6 +98,7 @@
 
             <label for="type">Collection type:</label>
             <select name="Collection type" id="post_type">
+              <option value="Any">Any</option>
               <option value="Cap">Cap</option>
               <option value="Cork">Cork</option>
               <option value="Label">Label</option>
@@ -104,7 +106,8 @@
 
             <label for="value">Value:</label>
             <select name="Value" id="price_range">
-              <option value="Under 100">Under 100</option>
+              <option value="Any">Any</option>
+              <option value="Under_100">Under 100</option>
               <option value="100-200">100-200</option>
               <option value="100-200">100-200</option>
               <option value="500-1.000">500-1.000</option>
@@ -113,11 +116,12 @@
               <option value="2.000-3.000">2.000-3.000</option>
               <option value="3.000-4.000">3.000-4.000</option>
               <option value="4.000-5.000">4.000-5.000</option>
-              <option value="Over 5.000">Over 5.000</option>
+              <option value="Over_5.000">Over 5.000</option>
             </select>
 
             <label for="state">Current state:</label>
             <select name="Current state" id="stat">
+              <option value="Any">Any</option>
               <option value="Brand New">Brand New</option>
               <option value="Slighty Damaged">Slighty Damaged</option>
               <option value="Damaged">Damaged</option>
@@ -174,10 +178,6 @@
     <div id="overlay"></div>
 
     <!--MODAL -->
-    <!-- <div class="button_container">
-      <a class="mybutton" onclick="">Previous</a>
-      <a class="mybutton" onclick="">Next</a>
-    </div> -->
     <script src="./js/HamburgerMenu.js"></script>
     <script src="./js/dropdown.js"></script>
     <script src="./js/shrinkHeaderTitle.js"></script>

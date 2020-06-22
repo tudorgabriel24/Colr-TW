@@ -2,18 +2,19 @@ var userObjectList = [];
 var articleObjectList = [];
 
 function addEventsToCards() {
-  var userListContainers = document.querySelectorAll(".user-information-container");
-  userListContainers.forEach(element => {
+  var userListContainers = document.querySelectorAll(
+    ".user-information-container"
+  );
+  userListContainers.forEach((element) => {
     element.addEventListener("click", function () {
       removeSelectedUser(userListContainers);
-      element.classList.add('selected-user');
-    }
-  );
-})}
+      element.classList.add("selected-user");
+    });
+  });
+}
 
 function renderDeleteUserDialog(question, email) {
-
-  let bodyPage = document.querySelector('body');
+  let bodyPage = document.querySelector("body");
 
   let dialog = document.createElement("DIV");
   dialog.id = "delete-dialog";
@@ -29,20 +30,19 @@ function renderDeleteUserDialog(question, email) {
   yesButton.id = "yes-button";
   let yesButtonText = document.createElement("P");
   yesButtonText.innerHTML = "YES";
-  yesButton.addEventListener('click', function () {
+  yesButton.addEventListener("click", function () {
     deleteUserRequest(email);
 
     dialog.remove();
-
-  })
+  });
   let noButton = document.createElement("DIV");
   noButton.id = "no-button";
   let noButtonText = document.createElement("P");
   noButtonText.innerHTML = "NO";
 
-  noButton.addEventListener('click', function () {
+  noButton.addEventListener("click", function () {
     dialog.remove();
-  })
+  });
 
   bodyPage.appendChild(dialog);
   dialog.appendChild(dialogQuestion);
@@ -51,12 +51,10 @@ function renderDeleteUserDialog(question, email) {
   yesButton.appendChild(yesButtonText);
   dialogControllers.appendChild(noButton);
   noButton.appendChild(noButtonText);
-
 }
 
 function renderDeleteArticleDialog(question, id) {
-
-  let bodyPage = document.querySelector('body');
+  let bodyPage = document.querySelector("body");
 
   let dialog = document.createElement("DIV");
   dialog.id = "delete-dialog";
@@ -72,19 +70,18 @@ function renderDeleteArticleDialog(question, id) {
   yesButton.id = "yes-button";
   let yesButtonText = document.createElement("P");
   yesButtonText.innerHTML = "YES";
-  yesButton.addEventListener('click', function () {
+  yesButton.addEventListener("click", function () {
     deleteArticle(id);
     dialog.remove();
-
-  })
+  });
   let noButton = document.createElement("DIV");
   noButton.id = "no-button";
   let noButtonText = document.createElement("P");
   noButtonText.innerHTML = "NO";
 
-  noButton.addEventListener('click', function () {
+  noButton.addEventListener("click", function () {
     dialog.remove();
-  })
+  });
 
   bodyPage.appendChild(dialog);
   dialog.appendChild(dialogQuestion);
@@ -93,13 +90,12 @@ function renderDeleteArticleDialog(question, id) {
   yesButton.appendChild(yesButtonText);
   dialogControllers.appendChild(noButton);
   noButton.appendChild(noButtonText);
-
 }
 
 function removeSelectedUser(userListContainers) {
-  userListContainers.forEach(element => {
-    element.classList.remove('selected-user');
-  })
+  userListContainers.forEach((element) => {
+    element.classList.remove("selected-user");
+  });
 }
 
 async function deleteUserRequest(email) {
@@ -107,10 +103,9 @@ async function deleteUserRequest(email) {
   xhttp.onload = function () {
     let responseBody = JSON.parse(xhttp.responseText);
     console.log(responseBody.success);
-    if(responseBody.success) {
+    if (responseBody.success) {
       location.reload();
     }
-    
   };
   xhttp.open("DELETE", "http://localhost:3000/users", true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
@@ -118,13 +113,11 @@ async function deleteUserRequest(email) {
   xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   console.log(authToken);
-  xhttp.setRequestHeader(
-    "Authorization",
-    authToken
-  );
+  xhttp.setRequestHeader("Authorization", authToken);
   let sendData = {
-    email: email
-  }
+    email: email,
+  };
+  console.log(sendData);
   xhttp.send(JSON.stringify(sendData));
 }
 
@@ -133,12 +126,11 @@ async function deleteArticle(id) {
   xhttp.onload = function () {
     let responseBody = JSON.parse(xhttp.responseText);
     console.log(responseBody.success);
-    if(responseBody.success) {
+    if (responseBody.success) {
       // location.reload();
       let deletedArticle = document.getElementById(id);
       deletedArticle.remove();
     }
-    
   };
   xhttp.open("DELETE", `http://localhost:3000/articles?id=${id}`, true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
@@ -146,16 +138,13 @@ async function deleteArticle(id) {
   xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   console.log(authToken);
-  xhttp.setRequestHeader(
-    "Authorization",
-    authToken
-  );
+  xhttp.setRequestHeader("Authorization", authToken);
   xhttp.send();
 }
 
-function renderArticles(object,fullName) {
-  let sectionContainer = document.getElementById('admin-panel-section');
-  document.getElementById('articles-container').remove();
+function renderArticles(object, fullName) {
+  let sectionContainer = document.getElementById("admin-panel-section");
+  document.getElementById("articles-container").remove();
   let articlesContainer = document.createElement("DIV");
   articlesContainer.id = "articles-container";
   sectionContainer.appendChild(articlesContainer);
@@ -171,7 +160,7 @@ function renderArticles(object,fullName) {
   chosenUser.appendChild(userFullName);
   articlesContainer.appendChild(articleList);
 
-  for(let index = 0; index < object.length; index++) {
+  for (let index = 0; index < object.length; index++) {
     let article = document.createElement("DIV");
     article.classList.add("article");
 
@@ -213,8 +202,11 @@ function renderArticles(object,fullName) {
     let deleteArticleText = document.createElement("SPAN");
     deleteArticleText.innerHTML = "DELETE";
 
-    deleteArticleButton.addEventListener('click', function () {
-      renderDeleteArticleDialog("Are you sure you want to delete this article?", object[index].ID);
+    deleteArticleButton.addEventListener("click", function () {
+      renderDeleteArticleDialog(
+        "Are you sure you want to delete this article?",
+        object[index].ID
+      );
     });
 
     articleList.appendChild(article);
@@ -229,21 +221,19 @@ function renderArticles(object,fullName) {
     articleControllers.appendChild(deleteArticleButton);
     deleteArticleButton.appendChild(deleteArticleIcon);
     deleteArticleButton.appendChild(deleteArticleText);
-
   }
 }
 
-function getUserArticles(email,fullName) {
+function getUserArticles(email, fullName) {
   let userEmail = email;
   console.log(userEmail);
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     let responseBody = JSON.parse(xhttp.responseText);
-    if(responseBody.success) {
+    if (responseBody.success) {
       renderArticles(responseBody.articles, fullName);
     }
     console.log(responseBody);
-    
   };
   xhttp.open("GET", `http://localhost:3000/articles?email=${userEmail}`, true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
@@ -251,11 +241,8 @@ function getUserArticles(email,fullName) {
   xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   console.log(authToken);
-  xhttp.setRequestHeader(
-    "Authorization",
-    authToken
-  );
-  
+  xhttp.setRequestHeader("Authorization", authToken);
+
   xhttp.send();
 }
 
@@ -263,39 +250,41 @@ function deleteUser(event) {
   console.log("DELETE ICON CLICKED ON ID ", event.path[1].id);
   let userEmailToDelete = event.path[1].childNodes[2].lastChild.innerText;
   console.log(userEmailToDelete);
-  renderDeleteUserDialog("Are you sure you want to delete this user?", userEmailToDelete);
+  renderDeleteUserDialog(
+    "Are you sure you want to delete this user?",
+    userEmailToDelete
+  );
 }
 
 function createUserCards(users) {
-  let userList = document.querySelector('#user-list-container');
-  for(let index = 0; index < users.length; index++) {
-    let userCard = document.createElement('DIV');
-    userCard.classList.add('user-information-container');
+  let userList = document.querySelector("#user-list-container");
+  for (let index = 0; index < users.length; index++) {
+    let userCard = document.createElement("DIV");
+    userCard.classList.add("user-information-container");
     userCard.id = index;
-    userCard.addEventListener('click', function () {
+    userCard.addEventListener("click", function () {
       getUserArticles(users[index].email, users[index].fullName);
     });
-    let deleteUserIcon = document.createElement('I');
-    deleteUserIcon.classList.add('fas')
-    deleteUserIcon.classList.add('fa-times');
-    deleteUserIcon.classList.add('delete-user-icon');
-    deleteUserIcon.addEventListener('click', function (event) {
+    let deleteUserIcon = document.createElement("I");
+    deleteUserIcon.classList.add("fas");
+    deleteUserIcon.classList.add("fa-times");
+    deleteUserIcon.classList.add("delete-user-icon");
+    deleteUserIcon.addEventListener("click", function (event) {
       event.stopPropagation();
       console.log(event);
       deleteUser(event);
-    }
-    );
-    let userImage = document.createElement('IMG');
-    userImage.setAttribute('src','../assets/user.svg');
-    userImage.setAttribute('alt','user-image');
-    userImage.classList.add('user-image');
+    });
+    let userImage = document.createElement("IMG");
+    userImage.setAttribute("src", "../assets/user.svg");
+    userImage.setAttribute("alt", "user-image");
+    userImage.classList.add("user-image");
     let userDetails = document.createElement("DIV");
-    userDetails.classList.add('user-details');
-    let fullName = document.createElement('P');
-    fullName.classList.add('full-name');
+    userDetails.classList.add("user-details");
+    let fullName = document.createElement("P");
+    fullName.classList.add("full-name");
     fullName.innerHTML = users[index].fullName;
-    let email = document.createElement('P');
-    email.classList.add('email');
+    let email = document.createElement("P");
+    email.classList.add("email");
     email.innerText = users[index].email;
 
     userList.appendChild(userCard);
@@ -323,9 +312,6 @@ window.onload = function getUsers() {
   xhttp.setRequestHeader("Content-Type", "application/json");
   const authToken = localStorage.getItem("Authorization");
   console.log(authToken);
-  xhttp.setRequestHeader(
-    "Authorization",
-    authToken
-  );
+  xhttp.setRequestHeader("Authorization", authToken);
   xhttp.send();
 };

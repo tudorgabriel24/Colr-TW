@@ -8,7 +8,7 @@ Chart.defaults.global.defaultFontColor = "#777";
 var myChart = new Chart(ctx, {
   type: "horizontalBar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data: {
-    labels: ["Capac", "Eticheta", "Dop"],
+    labels: ["Cap", "Label", "Cork"],
     datasets: [
       {
         label: "Views",

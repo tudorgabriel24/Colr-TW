@@ -83,7 +83,7 @@ class item {
 function exportCSV() {
   let csvContent = "data:text/csv;charset=utf-8,";
   console.log(rows);
-  csvContent += ["Name", "Country", "Number_views", "Brand", "Value"];
+  csvContent += ["Type", "Country", "Number_views", "Brand", "Value"];
   rows.forEach(function (rowArray) {
     row = rowArray.join(",");
     csvContent += row + "\r\n";
