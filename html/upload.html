@@ -18,6 +18,7 @@
             <a href="../index.html">Home</a>
             <a href="../html/export.html">Export</a>
             <a href="../html/upload.html">Upload article</a>
+            <a href="../html/adminPanel.html">Admin panel</a>
           </div>
         </div>
         <div>
@@ -148,7 +149,10 @@
             "Access-Control-Expose-Headers",
             "Authorization"
           );
-          request.send();
+          // request.setRequestHeader("Content-type", "application/json");
+          // var dataToSend = {'year': 2000};
+          // console.log('dataToSend');
+          request.send(fd);
         }
         const form = document.getElementById("uplForm");
         form.addEventListener("submit", function (event) {

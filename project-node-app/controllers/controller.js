@@ -12,8 +12,17 @@ var mysql = require("mysql");
 const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
+<<<<<<< HEAD
+  const articleService = require("./articleService");
+  const authService = require("./authService");
+  const adminService = require("./adminService");
+=======
+  req.on('data', () => {
+    console.log('ce are');
+  });
   var articleService = require("./articleService");
   var authService = require("./authService");
+>>>>>>> 7df9936e63b4ffd2efb1a4b313d219d480464faf
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
 
@@ -33,7 +42,7 @@ module.exports = http.createServer((req, res) => {
     res.writeHead(204, headers);
     res.end();
     return;
-  } 
+  } else
 
   if (reqUrl.pathname == "/login" && req.method === "POST") {
     console.log("login request");
@@ -46,7 +55,25 @@ module.exports = http.createServer((req, res) => {
   }
   
   else if (reqUrl.pathname == "/articles" && req.method == "GET") {
-    console.log('asd');
+<<<<<<< HEAD
+
+    if(reqUrl.query.email) {
+      console.log("get articles query email");
+      adminService.getUserArticles(req, res, headers);
+    } else {
+      console.log('asd');
+      let body = "";
+      req.on("data", (chunk) => {
+        console.log('dsa');
+        body += chunk.toString(); // convert Buffer to string
+        req.body = JSON.parse(body);
+        console.log(req.body);
+      });
+      service.getArticles(req, res);
+    }
+
+=======
+    console.log('facem get pe articole');
     let body = "";
     req.on("data", (chunk) => {
       console.log('dsa');
@@ -55,7 +82,7 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.getArticle(req, res);
     });
-    service.getArticles(req, res);
+>>>>>>> 7df9936e63b4ffd2efb1a4b313d219d480464faf
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
@@ -68,7 +95,6 @@ module.exports = http.createServer((req, res) => {
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
@@ -78,13 +104,14 @@ module.exports = http.createServer((req, res) => {
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.deleteArticle(req, res);
-    });
+    adminService.deleteUserArticles(req, res, headers);
+    // let body = "";
+    // req.on("data", (chunk) => {
+    //   body += chunk.toString(); // convert Buffer to string
+    //   req.body = JSON.parse(body);
+    //   console.log(req.body);
+    //   service.deleteArticle(req, res);
+    // });
   } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     let body = "";
@@ -94,17 +121,16 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.updateUser(req, res);
     });
+ 
+  } 
+  else if (reqUrl.pathname == "/users" && req.method == "GET") {
+     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+     adminService.getUsers(req,res,headers);
+  }
+  else if (reqUrl.pathname == "/users" && req.method == "PUT") {
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.deleteUser(req, res);
-    });
-  } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
-    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
-    service.deleteUser(req, res);
+    adminService.deleteUser(req, res, headers);
   }
   else if (reqUrl.pathname == "/cart" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
