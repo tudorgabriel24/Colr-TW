@@ -38,7 +38,7 @@ var myChart = new Chart(ctx, {
       position: "right",
     },
     layout: {
-      padding: { left: 300, right: 0, bottom: 0, top: 0 },
+      padding: { left: 220, right: 0, bottom: 0, top: 0 },
     },
 
     events: ["mousemove"],
