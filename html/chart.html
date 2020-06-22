@@ -5,9 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chart</title>
     <!-- <script src="path/to/chartjs/dist/Chart.min.js"></script> -->
+    <link rel="stylesheet" href="../css/chart.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
   </head>
   <body>
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
+            <a href="../index.html">Home</a>
+            <a href="../html/export.html">Export</a>
+            <a href="../html/upload.html">Upload article</a>
+            <a href="../html/adminPanel.html">Admin panel</a>
+            <a href="../html/chart.html">Most popular</a>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/logo.svg" id="miniLogo" alt="" />
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+    <a
+      target="_blank"
+      class="rssButton"
+      href="http://localhost:5500/project-node-app/xml/rss.xml"
+    >
+      RSS feed
+    </a>
+
     <div>
       <div
         class="chart-container"
@@ -17,8 +54,10 @@
       </div>
     </div>
 
-    <a type="application/rss+xml" href="feed.rss">RSS feed </a>
-
     <script src="../js/chart.js"></script>
+
+    <script src="../js/export_list.js"></script>
+    <script src="../js/export.js"></script>
+    <script src="../js/HamburgerMenu.js"></script>
   </body>
 </html>

@@ -85,34 +85,41 @@ function searchFil(event) {
   var price = document.getElementById("price_range").value;
   var type = document.getElementById("post_type").value;
 
-  var formData = {};
-  // console.log(country);
-  // console.log(state);
-  // console.log(price);
-  // console.log(type);
-  formData = {
-    country: country,
-    currentState: state,
-    price: price,
-    type: type,
-  };
-  formData = JSON.stringify(formData);
-  console.log(formData);
+  var get_list = [];
+  if (country != "Any") {
+    get_list.push(`country=${country}`);
+  }
+  if (state != "Any") {
+    get_list.push(`currentState=${state}`);
+  }
+  if (price != "Any") {
+    get_list.push(`priceRange=${price}`);
+  }
+  if (type != "Any") {
+    get_list.push(`type=${type}`);
+  }
+  get_list = get_list.join("&");
+  console.log(get_list);
 
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     console.log("yay");
-    if (this.state == 4) {
-      refreshGallery(object);
-    }
+    console.log(xhttp.responseText);
+
+    refreshGallery(JSON.parse(xhttp.responseText));
   };
-  xhttp.open("GET", "http://localhost:3000/articles", true);
-  xhttp.send(formData);
+
+  xhttp.open("GET", `http://localhost:3000/articles?${get_list}`, true);
+  xhttp.send();
 }
 
 function refreshGallery(object) {
+  console.log("am sters gridu");
   galleryGrid.remove();
+  body = document.getElementsByTagName("body")[0];
+  articlesLoaded = false;
   galleryGrid = document.createElement("DIV");
   galleryGrid.classList.add("basic-grid");
+  body.appendChild(galleryGrid);
   renderGalleryItems(object);
 }
