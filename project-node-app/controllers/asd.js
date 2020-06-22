@@ -17,10 +17,6 @@ function query(sql) {
     });
   }
 
-async function getUserPosts(user_id) {
-  return query(`SELECT COUNT(*) FROM articles WHERE user_id = '${user_id}'`);
-}
-
 async function getArticles() {
   return await query(`SELECT * FROM articles`);
 }
