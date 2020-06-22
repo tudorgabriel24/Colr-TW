@@ -110,7 +110,6 @@ async function deleteUserRequest(email) {
     if(responseBody.success) {
       location.reload();
     }
-    
   };
   xhttp.open("DELETE", "http://localhost:3000/users", true);
   xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
@@ -151,6 +150,10 @@ async function deleteArticle(id) {
     authToken
   );
   xhttp.send();
+}
+
+function updateArticle(article) {
+  console.log(article);
 }
 
 function renderArticles(object,fullName) {
@@ -202,6 +205,10 @@ function renderArticles(object,fullName) {
 
     let updateArticleText = document.createElement("SPAN");
     updateArticleText.innerHTML = "UPDATE";
+
+    updateArticleButton.addEventListener('click', function () {
+      updateArticle(object[index]);
+    })
 
     let deleteArticleButton = document.createElement("DIV");
     deleteArticleButton.classList.add("delete-article-button");
