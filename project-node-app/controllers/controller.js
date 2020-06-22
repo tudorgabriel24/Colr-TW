@@ -60,13 +60,16 @@ module.exports = http.createServer((req, res) => {
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-      req.body = JSON.parse(body);
-      console.log(req.body);
-      service.updateArticle(req, res);
-    });
+
+    console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
+    adminService.updateArticle(req, res, headers);
+    // let body = "";
+    // req.on("data", (chunk) => {
+    //   body += chunk.toString(); // convert Buffer to string
+    //   req.body = JSON.parse(body);
+    //   console.log(req.body);
+    //   service.updateArticle(req, res);
+    // });
   } else if (reqUrl.pathname == "/articles" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.deleteUserArticles(req, res, headers);
