@@ -118,7 +118,7 @@
           <option>1.000-1.500</option>
           <option>1.500-2.000</option>
           <option>2.000-3.000</option>
-          <option>3.000-5.00</option>
+          <option>3.000-5.000</option>
           <option>4.000-5.000</option>
           <option>Over 5.000</option>
         </select>
@@ -145,12 +145,12 @@
             console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open("POST", "http://localhost:3000/articles", true);
-          request.setRequestHeader(
-            "Access-Control-Expose-Headers",
-            "Authorization"
-          );
-          // request.setRequestHeader("Content-type", "application/json");
+          request.open('POST', 'http://localhost:3000/articles', true);
+          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
+          request.setRequestHeader("Content-type", "application/json");
+          request.setRequestHeader('Authorization', localStorage.getItem('Authorization'));
+          // var dataToSend = {'year': 2000};
+          // console.log('dataToSend');
           request.send(fd);
         }
         const form = document.getElementById("uplForm");
