@@ -229,7 +229,7 @@ exports.deleteArticle = async function (req, res) {
 
 exports.addUserView = async function (req, res) {
   var decoded = await verifyJwt(req, res);
-  if (req.body.user_id != decoded.id) {
+  if (decoded.id == undefined || decoded.id == null) {
     utils.writeJson(res, {
       code: 400,
       description: `watch doesn't count`,
