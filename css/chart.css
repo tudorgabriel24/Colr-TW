@@ -134,20 +134,16 @@ header {
   transition: 0.2s;
 }
 .rssButton {
-  display: inline-block;
-  border: none;
-  color: #566266;
-  text-align: center;
-  font-size: 1.7rem;
-  padding-left: 50px;
-  cursor: pointer;
-  outline: none;
-  transition: 1s;
-  text-decoration: none;
-  background-color: initial;
+  border: none !important;
+  color: #566266 !important;
+  font-size: 1.2rem;
+  outline: none !important;
+  transition: 200ms !important;
+  text-decoration: none !important;
+  background-color: initial !important;
 }
 .rssButton:hover {
-  color: #3a7ca5;
+  color: #3a7ca5 !important;
 }
 
 @media (max-width: 1300px) {

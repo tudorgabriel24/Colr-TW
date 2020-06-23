@@ -38,14 +38,14 @@
       </div>
     </header>
     <div class="page">
-      <div class="cont">
+      <div class="export_buttons">
         <button class="rssButton" id="rssButton">RSS feed</button>
-        <div class="export_buttons">
-          <button id="Stat_country" onclick="option()">Stats country</button>
-          <button id="Stat_type" onclick="option()">Stats type</button>
-          <button id="Stat_brand" onclick="option()">Stats brand</button>
-        </div>
+
+        <button id="Stat_country" class="stats_button">Stats country</button>
+        <button id="Stat_type" class="stats_button">Stats type</button>
+        <button id="Stat_brand" class="stats_button">Stats brand</button>
       </div>
+
       <div class="chart-container">
         <canvas id="myStatsChart"></canvas>
       </div>
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <script src="../js/export_list.js"></script>
+    <script src="../js/statistics.js"></script>
     <script src="../js/HamburgerMenu.js"></script>
     <script src="../js/stats_chart.js"></script>
   </body>
