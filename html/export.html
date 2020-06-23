@@ -20,7 +20,6 @@
             <a href="../html/export.html">Statistics</a>
             <a href="../html/upload.html">Upload article</a>
             <a href="../html/adminPanel.html">Admin panel</a>
-            <a href="../html/chart.html">Most popular</a>
           </div>
         </div>
         <div>
@@ -39,9 +38,13 @@
     </header>
     <div class="page">
       <div class="export_buttons">
-        <button id="Stat1" onclick="option()">Stats #1</button>
-        <button id="Stat2" onclick="option()">Stats #2</button>
+        <button class="rssButton" id="rssButton">RSS feed</button>
+
+        <button id="Stat_country" class="stats_button">Stats country</button>
+        <button id="Stat_type" class="stats_button">Stats type</button>
+        <button id="Stat_brand" class="stats_button">Stats brand</button>
       </div>
+
       <div class="chart-container">
         <canvas id="myStatsChart"></canvas>
       </div>
@@ -51,7 +54,7 @@
       </div>
     </div>
 
-    <script src="../js/export_list.js"></script>
+    <script src="../js/statistics.js"></script>
     <script src="../js/HamburgerMenu.js"></script>
     <script src="../js/stats_chart.js"></script>
   </body>

@@ -312,11 +312,14 @@ input {
   justify-content: center;
   text-align: center;
   position: relative;
-  width: 97%;
-  padding: 5rem 1rem 5rem 1rem;
-  font-size: 1.8rem;
-  margin: 0rem;
-  box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030;
+  width: 100%;
+  padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  font-size: 1.5rem;
+  box-shadow: 0 3px 4px 0 #00000033, 0 3px 10px 0 #00000030;
+  overflow: hidden;
+  align-self: center;
 }
 .container p:hover {
   transition: 0.5s;

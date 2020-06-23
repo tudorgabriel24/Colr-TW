@@ -6,18 +6,18 @@
     <description>Description Channel</description>
   </channel>
   <item>
-    <title>News from today</title>
-    <link>link from today</link>
-    <description>what happened today</description>
+    <title>Gugle</title>
+    <link>link1</link>
+    <description>Nice</description>
   </item>
   <item>
-    <title>News from yesterday</title>
-    <link>link from yesterday</link>
-    <description>what happened yesterday</description>
+    <title>d</title>
+    <link>link2</link>
+    <description>s</description>
   </item>
   <item>
-    <title>News from past</title>
-    <link>link from past</link>
-    <description/>
+    <title>d</title>
+    <link>link3</link>
+    <description>d</description>
   </item>
 </rss>

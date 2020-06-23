@@ -19,7 +19,6 @@
             <a href="../html/export.html">Statistics</a>
             <a href="../html/upload.html">Upload article</a>
             <a href="../html/adminPanel.html">Admin panel</a>
-            <a href="../html/chart.html">Most popular</a>
           </div>
         </div>
         <div>
@@ -113,9 +112,7 @@
           <option value="Ireland">Ireland</option>
           <option value="Croatia">Croatia</option>
           <option value="Moldova">Moldova</option>
-          <option value="Bosnia and Herzegovina"
-            >Bosnia and Herzegovina</option
-          >
+          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
           <option value="Albania">Albania</option>
           <option value="Lithuania">Lithuania</option>
           <option value="North Macedonia">North Macedonia</option>
@@ -181,9 +178,15 @@
             console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open('POST', 'http://localhost:3000/articles', true);
-          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
-          request.setRequestHeader('Authorization', localStorage.getItem('Authorization'));
+          request.open("POST", "http://localhost:3000/articles", true);
+          request.setRequestHeader(
+            "Access-Control-Expose-Headers",
+            "Authorization"
+          );
+          request.setRequestHeader(
+            "Authorization",
+            localStorage.getItem("Authorization")
+          );
           request.send(fd);
         }
         const form = document.getElementById("uplForm");

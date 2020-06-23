@@ -5,6 +5,8 @@ Chart.defaults.global.defaultFontFamily = "sans-serif";
 Chart.defaults.global.defaultFontSize = 18;
 Chart.defaults.global.defaultFontColor = "#777";
 
+var my_data = [50, 19, 25];
+
 var myChart = new Chart(ctx, {
   type: "horizontalBar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data: {
@@ -12,7 +14,7 @@ var myChart = new Chart(ctx, {
     datasets: [
       {
         label: "Views",
-        data: [50, 19, 25], //aici trebuie puse views-urile
+        data: [my_data[0], my_data[1], my_data[2]], //aici trebuie puse views-urile
         backgroundColor: [
           "rgba(52, 128, 235, 0.6)",
           "rgba(34, 186, 112, 0.6)",
@@ -38,7 +40,7 @@ var myChart = new Chart(ctx, {
       position: "right",
     },
     layout: {
-      padding: { left: 220, right: 0, bottom: 0, top: 0 },
+      padding: { left: 0, right: 0, bottom: 0, top: 0 },
     },
 
     events: ["mousemove"],
