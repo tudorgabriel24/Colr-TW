@@ -230,6 +230,22 @@ exports.deleteArticle = async function (req, res) {
     });
 };
 
+exports.addUserView = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (req.body.user_id != decoded.id) {
+    utils.writeJson(res, {
+      code: 400,
+      description: `watch doesn't count`,
+    });
+  }
+  req.body.id_user = decoded.id;
+  db.insertEntry('articleviews', req.body).then( (response) => {
+    utils.writeJson(res, {code: 201, description: "success"});
+  }).catch( (response) => {
+    utils.writeJson(res, response);
+  });
+}
+
 exports.deleteUser = async function (req, res) {
   var decode = await verifyJwt(req, res);
   if (decode.id == null) {
