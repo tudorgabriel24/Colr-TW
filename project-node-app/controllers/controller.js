@@ -133,6 +133,16 @@ module.exports = http.createServer((req, res) => {
       utils.writeJson(res, response);
     });
     return; 
+  } else if (reqUrl.pathname == "/view" && req.method == "POST") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+    });
+    req.on("end", (chunk) => {
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.addUserView(req, res);
+    });
   } else if (reqUrl.pathname == "/users" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.getUsers(req, res, headers);
