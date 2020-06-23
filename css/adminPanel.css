@@ -401,3 +401,88 @@ header {
   margin: .25rem .5rem;
   color: #637074;
 }
+
+.update-article-dialog {
+  position: fixed;
+  width: 45rem;
+  height: 47rem;
+  background-color: rgba(255, 255, 255, 0.918);
+  border-radius: 1rem;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+@media (max-width: 450px) {
+  .update-article-dialog {
+    width: 30rem;
+    height: 50rem;
+  }
+}
+
+#dialog-article {
+  font-size: 1.6rem;
+  color: #637074;
+  font-weight: 500;
+}
+
+.inputs-container {
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 70%;
+}
+.inputs-container label {
+  margin-left: 0px;
+  font-size: 1.4rem;
+  color: #637074;
+  font-weight: 400;
+}
+
+.inputs-container input, .inputs-container textarea {
+  width: 100%;
+  outline: none;
+  resize: none;
+}
+.inputs-container input:focus, .inputs-container textarea:focus {
+  background-color: honeydew;
+}
+
+#alcoholic-checkbox {
+  align-self: flex-start;
+}
+
+#dialog-update-article-controllers {
+  width: 100%;
+  height: 3rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dialog-hidden {
+  display:none;
+}
+#save-changes-button, #close-without-save-button {
+  width: 7rem;
+  border: 1px #637074 solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: 500;
+  color: #637074;
+  cursor: pointer;
+}
+
+#save-changes-button:hover, #close-without-save-button:hover {
+  background-color: #637074;
+  color: rgba(255, 255, 255, 0.918);
+}

@@ -21,16 +21,26 @@ exports.addArticle = async function (req, res) {
     console.log('utilizator nelogat');
     return;
   }
-  console.log('decoded');
+  console.log("decoded");
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = decoded.id;
+  jsonData["user_id"] = decoded;
+  var imagePath = jsonData.imagePath;
+  delete jsonData["imagePath"];
 
   db.insertEntry("articles", jsonData)
     .then(function (response) {
-      fs.readFile(jsonData.imagePath, function (err, data) {
-        fs.writeFile(`./images/${jsonData["ID"]}`, data, function (err) {
+      console.log("am primit raspuns" + response);
+      fs.readFile(imagePath, function (err, data) {
+        console.log("citim fisierul");
+        if (err) {
+          utils.writeJson(res, {
+            code: 406,
+            description: err,
+          });
+        }
+        fs.writeFile(`./images/${jsonData["ID"]}.png`, data, function (err) {
           if (err) {
             utils.writeJson(res, {
               code: 405,
@@ -61,7 +71,7 @@ exports.addUser = function (req, res) {
 };
 
 exports.addToCart = async function (req, res) {
-  let decoded = await verifyJwt(req,res);
+  let decoded = await verifyJwt(req, res);
 
   var jsonData = {
     id_user: decoded.id,
@@ -149,8 +159,13 @@ exports.getStats = async function (params, order_num) {
 
 exports.getArticles = function (req, res) {
   var jsonData = req.body;
-  if (jsonData == undefined) {
-    console.log('no params');
+  console.log(jsonData);
+  if (
+    jsonData == undefined ||
+    jsonData == null ||
+    Object.keys(jsonData).length === 0
+  ) {
+    console.log("no params");
     db.getArticles()
       .then(function (response) {
         utils.writeJson(res, response);
@@ -161,15 +176,14 @@ exports.getArticles = function (req, res) {
     return;
   }
   var order;
-  if (jsonData.hasOwnProperty('order')) {
-    order = jsonData['order'];
-    delete jsonData['order'];
-  }
-  else {
-    order = 'views';
+  if (jsonData.hasOwnProperty("order")) {
+    order = jsonData["order"];
+    delete jsonData["order"];
+  } else {
+    order = "views";
   }
 
-  db.getEntries('articles', jsonData, order)
+  db.getEntries("articles", jsonData, order)
     .then(function (response) {
       utils.writeJson(res, response);
       console.log(response);
@@ -197,7 +211,7 @@ exports.getUsers = function (req, res) {
     });
 };
 
-console.log('asd');
+console.log("asd");
 
 exports.deleteArticle = async function (req, res) {
   var decoded = await verifyJwt(req, res);
@@ -224,8 +238,7 @@ exports.deleteUser = async function (req, res) {
   var idToDelete = null;
   if (req.body != undefined && decode.admin == true) {
     idToDelete = req.body.ID;
-  }
-  else {
+  } else {
     idToDelete = decode.id;
   }
   db.deleteEntry("users", idToDelete)
@@ -238,23 +251,25 @@ exports.deleteUser = async function (req, res) {
 };
 
 exports.getCart = async function (req, res) {
-  let decoded = await verifyJwt(req,res);
+  let decoded = await verifyJwt(req, res);
   var jsonData = {
-    id_user: decoded.id
+    id_user: decoded.id,
   };
 
   db.getEntries("user_articles", jsonData, 1)
     .then(function (response) {
       console.log(response);
       if (response.length == 0) {
-        utils.writeJson(res, {'code': 204, 'description': 'user has no items in cart'});
+        utils.writeJson(res, {
+          code: 204,
+          description: "user has no items in cart",
+        });
       }
       var chek = [];
-      for(var key in response) {
-        
-        chek.push(`'${response[key]['id_article']}'`);
+      for (var key in response) {
+        chek.push(`'${response[key]["id_article"]}'`);
       }
-      chek = chek.join(',');
+      chek = chek.join(",");
       console.log(chek);
       db.getCart(chek)
         .then(function (rezponze) {
@@ -271,12 +286,15 @@ exports.getCart = async function (req, res) {
 
 exports.deletFromCart = async function (req, res) {
   var jsonData = req.body;
-  console.log("JSON",jsonData);
+  console.log("JSON", jsonData);
   let decoded = await verifyJwt(req, res);
-  jsonData['id_user'] = decoded.id;
-  db.deleteFromCart(jsonData['id_user'], jsonData['id_article'])
+  jsonData["id_user"] = decoded.id;
+  db.deleteFromCart(jsonData["id_user"], jsonData["id_article"])
     .then(function (response) {
-      utils.writeJson(response, {'code': 205, 'description': 'article successfuly removed from cart'});
+      utils.writeJson(response, {
+        code: 205,
+        description: "article successfuly removed from cart",
+      });
     })
     .catch(function (response) {
       utils.writeJson(res, response);

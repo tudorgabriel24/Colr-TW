@@ -14,11 +14,12 @@
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
             >&times;</a
           >
-          <div style="margin-top: 200px;">
+          <div style="margin-top: 150px;">
             <a href="../index.html">Home</a>
-            <a href="../html/export.html">Export</a>
+            <a href="../html/export.html">Statistics</a>
             <a href="../html/upload.html">Upload article</a>
             <a href="../html/adminPanel.html">Admin panel</a>
+            <a href="../html/chart.html">Most popular</a>
           </div>
         </div>
         <div>
@@ -135,8 +136,8 @@
           required
         ></textarea
         ><br />
-        <label for="currState">Current State: </label>
-        <select id="currState" name="currState" class="inpText">
+        <label for="currentState">Current State: </label>
+        <select id="currentState" name="currentState" class="inpText">
           <option>Brand New</option>
           <option>Slighty Damaged</option>
           <option>Damaged</option>
@@ -153,7 +154,7 @@
           <option>1.000-1.500</option>
           <option>1.500-2.000</option>
           <option>2.000-3.000</option>
-          <option>3.000-5.00</option>
+          <option>3.000-5.000</option>
           <option>4.000-5.000</option>
           <option>Over 5.000</option>
         </select>
@@ -180,13 +181,10 @@
             console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open("GET", "http://localhost:3000/stats/brand", true);
-          request.setRequestHeader(
-            "Access-Control-Expose-Headers",
-            "Authorization"
-          );
-          // request.setRequestHeader("Content-type", "application/json");
-          request.send();
+          request.open('POST', 'http://localhost:3000/articles', true);
+          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
+          request.setRequestHeader('Authorization', localStorage.getItem('Authorization'));
+          request.send(fd);
         }
         const form = document.getElementById("uplForm");
         form.addEventListener("submit", function (event) {
