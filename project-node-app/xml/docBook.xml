@@ -1,19 +1,27 @@
 <?xml version="1.0"?>
-<book>
+<table frame="all">
   <title>Statistics</title>
-  <chapter>
-    <title>Romania</title>
-    <para>Capac</para>
-    <para>200</para>
-  </chapter>
-  <chapter>
-    <title>Rusia</title>
-    <para>Dop</para>
-    <para>500</para>
-  </chapter>
-  <chapter>
-    <title>Franta</title>
-    <para>Eticheta</para>
-    <para>5000</para>
-  </chapter>
-</book>
+  <tgroup cols="2">
+    <colspec colname="c1"/>
+    <colspec colname="c2"/>
+    <thead>
+      <row>
+        <entry>Number_views</entry>
+        <entry>Times_uploaded</entry>
+      </row>
+    </thead>
+    <tbody/>
+  </tgroup>
+  <row>
+    <entry>200</entry>
+    <entry>3</entry>
+  </row>
+  <row>
+    <entry>500</entry>
+    <entry>10</entry>
+  </row>
+  <row>
+    <entry>5000</entry>
+    <entry>8</entry>
+  </row>
+</table>

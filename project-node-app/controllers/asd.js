@@ -1,21 +1,21 @@
 const mysql = require("mysql");
 const crypto = require("crypto");
 
-const conn = require('../server').connection;
+const conn = require("../server").connection;
 
 function query(sql) {
-    return new Promise((resolve, reject) => {
-        console.log(sql);
-        conn.query(sql, function(err, results, fields) {
-            if (err) {
-                reject({'status': 404, 'description': err});
+  return new Promise((resolve, reject) => {
+    console.log(sql);
+    conn.query(sql, function (err, results, fields) {
+      if (err) {
+        reject({ status: 404, description: err });
 
-                // throw err;
-            }
-            resolve(results);
-        });
+        // throw err;
+      }
+      resolve(results);
     });
-  }
+  });
+}
 
 async function getArticles() {
   return await query(`SELECT * FROM articles`);
@@ -43,7 +43,9 @@ async function insertEntry(table, jsonData) {
 }
 
 async function deleteFromCart(id_user, id_article) {
-    return await query(`SELECT * FROM users_articles WHERE id_user = ${id_user} AND id_article = ${id_article}`);
+  return await query(
+    `SELECT * FROM users_articles WHERE id_user = ${id_user} AND id_article = ${id_article}`
+  );
 }
 exports.deleteFromCart = deleteFromCart;
 
@@ -83,10 +85,9 @@ async function getEntries(table, jsonData, orderColumn) {
     get.push(`${key} = '${jsonData[key]}'`);
   }
   get = get.join(" AND ");
-  var selectSQL = `SELECT * FROM ${table} WHERE ${get} ORDER BY 1`;
+  var selectSQL = `SELECT * FROM ${table} WHERE ${get} ORDER BY ${orderColumn}`;
   var res = await query(selectSQL);
   return res;
 }
 
 exports.getEntries = getEntries;
-

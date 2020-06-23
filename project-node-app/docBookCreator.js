@@ -3,21 +3,32 @@ var fs = require("fs");
 var builder = require("xmlbuilder");
 
 //Aici trebuie puse informatiile ce vor sa fie in docBook, poate fi modficat ulterior
-var countries = ["Romania", "Rusia", "Franta"];
-var types = ["Capac", "Dop", "Eticheta"];
-var price = ["200", "500", "5000"];
+var no_views = ["200", "500", "5000"];
+var times_upl = ["3", "10", "8"];
 
-var obj = { book: { title: { "#text": "Statistics" } } };
+var obj = {
+  table: {
+    "@frame": "all",
+    title: { "#text": "Statistics" },
+    tgroup: {
+      "@cols": "2",
+      colspec: [{ "@colname": "c1" }, { "@colname": "c2" }],
+      thead: {
+        row: {
+          entry: [{ "#text": "Number_views" }, { "#text": "Times_uploaded" }],
+        },
+      },
+      tbody: {},
+    },
+  },
+};
 var xml = builder.create(obj);
 
-for (i = 0; i < countries.length; i++) {
-  var chapter = {
-    chapter: {
-      title: { "#text": countries[i] },
-      para: [{ "#text": types[i] }, { "#text": price[i] }],
-    },
+for (i = 0; i < no_views.length; i++) {
+  var row = {
+    row: { entry: [{ "#text": no_views[i] }, { "#text": times_upl[i] }] },
   };
-  var xml = xml.ele(chapter).up();
+  var xml = xml.ele(row).up();
 }
 
 var xml = xml.end({ pretty: true });

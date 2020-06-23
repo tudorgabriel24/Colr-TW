@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 exports.verifyJwt = async function(req,res) {
   // Gather the jwt access token from the request header
   const authHeader = req.headers.authorization;
+
   const token = authHeader && authHeader.split(' ')[1];
   let decoded = null;
   console.log(`Token is ${token}`);
