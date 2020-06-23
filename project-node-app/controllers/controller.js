@@ -3,22 +3,15 @@ const url = require("url");
 
 
 var formidable = require("formidable");
-var util = require("util");
-const { parse } = require("querystring");
-const jwt = require("jsonwebtoken");
-const { brotliDecompress } = require("zlib");
 var utils = require("../../util.js");
-var mysql = require("mysql");
-const { resolveAny, resolveCname } = require("dns");
 
 module.exports = http.createServer((req, res) => {
-  const articleService = require("./articleService");
   const authService = require("./authService");
   const adminService = require("./adminService");
-  var articleService = require("./articleService");
-  var authService = require("./authService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
+
+  var path = reqUrl.pathname.split('/')
 
   console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
 
@@ -95,8 +88,21 @@ module.exports = http.createServer((req, res) => {
       service.updateUser(req, res);
     });
  
-  } 
-  else if (reqUrl.pathname == "/users" && req.method == "GET") {
+  } else if (path[1] == "stats" && req.method == "GET") {
+    console.log('dam stats');
+    var my_list = [];
+    for(i = 2; i < path.length; i = i + 1) {
+      my_list.push(path[i]);
+    }
+    my_list = my_list.join(',');
+    console.log(my_list);
+    service.getStats(my_list, reqUrl.query.order).then( (response) => {
+      utils.writeJson(res, response)
+    }).catch( (response) => {
+      utils.writeJson(res, response);
+    });
+    return;
+  } else if (reqUrl.pathname == "/users" && req.method == "GET") {
      console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
      adminService.getUsers(req,res,headers);
   }
