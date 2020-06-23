@@ -109,7 +109,25 @@ function navigateToLogin() {
 }
 
 var galleryGrid = document.querySelector(".basic-grid");
-
+let postView = function (id) {
+  if(localStorage.getItem('Authorization') !== null) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+      console.log(xhttp.responseText);
+    };
+    xhttp.open("POST", "http://localhost:3000/view", true);
+    xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+    xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    const authToken = localStorage.getItem("Authorization");
+    console.log(authToken);
+    let requestBody = {
+      id_article: id
+    };
+    xhttp.setRequestHeader("Authorization", authToken);
+    xhttp.send(JSON.stringify(requestBody));
+  }
+}
 let renderPopUp = function (description, title) {
   let body = document.querySelector('body');
   
@@ -169,7 +187,7 @@ function loadItem(id, description, title) {
   popButton.innerHTML = "Show more";
 
   popButton.addEventListener('click', function () {
-    
+    postView(id);
     renderPopUp(description,title);
   });
 
