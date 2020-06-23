@@ -27,25 +27,7 @@ function loadItem(image, description) {
   let itemImage = document.createElement("IMG");
   itemImage.src = `./project-node-app/images/${image}.png`;
   itemImage.alt = ``;
-  // let addButton = document.createElement("BUTTON");
-  // addButton.classList.add("addbtn");
-  // addButton.innerHTML = "Add";
-  // addButton.id = image;
-  // addButton.addEventListener("click", () => {
-  //   const xhttp = new XMLHttpRequest();
-  //   xhttp.onload = function () {
-  //     console.log("yay");
-  //   };
-  //   xhttp.open("POST", "http://localhost:3000/articles", true);
 
-  //   xhttp.getResponseHeader("Access-Control-Allow-Origin", "");
-  //   xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "");
-  //   xhttp.setRequestHeader("Content-Type", "application/json");
-  //   // console.log(requestData.image.length);
-  //   const authToken = localStorage.getItem("Authorization");
-  //   xhttp.setRequestHeader("Authorization", authToken);
-  //   xhttp.send(JSON.stringify({ id_article: `${addButton.id}` }));
-  // });
   let itemDescription = document.createElement("P");
   itemDescription.innerHTML = description;
   let popButton = document.createElement("SPAN");
@@ -57,9 +39,7 @@ function loadItem(image, description) {
   container.appendChild(itemImage);
   container.appendChild(itemDescription);
   itemDescription.appendChild(popButton);
-  // container.appendChild(addButton);
 }
-// var btn = document.getElementsByClassName("addbtn");
 
 function renderGalleryItems(object) {
   console.log("render1");
