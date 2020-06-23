@@ -38,9 +38,13 @@
       </div>
     </header>
     <div class="page">
-      <div class="export_buttons">
-        <button id="Stat1" onclick="option()">Stats #1</button>
-        <button id="Stat2" onclick="option()">Stats #2</button>
+      <div class="cont">
+        <button class="rssButton" id="rssButton">RSS feed</button>
+        <div class="export_buttons">
+          <button id="Stat_country" onclick="option()">Stats country</button>
+          <button id="Stat_type" onclick="option()">Stats type</button>
+          <button id="Stat_brand" onclick="option()">Stats brand</button>
+        </div>
       </div>
       <div class="chart-container">
         <canvas id="myStatsChart"></canvas>

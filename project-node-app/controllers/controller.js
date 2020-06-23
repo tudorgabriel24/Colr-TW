@@ -9,9 +9,9 @@ module.exports = http.createServer((req, res) => {
   const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  // const rssCreator = require('./rssCreator');
+  const rssCreator = require("./rssCreator");
 
-  var path = reqUrl.pathname.split('/')
+  var path = reqUrl.pathname.split("/");
 
   console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
 
@@ -87,39 +87,46 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.updateUser(req, res);
     });
- 
   } else if (reqUrl.pathname == "/rss" && req.method == "GET") {
-    service.getHottest().then( (response) => {
-      const title = [response[0].name, response[1].name, response[2].name];
-      const description = [response[0].description, response[1].description, response[2].description];
-      const link = ['link1', 'link2', 'link3'];
-      console.log(title);
-      utils.writeJson(res, response);
-      // rssCreator.getRss(title, link, description);
-
-    }).catch( (response) => {
-      utils.writeJson(res, response);
-    });
- 
-    } else if (path[1] == "stats" && req.method == "GET") {
-    console.log('dam stats');
+    service
+      .getHottest()
+      .then((response) => {
+        const title = [response[0].name, response[1].name, response[2].name];
+        const description = [
+          response[0].description,
+          response[1].description,
+          response[2].description,
+        ];
+        const link = ["link1", "link2", "link3"];
+        console.log(title);
+        // utils.writeJson(res, response);
+        rssCreator.getRss(title, link, description, res);
+        utils.writeJson(res, { code: 200, description: "success" });
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  } else if (path[1] == "stats" && req.method == "GET") {
+    console.log("dam stats");
     var my_list = [];
-    for(i = 2; i < path.length; i = i + 1) {
+    for (i = 2; i < path.length; i = i + 1) {
       my_list.push(path[i]);
     }
-    my_list = my_list.join(',');
+    my_list = my_list.join(",");
     console.log(my_list);
-    service.getStats(my_list, reqUrl.query.order).then( (response) => {
-      utils.writeJson(res, response)
-    }).catch( (response) => {
-      utils.writeJson(res, response);
-    });
-    return; 
+    service
+      .getStats(my_list, reqUrl.query.order)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+    return;
   } else if (reqUrl.pathname == "/users" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.getUsers(req, res, headers);
   } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
-    
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.deleteUser(req, res, headers);
@@ -138,4 +145,4 @@ module.exports = http.createServer((req, res) => {
     );
     service.invalidRequest(req, res);
   }
-});;
+});

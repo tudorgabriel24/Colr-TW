@@ -144,6 +144,7 @@ header {
   outline: none;
   transition: 1s;
   text-decoration: none;
+  background-color: initial;
 }
 .rssButton:hover {
   color: #3a7ca5;
