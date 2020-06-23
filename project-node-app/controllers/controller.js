@@ -10,6 +10,7 @@ module.exports = http.createServer((req, res) => {
   const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
+  // const rssCreator = require('./rssCreator');
 
   var path = reqUrl.pathname.split('/')
 
@@ -88,7 +89,20 @@ module.exports = http.createServer((req, res) => {
       service.updateUser(req, res);
     });
  
-  } else if (path[1] == "stats" && req.method == "GET") {
+  } else if (reqUrl.pathname == "/rss" && req.method == "GET") {
+    service.getHottest().then( (response) => {
+      const title = [response[0].name, response[1].name, response[2].name];
+      const description = [response[0].description, response[1].description, response[2].description];
+      const link = ['link1', 'link2', 'link3'];
+      console.log(title);
+      utils.writeJson(res, response);
+      // rssCreator.getRss(title, link, description);
+
+    }).catch( (response) => {
+      utils.writeJson(res, response);
+    });
+ 
+    } else if (path[1] == "stats" && req.method == "GET") {
     console.log('dam stats');
     var my_list = [];
     for(i = 2; i < path.length; i = i + 1) {

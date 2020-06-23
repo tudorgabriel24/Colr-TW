@@ -113,6 +113,21 @@ exports.updateArticle = async function (req, res) {
     });
 };
 
+exports.getHottest = async function () {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT name, description FROM articles ORDER BY views DESC';
+    conn.query(sql, function(err, results, fields) {
+      if (err) {
+          reject({'status': 404, 'description': err});
+          return;
+      }
+      // console.log(results, fields, err);
+      // console.log(results)
+      resolve(results.slice(0, 3));
+  });
+  });
+}
+
 exports.getStats = async function (params, order_num) {
   return new Promise((resolve, reject) => {
     if (order_num == undefined) {
