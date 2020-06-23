@@ -70,11 +70,11 @@ function insertUser(fullName, email, password) {
 }
 
 function createToken(userData) {
-  const jwtExpirySeconds = 60 * 60 * 24;
+  // const jwtExpirySeconds = 60 * 60 * 24;
   console.log("USERDATA= ", userData);
   const token = jwt.sign({ id: userData.ID, admin: userData.admin }, "secret", {
     algorithm: "HS256",
-    expiresIn: jwtExpirySeconds,
+    // expiresIn: jwtExpirySeconds,
   });
   return token;
 }
@@ -83,7 +83,7 @@ exports.loginRequest = async (req, resp, headers) => {
   console.log("HEADERS", headers);
   // const reqUrl = url.parse(req.url, true);
   let response = {
-    success: false,
+    success: false
   };
   let body = "";
 

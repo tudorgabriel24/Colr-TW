@@ -204,8 +204,8 @@ header {
   background-color: #fff;
   padding: 0.5rem;
   color: #323232;
-  border: 0.1rem solid #3d3d3d;
-  width: 15%;
+  border: 0.05rem solid #3d3d3d;
+  width: 200px;
   border-radius: 0.5rem;
   align-self: center;
   transition-duration: 0.2s;
@@ -235,4 +235,11 @@ header {
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 10rem;
+}
+
+.cont {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: auto;
 }
