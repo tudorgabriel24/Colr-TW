@@ -133,7 +133,7 @@ header {
   margin-bottom: 2rem;
   transition: 0.2s;
 }
-
+/* 
 .container {
   text-align: center;
   background-color: #e6e6e6;
@@ -166,7 +166,7 @@ header {
   align-self: center;
   outline: none;
   color: #323232;
-}
+} */
 .removeButton {
   background-color: #fff;
   padding: 0.5rem;
@@ -180,7 +180,7 @@ header {
   font-size-adjust: 0.5rem;
   outline: none;
   margin: 0.3rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 .removeButton:hover {
   background-color: #16425b;
@@ -198,6 +198,7 @@ header {
 .export_buttons {
   text-align: center;
   margin-bottom: 2rem;
+  width: auto;
 }
 .export_buttons button {
   background-color: #fff;
@@ -224,4 +225,14 @@ header {
   .export_buttons button {
     width: 10%;
   }
+}
+
+.chart-container {
+  width: 900px !important;
+  height: 300px !important;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 10rem;
 }
