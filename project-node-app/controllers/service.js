@@ -25,7 +25,7 @@ exports.addArticle = async function (req, res) {
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = decoded;
+  jsonData["user_id"] = decoded.id;
   var imagePath = jsonData.imagePath;
   delete jsonData["imagePath"];
 

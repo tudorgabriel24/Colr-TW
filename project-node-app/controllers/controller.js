@@ -10,8 +10,8 @@ module.exports = http.createServer((req, res) => {
   const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  const rssCreator = require('./rssCreator');
-  const docBookCreator = require('./docBookCreator');
+  // const rssCreator = require('./rssCreator');
+  // const docBookCreator = require('./docBookCreator');
 
   var path = reqUrl.pathname.split('/')
 
