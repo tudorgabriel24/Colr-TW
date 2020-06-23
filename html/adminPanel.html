@@ -64,8 +64,124 @@
         </div>
       </div>
 
-      <div id="update-article-dialog">
-        
+      <div class="update-article-dialog dialog-hidden">
+        <p id="dialog-article">Update article</p>
+
+        <div class="inputs-container">
+          <label for="input-title">Title</label>
+          <input name="input-title" type="text" id="input-title">
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-description">Description</label>
+          <textarea name="input-description" id="input-description" rows="3" cols="50"></textarea>
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-current-state">Current state</label>
+          <select name="input-current-state" id="input-current-state">
+            <option value="Any">Any</option>
+            <option value="Brand New">Brand new</option>
+            <option value="Slighty Damaged">Slighty damaged</option>
+            <option value="Damaged">Damaged</option>
+          </select> 
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-country">Country</label>
+          <select name="input-country" id="input-country">
+            <option value="Any">Any</option>
+            <option value="Russia">Russia</option>
+            <option value="Germany">Germany</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="France">France</option>
+            <option value="Italy">Italy</option>
+            <option value="Spain">Spain</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="Poland">Poland</option>
+            <option value="Romania">Romania</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Czech Republic">Czech Republic</option>
+            <option value="Greece">Greece</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Hungary">Hungary</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Austria">Austria</option>
+            <option value="Serbia">Serbia</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Bulgaria">Bulgaria</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Finland">Finland</option>
+            <option value="Slovakia">Slovakia</option>
+            <option value="Norway">Norway</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Croatia">Croatia</option>
+            <option value="Moldova">Moldova</option>
+            <option value="Bosnia and Herzegovina"
+              >Bosnia and Herzegovina</option
+            >
+            <option value="Albania">Albania</option>
+            <option value="Lithuania">Lithuania</option>
+            <option value="North Macedonia">North Macedonia</option>
+            <option value="Slovenia">Slovenia</option>
+            <option value="Latvia">Latvia</option>
+            <option value="Estonia">Estonia</option>
+            <option value="Montenegro">Montenegro</option>
+            <option value="Luxembourg">Luxembourg</option>
+            <option value="Malta">Malta</option>
+            <option value="Iceland">Iceland</option>
+          </select>
+        </div>
+
+        <div class="inputs-container">
+          <label for="price-range-input">Price range</label>
+          <select name="price-range-input" id="price-range-input">
+            <option value="Any">Any</option>
+            <option value="Under 100">Under 100</option>
+            <option value="100-200">100-200</option>
+            <option value="200-500">200-500</option>
+            <option value="500-1000">500-1000</option>
+            <option value=1000-1500>1.000-1.500</option>
+            <option value="1500-2000">1.500-2.000</option>
+            <option value="2000-3000">2.000-3.000</option>
+            <option value="3000-4000">3.000-4.000</option>
+            <option value="4000-5000">4.000-5.000</option>
+            <option value="Over 5000">Over 5.000</option>
+          </select>
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-year">Year</label>
+          <input type="number" min="0" max="2020" name="input-year" id="input-year">
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-type">Type</label>
+          <select name="input-type" id="input-type">
+            <option value="Any">Any</option>
+            <option value="Cap">Cap</option>
+            <option value="Label">Label</option>
+            <option value="Cork">Cork</option>
+          </select>
+        </div>
+
+        <div class="inputs-container">
+          <label for="input-alcoholic">Alcoholic</label>
+          <input type="checkbox" name="input-alcoholic" id="alcoholic-checkbox">
+        </div>
+
+        <div id="dialog-update-article-controllers">
+          <div id="save-changes-button">
+            <i class="fas fa-save"></i>
+            <p>SAVE</p>
+          </div>
+          <div id="close-without-save-button">
+            <i class="fas fa-times"></i>
+            <p>CLOSE</p>
+          </div>
+        </div>
       </div>
 
       <script src="../js/adminPanel.js"></script>

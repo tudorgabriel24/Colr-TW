@@ -2,24 +2,12 @@ const verifyJwt = require("./jwtMiddleware").verifyJwt;
 const connection = require("../server").connection;
 const url = require("url");
 
-// let setHeader = (headers, token) => {
-//   console.log(headers);
-//   headers = {
-//     ...headers,
-//     'Authorization': 'Bearer ' + token
-//   }
-//   console.log(headers);
-//   return headers;
-
-// }
-
 let getAllUsers = async function () {
   let usersQuery = `SELECT email,fullName FROM USERS`;
   let usersQueryPromise = new Promise((resolve, reject) => {
     connection.query(usersQuery, (err, result) => {
       if (err) reject(err);
       let dbUsers = [];
-      console.log(result);
       if (result[0] === undefined) {
         console.log("there are no users saved in database");
       } else {
@@ -36,9 +24,11 @@ let getUserArticles = async function (id) {
   let articlesQuery = `SELECT * FROM ARTICLES WHERE user_id = '${id}'`;
   let articlesQueryPromise = new Promise((resolve, reject) => {
     connection.query(articlesQuery, (err, result) => {
-      if (err) resolve(null);
+      if (err) {
+        console.log(err);
+        resolve(null);
+      }
       let dbArticles = [];
-      console.log(result);
       if (result[0] === undefined) {
         console.log("this user has no articles");
       } else {
@@ -55,9 +45,11 @@ let getUserIdByEmail = async function (email) {
   let usersQuery = `SELECT ID FROM USERS WHERE email = '${email}'`;
   let usersQueryPromise = new Promise((resolve, reject) => {
     connection.query(usersQuery, (err, result) => {
-      if (err) resolve(null);
+      if (err) {
+        console.log(err);
+        resolve(null);
+      }
       let dbUsers = [];
-      console.log(result);
       if (result[0] === undefined) {
         console.log("user doesn`t exist");
       } else {
@@ -75,9 +67,11 @@ let deleteUser = async function (email) {
   let deleteQuery = `DELETE FROM users WHERE email = '${email}'`;
   let deleteQueryPromise = new Promise((resolve, reject) => {
     connection.query(deleteQuery, (err, result) => {
-      if (err) resolve(false);
-      console.log(err);
-      console.log(result);
+      if (err) {
+        console.log(err);
+        resolve(false);
+      }
+
       resolve(true);
     });
   });
@@ -90,8 +84,10 @@ let deleteArticle = async function (id) {
   let deleteQuery = `DELETE FROM articles WHERE id = '${id}'`;
   let deleteQueryPromise = new Promise((resolve, reject) => {
     connection.query(deleteQuery, (err, result) => {
-      if (err) resolve(false);
-      console.log(result);
+      if (err) {
+        console.log(err);
+        resolve(false);
+      }
       resolve(true);
     });
   });
@@ -99,11 +95,26 @@ let deleteArticle = async function (id) {
   return deleteQueryPromise;
 };
 
+let updateArticleDB = async function (article) {
+  article = JSON.parse(article);
+  let updateArticleQuery = `UPDATE articles SET name = '${article.name}', description = '${article.description}', currentState = '${article.currentState}', country = '${article.country}', priceRange = '${article.priceRange}', year = ${article.year}, type = '${article.type}', alcoholic = '${article.alcoholic}' WHERE ID = '${article.ID}';`;
+  console.log(updateArticleQuery);
+  let updateArticleQueryPromise = new Promise ((resolve,reject) => {
+    connection.query(updateArticleQuery, (err,result) => {
+      if(err) {
+        console.log(err);
+        resolve(false);
+      }
+      resolve(true);
+    })
+  });
+  return updateArticleQueryPromise;
+};
+
 exports.getUsers = async function (req, res, headers) {
   let body = "";
 
   req.on("data", (data) => {
-    console.log("req daata");
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
@@ -115,7 +126,6 @@ exports.getUsers = async function (req, res, headers) {
         success: false,
       };
       let adminData = await verifyJwt(req, res);
-      console.log(adminData);
       if (adminData !== null || adminData !== undefined) {
         if (adminData.admin === true) {
           responseBody.users = await getAllUsers();
@@ -123,9 +133,7 @@ exports.getUsers = async function (req, res, headers) {
           headers = { ...headers, Authorization: req.headers.authorization };
         }
       }
-      console.log("RESPONSE ", responseBody);
       res.writeHead(responseBody.success ? 200 : 401, headers);
-      console.log("HEADERS ", headers);
       res.write(JSON.stringify(responseBody));
       res.end();
     } catch (err) {
@@ -137,7 +145,6 @@ exports.getUsers = async function (req, res, headers) {
 exports.deleteUser = async function (req, res, headers) {
   var body = "";
   req.on("data", (data) => {
-    console.log("req daata");
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
@@ -150,7 +157,6 @@ exports.deleteUser = async function (req, res, headers) {
         success: false,
       };
       let adminData = await verifyJwt(req, res);
-      console.log(adminData);
       if (adminData !== null || adminData !== undefined) {
         if (adminData.admin === true) {
           let dbResponse = await deleteUser(user.email);
@@ -164,7 +170,6 @@ exports.deleteUser = async function (req, res, headers) {
         ...headers,
         Authorization: `Bearer ${req.headers.authorization}`,
       };
-      console.log(responseBody);
       res.writeHead(responseBody.success ? 200 : 401, headers);
       res.write(JSON.stringify(responseBody));
       res.end();
@@ -179,7 +184,6 @@ exports.getUserArticles = async function (req, res, headers) {
   let body = "";
 
   req.on("data", (data) => {
-    console.log("req daata");
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
@@ -187,7 +191,6 @@ exports.getUserArticles = async function (req, res, headers) {
   req.on("end", async () => {
     try {
       let email = reqUrl.query.email;
-      console.log(email);
       let user = await getUserIdByEmail(email);
       let responseBody = {
         success: false,
@@ -195,7 +198,6 @@ exports.getUserArticles = async function (req, res, headers) {
       };
       if (user.ID !== null) {
         let userArticles = await getUserArticles(user.ID);
-        console.log(userArticles);
         if (userArticles !== null) {
           responseBody = {
             success: true,
@@ -208,7 +210,6 @@ exports.getUserArticles = async function (req, res, headers) {
         ...headers,
         Authorization: `Bearer ${req.headers.authorization}`,
       };
-      console.log(responseBody);
       res.writeHead(responseBody.success ? 200 : 401, headers);
       res.write(JSON.stringify(responseBody));
       res.end();
@@ -221,7 +222,6 @@ exports.getUserArticles = async function (req, res, headers) {
 exports.deleteUserArticles = async function (req, res, headers) {
   var body = "";
   req.on("data", (data) => {
-    console.log("req daata");
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
@@ -235,12 +235,48 @@ exports.deleteUserArticles = async function (req, res, headers) {
         success: false,
       };
       let adminData = await verifyJwt(req, res);
-      console.log(adminData);
       if (adminData !== null || adminData !== undefined) {
-        if (adminData.admin === true && (id !== undefined || id !== null)) {
+        if (adminData.admin === true && (id !== undefined && id !== null)) {
           let dbResponse = await deleteArticle(id);
           if (dbResponse === true) {
             responseBody.message = "Article has been deleted";
+            responseBody.success = true;
+          }
+        }
+      }
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${req.headers.authorization}`,
+      };
+      res.writeHead(responseBody.success ? 200 : 401, headers);
+      res.write(JSON.stringify(responseBody));
+      res.end();
+    } catch (err) {
+      console.log(err);
+    }
+  });
+};
+
+exports.updateArticle = async function (req, res, headers) {
+  var body = "";
+  req.on("data", (data) => {
+    body += data;
+    if (body.length > 1e6) req.connection.destroy();
+  });
+
+  req.on("end", async () => {
+    try {
+      let responseBody = {
+        message: "Article cannot be edited!",
+        success: false,
+      };
+
+      let adminData = await verifyJwt(req, res);
+      if (adminData !== null || adminData !== undefined) {
+        if (adminData.admin === true && (body !== null && body !== {})) {
+          let dbResponse = await updateArticleDB(body);
+          if (dbResponse === true) {
+            responseBody.message = "Article has been updated";
             responseBody.success = true;
           }
         }
@@ -253,8 +289,9 @@ exports.deleteUserArticles = async function (req, res, headers) {
       res.writeHead(responseBody.success ? 200 : 401, headers);
       res.write(JSON.stringify(responseBody));
       res.end();
-    } catch (err) {
+    }
+    catch(err) {
       console.log(err);
     }
   });
-};
+}

@@ -127,9 +127,11 @@ async function deleteArticle(id) {
     let responseBody = JSON.parse(xhttp.responseText);
     console.log(responseBody.success);
     if (responseBody.success) {
-      // location.reload();
-      let deletedArticle = document.getElementById(id);
-      deletedArticle.remove();
+      location.reload();
+      console.log(id);
+      // let deletedArticle = document.getElementById(`${id}`);
+      // console.log(deleteArticle);
+      // deletedArticle.remove();
     }
   };
   xhttp.open("DELETE", `http://localhost:3000/articles?id=${id}`, true);
@@ -142,9 +144,75 @@ async function deleteArticle(id) {
   xhttp.send();
 }
 
-function renderArticles(object, fullName) {
-  let sectionContainer = document.getElementById("admin-panel-section");
-  document.getElementById("articles-container").remove();
+async function updateArticleRequest(article) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    let responseBody = JSON.parse(xhttp.responseText);
+    console.log(responseBody.success);
+    if (responseBody.success) {
+      location.reload();
+      console.log(id);
+      // let deletedArticle = document.getElementById(`${id}`);
+      // console.log(deleteArticle);
+      // deletedArticle.remove();
+    }
+  };
+  xhttp.open("PUT", `http://localhost:3000/articles`, true);
+  xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  const authToken = localStorage.getItem("Authorization");
+  console.log(authToken);
+  xhttp.setRequestHeader("Authorization", authToken);
+  xhttp.send(JSON.stringify(article));
+}
+
+function updateArticle(article) {
+  console.log(article);
+  let updatedArticle = article;
+  let updateDialog = document.getElementsByClassName('update-article-dialog');
+  updateDialog[0].classList.remove('dialog-hidden');
+  let closeButton = document.getElementById('close-without-save-button');
+  let saveButton = document.getElementById('save-changes-button');
+
+  let title = document.getElementById('input-title');
+  title.value = article.name;
+  let description = document.getElementById('input-description');
+  description.value = article.description;
+  let currentState = document.getElementById('input-current-state');
+  currentState.value = article.currentState;
+  let country = document.getElementById('input-country');
+  country.value = article.country;
+  let price = document.getElementById('price-range-input')
+  price.value = article.priceRange;
+  let year = document.getElementById('input-year');
+  year.value = article.year;
+  let type = document.getElementById('input-type');
+  type.value = article.type;
+  let alcoholic = document.getElementById('alcoholic-checkbox');
+  alcoholic.checked = article.alcoholic === 'on' ? true : false;
+
+  closeButton.addEventListener('click', function () {
+    updateDialog[0].classList.add('dialog-hidden');
+  });
+
+  saveButton.addEventListener('click', function() {
+    updatedArticle.name = title.value;
+    updatedArticle.description = description.value;
+    updatedArticle.currentState = currentState.value;
+    updatedArticle.country = country.value;
+    updatedArticle.priceRange = price.value;
+    updatedArticle.year = year.value;
+    updatedArticle.type = type.value;
+    updatedArticle.alcoholic = alcoholic.checked ? 'on' : 'off';
+    console.log(updatedArticle);
+    updateArticleRequest(updatedArticle);
+  });
+}
+
+function renderArticles(object,fullName) {
+  let sectionContainer = document.getElementById('admin-panel-section');
+  document.getElementById('articles-container').remove();
   let articlesContainer = document.createElement("DIV");
   articlesContainer.id = "articles-container";
   sectionContainer.appendChild(articlesContainer);
@@ -191,6 +259,10 @@ function renderArticles(object, fullName) {
 
     let updateArticleText = document.createElement("SPAN");
     updateArticleText.innerHTML = "UPDATE";
+
+    updateArticleButton.addEventListener('click', function () {
+      updateArticle(object[index]);
+    })
 
     let deleteArticleButton = document.createElement("DIV");
     deleteArticleButton.classList.add("delete-article-button");
