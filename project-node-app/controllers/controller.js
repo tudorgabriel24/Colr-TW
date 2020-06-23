@@ -49,18 +49,20 @@ module.exports = http.createServer((req, res) => {
       service.getArticles(req, res);
     }
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
+    console.log("Se asteapta formularul");
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
         utils.writeJson({ code: 402, description: err });
       }
+      console.log("Nici o eroare");
       req.body = fields;
       req.body.imagePath = files.image.path;
       console.log(req.body);
+      console.log("Se apeleaza");
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.updateArticle(req, res, headers);
     // let body = "";

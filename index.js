@@ -32,7 +32,9 @@ function loadItem(image, description) {
   itemDescription.innerHTML = description;
   let popButton = document.createElement("SPAN");
   popButton.classList.add("pop_button");
-  popButton.dataset.target = "#modal";
+  // popButton.setAttribute("ID", "modal");
+  popButton.id = "modal";
+  // popButton.dataset.target = "#modal";
   popButton.innerHTML = "Show more";
 
   galleryGrid.appendChild(container);
@@ -102,4 +104,13 @@ function refreshGallery(object) {
   galleryGrid.classList.add("basic-grid");
   body.appendChild(galleryGrid);
   renderGalleryItems(object);
+}
+
+var showBtn = document.getElementById("modal");
+showBtn.addEventListener(onclick, function () {
+  addView();
+});
+
+function addView() {
+  console.log("A fost click");
 }

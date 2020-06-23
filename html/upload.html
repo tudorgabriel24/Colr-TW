@@ -145,10 +145,16 @@
             console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open('POST', 'http://localhost:3000/articles', true);
-          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
-          request.setRequestHeader("Content-type", "application/json");
-          request.setRequestHeader('Authorization', localStorage.getItem('Authorization'));
+          request.open("POST", "http://localhost:3000/articles", true);
+          request.setRequestHeader(
+            "Access-Control-Expose-Headers",
+            "Authorization"
+          );
+          // request.setRequestHeader("Content-type", "application/json");
+          request.setRequestHeader(
+            "Authorization",
+            localStorage.getItem("Authorization")
+          );
           // var dataToSend = {'year': 2000};
           // console.log('dataToSend');
           request.send(fd);

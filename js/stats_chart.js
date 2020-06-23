@@ -8,7 +8,7 @@ Chart.defaults.global.defaultFontColor = "#777";
 // var myChart = new Chart(ctx, opt);
 
 //aici trebuie puse statistici
-var label_list = ["Brand", "Label", "Cap", "Country"];
+var label_list = ["Timisoreana", "Bergenbier", "Cap", "Country"];
 var views_list = [60, 70, 100, 26];
 var times_list = [7, 30, 2, 10];
 
