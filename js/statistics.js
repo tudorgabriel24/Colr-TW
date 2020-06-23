@@ -1,5 +1,68 @@
 var myChart;
 
+window.onload = function renderMenuItems () {
+  if(localStorage.getItem("Authorization") !== undefined) {
+    getUser();
+  }
+  else {
+    window.location.replace('http://localhost:5500/index.html');
+  }
+}
+
+let getUser = function () {
+  console.log("AICI AA");
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    console.log(xhttp.responseText);
+    let responseBody = JSON.parse(xhttp.responseText);
+    console.log(responseBody);
+    renderMenuData(responseBody);
+  };
+  xhttp.open("GET", "http://localhost:3000/me", true);
+  xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+  // xhttp.setRequestHeader("Content-Type", "application/json");
+  const authToken = localStorage.getItem("Authorization");
+  console.log(authToken);
+  xhttp.setRequestHeader("Authorization", authToken);
+  xhttp.send();
+
+}
+
+let renderMenuData = function (response) {
+  let menuContainer = document.getElementById('nav-container');
+  let homePage = document.createElement('a');
+  homePage.href = '../index.html';
+  homePage.innerHTML = 'Home';
+  menuContainer.appendChild(homePage);
+  if(response.success === true) {
+    let statisticsPage = document.createElement('a');
+    statisticsPage.href = '../html/export.html';
+    statisticsPage.innerHTML = 'Statistics';
+    let uploadPage = document.createElement('a');
+    uploadPage.href = '../html/upload.html';
+    uploadPage.innerHTML = 'Upload articles';
+    menuContainer.appendChild(statisticsPage);
+    menuContainer.appendChild(uploadPage);
+
+    if(response.user.admin) {
+      let adminPage = document.createElement('a');
+      adminPage.href = '../html/adminPanel.html';
+      adminPage.innerHTML = "Admin panel";
+      menuContainer.appendChild(adminPage);
+    }
+    let logout = document.createElement('a');
+    logout.href = '../index.html';
+    logout.innerHTML = 'Logout';
+    menuContainer.appendChild(logout);
+
+    logout.addEventListener('click', function () {
+      // window.location.replace('http://localhost:5500/index.html');
+      localStorage.removeItem('Authorization');
+    })
+  }
+}
+
 function exportCSV() {
   let csvContent = "data:text/csv;charset=utf-8,";
   console.log(rows);

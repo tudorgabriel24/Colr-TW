@@ -173,7 +173,14 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteFromCart(req, res);
     });
-  } else {
+  } 
+  else if(reqUrl.pathname == "/me" && req.method == "GET") {
+    console.log(
+      "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
+    );
+    service.getUserData(req, res, headers);
+  }
+  else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );

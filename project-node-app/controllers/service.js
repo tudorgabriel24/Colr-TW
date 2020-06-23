@@ -6,11 +6,8 @@ const crypto = require("crypto");
 const fs = require("fs");
 const { assert } = require("console");
 const util = require("util");
-const { rejects } = require("assert");
-const verifyJwt = require('./jwtMiddleware').verifyJwt;
-const conn = require('../server').connection;
-
-console.log(conn);
+const verifyJwt = require("./jwtMiddleware").verifyJwt;
+const connection = require("../server").connection;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
@@ -25,7 +22,7 @@ exports.addArticle = async function (req, res) {
   const hash = crypto.createHash("md5");
   hash.update(Date.now().toString());
   jsonData["ID"] = hash.digest("hex");
-  jsonData["user_id"] = decoded;
+  jsonData["user_id"] = decoded.id;
   var imagePath = jsonData.imagePath;
   delete jsonData["imagePath"];
 
@@ -126,7 +123,7 @@ exports.updateArticle = async function (req, res) {
 exports.getHottest = async function () {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT name, description FROM articles ORDER BY views DESC';
-    conn.query(sql, function(err, results, fields) {
+    connection.query(sql, function(err, results, fields) {
       if (err) {
           reject({'status': 404, 'description': err});
           return;
@@ -145,7 +142,7 @@ exports.getStats = async function (params, order_num, firstN) {
     }
     const sql = `SELECT ${params}, COUNT(*) timesUploaded, SUM(views) totalViews FROM articles GROUP BY ${params} ORDER BY ${order_num} DESC`;
     console.log(sql);
-    conn.query(sql, function(err, results, fields) {
+    connection.query(sql, function(err, results, fields) {
       if (err) {
           reject({'status': 404, 'description': err});
           return;
@@ -232,7 +229,7 @@ exports.deleteArticle = async function (req, res) {
 
 exports.addUserView = async function (req, res) {
   var decoded = await verifyJwt(req, res);
-  if (req.body.user_id != decoded.id) {
+  if (decoded.id == undefined || decoded.id == null) {
     utils.writeJson(res, {
       code: 400,
       description: `watch doesn't count`,
@@ -315,6 +312,102 @@ exports.deletFromCart = async function (req, res) {
     .catch(function (response) {
       utils.writeJson(res, response);
     });
+};
+
+let getAdminData = async function (ID) {
+  console.log(ID);
+  let adminDataQuery = `SELECT * FROM ADMINS WHERE ID = '${ID}'`;
+  let adminQueryPromise = new Promise((resolve, reject) => {
+    connection.query(adminDataQuery, (err, result) => {
+      if (err) reject(err);
+      let dbAdminData = null;
+      if (result[0] === undefined) {
+        console.log("admin not exist");
+      } else {
+        dbAdminData = {
+          fullName: result[0].fullName,
+          admin: true
+        };
+      }
+      resolve(dbAdminData);
+    });
+  });
+  return adminQueryPromise;
+};
+
+let getUserDataFromDB = async function (ID) {
+  console.log(ID);
+  let userDataQuery = `SELECT * FROM USERS WHERE ID = '${ID}'`;
+  let userQueryPromise = new Promise((resolve, reject) => {
+    connection.query(userDataQuery, (err, result) => {
+      if (err) reject(err);
+      let dbUserData = null;
+      if (result[0] === undefined) {
+        console.log("user not exist");
+      } else {
+        dbUserData = {
+          fullName: result[0].fullName,
+          admin: true
+        };
+      }
+      resolve(dbUserData);
+    });
+  });
+  return userQueryPromise;
+}
+
+exports.getUserData = async function (req,res,headers) {
+  var body = "";
+  req.on("data", (data) => {
+    body += data;
+    if (body.length > 1e6) req.connection.destroy();
+  });
+
+  req.on("end", async () => {
+    try {
+      let responseBody = {
+        message: "User not exist!",
+        success: false,
+      };
+      let userData = await verifyJwt(req, res);
+      if (userData !== null || userData !== undefined) {
+        if (userData.admin === true) {
+          let dbResponse = await getAdminData(userData.id);
+          if (dbResponse !== null) {
+            responseBody = {
+              success: true,
+              user: {
+                fullName: dbResponse.fullName,
+                admin: true
+              }
+            }
+          }
+        }
+        else {
+          let dbResponse = await getUserDataFromDB(userData.id);
+          if (dbResponse !== null) {
+            responseBody = {
+              success: true,
+              user: {
+                fullName: dbResponse.fullName,
+                admin: false
+              }
+            }
+          }
+
+        }
+      }
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${req.headers.authorization}`,
+      };
+      res.writeHead(responseBody.success ? 200 : 401, headers);
+      res.write(JSON.stringify(responseBody));
+      res.end();
+    } catch (err) {
+      console.log(err);
+    }
+  });
 };
 
 exports.invalidRequest = function (req, res) {
