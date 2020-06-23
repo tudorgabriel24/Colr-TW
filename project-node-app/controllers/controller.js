@@ -3,6 +3,7 @@ const url = require("url");
 
 var formidable = require("formidable");
 var utils = require("../../util.js");
+const { time } = require("console");
 
 module.exports = http.createServer((req, res) => {
   const authService = require("./authService");
@@ -10,6 +11,7 @@ module.exports = http.createServer((req, res) => {
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
   const rssCreator = require("./rssCreator");
+  const docBookCreator = require("./docBookCreator");
 
   var path = reqUrl.pathname.split("/");
 
@@ -99,9 +101,31 @@ module.exports = http.createServer((req, res) => {
         ];
         const link = ["link1", "link2", "link3"];
         console.log(title);
-        // utils.writeJson(res, response);
-        rssCreator.getRss(title, link, description, res);
-        utils.writeJson(res, { code: 200, description: "success" });
+        utils.writeJson(res, response);
+        rssCreator.getRss(title, link, description);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  } else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
+    service
+      .getStats(reqUrl.query.param, 3, 10)
+      .then((response) => {
+        var params = [];
+        var timesUploaded = [];
+        var totalViews = [];
+        for (i = 0; i < response.length; i = i + 1) {
+          params.push(response[i][reqUrl.query.param]);
+          timesUploaded.push(response[i]["timesUploaded"]);
+          totalViews.push(response[i]["totalViews"]);
+        }
+        utils.writeJson(res, response);
+        docBookCreator.getDoc(
+          totalViews,
+          timesUploaded,
+          params,
+          reqUrl.query.param
+        );
       })
       .catch((response) => {
         utils.writeJson(res, response);
@@ -115,7 +139,7 @@ module.exports = http.createServer((req, res) => {
     my_list = my_list.join(",");
     console.log(my_list);
     service
-      .getStats(my_list, reqUrl.query.order)
+      .getStats(my_list, reqUrl.query.order, 4)
       .then((response) => {
         utils.writeJson(res, response);
       })

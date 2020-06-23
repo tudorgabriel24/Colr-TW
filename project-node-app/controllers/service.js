@@ -138,7 +138,7 @@ exports.getHottest = async function () {
   });
 }
 
-exports.getStats = async function (params, order_num) {
+exports.getStats = async function (params, order_num, firstN) {
   return new Promise((resolve, reject) => {
     if (order_num == undefined) {
       order_num = 3;
@@ -152,7 +152,7 @@ exports.getStats = async function (params, order_num) {
       }
       // console.log(results, fields, err);
       console.log(results)
-      resolve(results.slice(0, 4));
+      resolve(results.slice(0, firstN));
   });
   });
 }
