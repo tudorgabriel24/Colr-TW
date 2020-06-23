@@ -10,10 +10,7 @@ var title = ["News from today", "News from yesterday", "News from past"];
 var link = ["link from today", "link from yesterday", "link from past"];
 var description = ["what happened today", "what happened yesterday"];
 
-exports.getRss = async function getRss(req, res) {
-  var title = [];
-  var link = [];
-  var description = [];
+exports.getRss = async function getRss(title, link, description) {
   var obj = {
     rss: {
       "@version": "2.0",
