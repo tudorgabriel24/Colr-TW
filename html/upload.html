@@ -187,9 +187,6 @@
         let responseBody = JSON.parse(xhttp.responseText);
         console.log(responseBody);
         renderMenuData(responseBody);
-        if(responseBody.success === true) {
-          changeTopMenuName(responseBody.user.fullName);
-        }
       };
       xhttp.open("GET", "http://localhost:3000/me", true);
       xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
@@ -200,14 +197,6 @@
       xhttp.setRequestHeader("Authorization", authToken);
       xhttp.send();
 
-    }
-
-    let changeTopMenuName = function (fullName) {
-      let showUsername = document.querySelector("#userLogin span div");
-      let userContaier = document.getElementById('userLogin');
-      userContaier.onclick = "";
-      showUsername.innerHTML = fullName;
-      console.log("here");
     }
 
     let renderMenuData = function (response) {

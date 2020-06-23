@@ -62,6 +62,8 @@ let changeTopMenuName = function (fullName) {
   console.log("here");
 }
 
+
+
 let renderMenuData = function (response) {
   let menuContainer = document.getElementById('nav-container');
   let homePage = document.createElement('a');
@@ -108,12 +110,52 @@ function navigateToLogin() {
 
 var galleryGrid = document.querySelector(".basic-grid");
 
-function loadItem(image, description) {
+let renderPopUp = function (description, title) {
+  let body = document.querySelector('body');
+  
+  let popUpModal = document.createElement('DIV');
+  popUpModal.id = 'pop-up-modal';
+  let popUpTitle = document.createElement('P');
+  popUpTitle.id = 'pop-up-title';
+  popUpTitle.innerHTML = title;
+  let popUpDescription = document.createElement('P');
+  popUpDescription.id = 'pop-up-description';
+  popUpDescription.innerHTML = description;
+  let popUpCloseContainer = document.createElement('DIV');
+  popUpCloseContainer.id = 'pop-up-close-container';
+  let closeIcon = document.createElement('I');
+  closeIcon.classList.add('fas','fa-times','pop-up-close-icon');
+  let closeText = document.createElement('P');
+  closeText.innerHTML = "CLOSE";
+
+  body.appendChild(popUpModal);
+  popUpModal.appendChild(popUpTitle);
+  popUpModal.appendChild(popUpDescription);
+  popUpModal.appendChild(popUpCloseContainer);
+  popUpCloseContainer.appendChild(closeIcon);
+  popUpCloseContainer.appendChild(closeText);
+
+  popUpCloseContainer.addEventListener('click', function () {
+    popUpModal.remove();
+  });
+}
+
+
+//  <div id="pop-up-modal">
+// <p id="pop-up-title">Title</p>
+// <p id= "pop-up-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum alias sunt cumque officia, reprehenderit nihil ipsum dolore. Sunt ad illum distinctio libero cumque labore cum placeat a pariatur! Eligendi, consequatur.</p>
+// <div id="pop-up-close-container">
+//   <i class="fas fa-times pop-up-close-icon"></i>
+//   <p>CLOSE</p>
+// </div>
+// </div> 
+
+function loadItem(id, description, title) {
   console.log("render2");
   let container = document.createElement("DIV");
   container.classList.add("container");
   let itemImage = document.createElement("IMG");
-  itemImage.src = `./project-node-app/images/${image}.png`;
+  itemImage.src = `./project-node-app/images/${id}.png`;
   itemImage.alt = ``;
 
   let bottomArticleContainer = document.createElement('DIV');
@@ -126,6 +168,11 @@ function loadItem(image, description) {
   popButton.dataset.target = "#modal";
   popButton.innerHTML = "Show more";
 
+  popButton.addEventListener('click', function () {
+    
+    renderPopUp(description,title);
+  });
+
   galleryGrid.appendChild(container);
   container.appendChild(itemImage);
   container.appendChild(bottomArticleContainer);
@@ -137,7 +184,7 @@ function renderGalleryItems(object) {
   console.log("render1");
   if (!articlesLoaded) {
     for (let index = 0; index < object.length; index++) {
-      loadItem(object[index].ID, object[index].description);
+      loadItem(object[index].ID, object[index].description, object[index].name);
     }
   }
 
