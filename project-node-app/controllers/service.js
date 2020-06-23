@@ -11,12 +11,11 @@ const connection = require("../server").connection;
 
 exports.addArticle = async function (req, res) {
   var jsonData = req.body;
-  res.writeHead(200, { "Access-Control-Allow-Origin": "*" });
-  console.log("before decoding");
-  // var decoded = await verifyJwt(req, res);
-  var decoded = "f2e0816f133d41017ea78b426d17f955";
-  if (decoded == null) {
-    console.log("utilizator nelogat");
+  res.writeHead(200, {"Access-Control-Allow-Origin": "*"});
+  console.log('before decoding');
+  var decoded = await verifyJwt(req, res);
+  if (decoded == null || decoded == undefined) {
+    console.log('utilizator nelogat');
     return;
   }
   console.log("decoded");
@@ -120,6 +119,40 @@ exports.updateArticle = async function (req, res) {
       utils.writeJson(res, response);
     });
 };
+
+exports.getHottest = async function () {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT name, description FROM articles ORDER BY views DESC';
+    connection.query(sql, function(err, results, fields) {
+      if (err) {
+          reject({'status': 404, 'description': err});
+          return;
+      }
+      // console.log(results, fields, err);
+      // console.log(results)
+      resolve(results.slice(0, 3));
+  });
+  });
+}
+
+exports.getStats = async function (params, order_num) {
+  return new Promise((resolve, reject) => {
+    if (order_num == undefined) {
+      order_num = 3;
+    }
+    const sql = `SELECT ${params}, COUNT(*) timesUploaded, SUM(views) totalViews FROM articles GROUP BY ${params} ORDER BY ${order_num} DESC`;
+    console.log(sql);
+    connection.query(sql, function(err, results, fields) {
+      if (err) {
+          reject({'status': 404, 'description': err});
+          return;
+      }
+      // console.log(results, fields, err);
+      console.log(results)
+      resolve(results.slice(0, 4));
+  });
+  });
+}
 
 exports.getArticles = function (req, res) {
   var jsonData = req.body;
