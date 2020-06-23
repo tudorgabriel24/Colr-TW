@@ -15,11 +15,6 @@
             >&times;</a
           >
           <div style="margin-top: 150px;" id='nav-container'>
-            <!-- <a href="../index.html">Home</a>
-            <a href="../html/export.html">Statistics</a>
-            <a href="../html/upload.html">Upload article</a>
-            <a href="../html/adminPanel.html">Admin panel</a>
-            <a href="../html/chart.html">Most popular</a> -->
           </div>
         </div>
         <div>
@@ -113,9 +108,7 @@
           <option value="Ireland">Ireland</option>
           <option value="Croatia">Croatia</option>
           <option value="Moldova">Moldova</option>
-          <option value="Bosnia and Herzegovina"
-            >Bosnia and Herzegovina</option
-          >
+          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
           <option value="Albania">Albania</option>
           <option value="Lithuania">Lithuania</option>
           <option value="North Macedonia">North Macedonia</option>
@@ -212,12 +205,8 @@
         let uploadPage = document.createElement('a');
         uploadPage.href = './upload.html';
         uploadPage.innerHTML = 'Upload articles';
-        let chartPage = document.createElement('a');
-        chartPage.href = './chart.html';
-        chartPage.innerHTML = 'Most popular';
         menuContainer.appendChild(statisticsPage);
         menuContainer.appendChild(uploadPage);
-        menuContainer.appendChild(chartPage);
 
         if(response.user.admin) {
           let adminPage = document.createElement('a');
@@ -245,9 +234,15 @@
             console.log(request.responseText);
           };
           var fd = new FormData(form);
-          request.open('POST', 'http://localhost:3000/articles', true);
-          request.setRequestHeader("Access-Control-Expose-Headers", "Authorization");
-          request.setRequestHeader('Authorization', localStorage.getItem('Authorization'));
+          request.open("POST", "http://localhost:3000/articles", true);
+          request.setRequestHeader(
+            "Access-Control-Expose-Headers",
+            "Authorization"
+          );
+          request.setRequestHeader(
+            "Authorization",
+            localStorage.getItem("Authorization")
+          );
           request.send(fd);
         }
         const form = document.getElementById("uplForm");

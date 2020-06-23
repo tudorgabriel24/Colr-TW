@@ -77,12 +77,9 @@ let renderMenuData = function (response) {
     let uploadPage = document.createElement('a');
     uploadPage.href = './html/upload.html';
     uploadPage.innerHTML = 'Upload articles';
-    let chartPage = document.createElement('a');
-    chartPage.href = '../html/chart.html';
-    chartPage.innerHTML = 'Most popular';
     menuContainer.appendChild(statisticsPage);
     menuContainer.appendChild(uploadPage);
-    menuContainer.appendChild(chartPage);
+
 
     if(response.user.admin) {
       let adminPage = document.createElement('a');
@@ -183,7 +180,9 @@ function loadItem(id, description, title) {
   itemDescription.innerHTML = description;
   let popButton = document.createElement("SPAN");
   popButton.classList.add("pop_button");
-  popButton.dataset.target = "#modal";
+  // popButton.setAttribute("ID", "modal");
+  popButton.id = "modal";
+  // popButton.dataset.target = "#modal";
   popButton.innerHTML = "Show more";
 
   popButton.addEventListener('click', function () {

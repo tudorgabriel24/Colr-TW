@@ -10,10 +10,10 @@ module.exports = http.createServer((req, res) => {
   const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  const rssCreator = require('./rssCreator');
-  const docBookCreator = require('./docBookCreator');
+  const rssCreator = require("./rssCreator");
+  const docBookCreator = require("./docBookCreator");
 
-  var path = reqUrl.pathname.split('/')
+  var path = reqUrl.pathname.split("/");
 
   console.log(`Request Type: ${req.method} Endpoint: ${reqUrl.pathname}`);
 
@@ -47,18 +47,20 @@ module.exports = http.createServer((req, res) => {
       service.getArticles(req, res);
     }
   } else if (reqUrl.pathname == "/articles" && req.method == "POST") {
+    console.log("Se asteapta formularul");
     new formidable.IncomingForm().parse(req, function (err, fields, files) {
       if (err) {
         console.log(err);
         utils.writeJson({ code: 402, description: err });
       }
+      console.log("Nici o eroare");
       req.body = fields;
       req.body.imagePath = files.image.path;
       console.log(req.body);
+      console.log("Se apeleaza");
       service.addArticle(req, res);
     });
   } else if (reqUrl.pathname == "/articles" && req.method == "PUT") {
-
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.updateArticle(req, res, headers);
     // let body = "";
@@ -87,52 +89,64 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.updateUser(req, res);
     });
- 
   } else if (reqUrl.pathname == "/rss" && req.method == "GET") {
-    service.getHottest().then( (response) => {
-      const title = [response[0].name, response[1].name, response[2].name];
-      const description = [response[0].description, response[1].description, response[2].description];
-      const link = ['link1', 'link2', 'link3'];
-      console.log(title);
-      utils.writeJson(res, response);
-      rssCreator.getRss(title, link, description);
-
-    }).catch( (response) => {
-      utils.writeJson(res, response);
-    });
- 
-    }
-    else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
-      service.getStats(reqUrl.query.param, 3, 10).then( (response) => {
+    service
+      .getHottest()
+      .then((response) => {
+        const title = [response[0].name, response[1].name, response[2].name];
+        const description = [
+          response[0].description,
+          response[1].description,
+          response[2].description,
+        ];
+        const link = ["link1", "link2", "link3"];
+        console.log(title);
+        utils.writeJson(res, response);
+        rssCreator.getRss(title, link, description);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  } else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
+    service
+      .getStats(reqUrl.query.param, 3, 10)
+      .then((response) => {
         var params = [];
         var timesUploaded = [];
         var totalViews = [];
         for (i = 0; i < response.length; i = i + 1) {
           params.push(response[i][reqUrl.query.param]);
-          timesUploaded.push(response[i]['timesUploaded']);
+          timesUploaded.push(response[i]["timesUploaded"]);
           totalViews.push(response[i]["totalViews"]);
         }
         utils.writeJson(res, response);
-        docBookCreator.getDoc(totalViews, timesUploaded, params, reqUrl.query.param);
-  
-      }).catch( (response) => {
+        docBookCreator.getDoc(
+          totalViews,
+          timesUploaded,
+          params,
+          reqUrl.query.param
+        );
+      })
+      .catch((response) => {
         utils.writeJson(res, response);
       });
-   
-      } else if (path[1] == "stats" && req.method == "GET") {
-    console.log('dam stats');
+  } else if (path[1] == "stats" && req.method == "GET") {
+    console.log("dam stats");
     var my_list = [];
-    for(i = 2; i < path.length; i = i + 1) {
+    for (i = 2; i < path.length; i = i + 1) {
       my_list.push(path[i]);
     }
-    my_list = my_list.join(',');
+    my_list = my_list.join(",");
     console.log(my_list);
-    service.getStats(my_list, reqUrl.query.order, 4).then( (response) => {
-      utils.writeJson(res, response)
-    }).catch( (response) => {
-      utils.writeJson(res, response);
-    });
-    return; 
+    service
+      .getStats(my_list, reqUrl.query.order, 4)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+    return;
   } else if (reqUrl.pathname == "/view" && req.method == "POST") {
     let body = "";
     req.on("data", (chunk) => {
@@ -147,7 +161,6 @@ module.exports = http.createServer((req, res) => {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.getUsers(req, res, headers);
   } else if (reqUrl.pathname == "/users" && req.method == "PUT") {
-    
   } else if (reqUrl.pathname == "/users" && req.method == "DELETE") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.deleteUser(req, res, headers);
@@ -173,4 +186,4 @@ module.exports = http.createServer((req, res) => {
     );
     service.invalidRequest(req, res);
   }
-});;
+});
