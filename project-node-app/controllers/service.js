@@ -135,7 +135,7 @@ exports.getHottest = async function () {
   });
 }
 
-exports.getStats = async function (params, order_num) {
+exports.getStats = async function (params, order_num, firstN) {
   return new Promise((resolve, reject) => {
     if (order_num == undefined) {
       order_num = 3;
@@ -149,7 +149,7 @@ exports.getStats = async function (params, order_num) {
       }
       // console.log(results, fields, err);
       console.log(results)
-      resolve(results.slice(0, 4));
+      resolve(results.slice(0, firstN));
   });
   });
 }
@@ -226,6 +226,22 @@ exports.deleteArticle = async function (req, res) {
       utils.writeJson(res, response);
     });
 };
+
+exports.addUserView = async function (req, res) {
+  var decoded = await verifyJwt(req, res);
+  if (req.body.user_id != decoded.id) {
+    utils.writeJson(res, {
+      code: 400,
+      description: `watch doesn't count`,
+    });
+  }
+  req.body.id_user = decoded.id;
+  db.insertEntry('articleviews', req.body).then( (response) => {
+    utils.writeJson(res, {code: 201, description: "success"});
+  }).catch( (response) => {
+    utils.writeJson(res, response);
+  });
+}
 
 exports.deleteUser = async function (req, res) {
   var decode = await verifyJwt(req, res);

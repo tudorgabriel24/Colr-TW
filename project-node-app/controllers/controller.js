@@ -3,13 +3,15 @@ const url = require("url");
 
 var formidable = require("formidable");
 var utils = require("../../util.js");
+const { time } = require("console");
 
 module.exports = http.createServer((req, res) => {
   const authService = require("./authService");
   const adminService = require("./adminService");
   const service = require("./service");
   const reqUrl = url.parse(req.url, true);
-  // const rssCreator = require('./rssCreator');
+  const rssCreator = require('./rssCreator');
+  const docBookCreator = require('./docBookCreator');
 
   var path = reqUrl.pathname.split('/')
 
@@ -93,13 +95,31 @@ module.exports = http.createServer((req, res) => {
       const link = ['link1', 'link2', 'link3'];
       console.log(title);
       utils.writeJson(res, response);
-      // rssCreator.getRss(title, link, description);
+      rssCreator.getRss(title, link, description);
 
     }).catch( (response) => {
       utils.writeJson(res, response);
     });
  
-    } else if (path[1] == "stats" && req.method == "GET") {
+    }
+    else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
+      service.getStats(reqUrl.query.param, 3, 10).then( (response) => {
+        var params = [];
+        var timesUploaded = [];
+        var totalViews = [];
+        for (i = 0; i < response.length; i = i + 1) {
+          params.push(response[i][reqUrl.query.param]);
+          timesUploaded.push(response[i]['timesUploaded']);
+          totalViews.push(response[i]["totalViews"]);
+        }
+        utils.writeJson(res, response);
+        docBookCreator.getDoc(totalViews, timesUploaded, params, reqUrl.query.param);
+  
+      }).catch( (response) => {
+        utils.writeJson(res, response);
+      });
+   
+      } else if (path[1] == "stats" && req.method == "GET") {
     console.log('dam stats');
     var my_list = [];
     for(i = 2; i < path.length; i = i + 1) {
@@ -107,12 +127,22 @@ module.exports = http.createServer((req, res) => {
     }
     my_list = my_list.join(',');
     console.log(my_list);
-    service.getStats(my_list, reqUrl.query.order).then( (response) => {
+    service.getStats(my_list, reqUrl.query.order, 4).then( (response) => {
       utils.writeJson(res, response)
     }).catch( (response) => {
       utils.writeJson(res, response);
     });
     return; 
+  } else if (reqUrl.pathname == "/view" && req.method == "POST") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+    });
+    req.on("end", (chunk) => {
+      req.body = JSON.parse(body);
+      console.log(req.body);
+      service.addUserView(req, res);
+    });
   } else if (reqUrl.pathname == "/users" && req.method == "GET") {
     console.log(`Request Type: ${req.method} \nEndpoint: ${reqUrl.pathname}`);
     adminService.getUsers(req, res, headers);
