@@ -6,13 +6,13 @@ exports.verifyJwt = async function(req,res) {
   const token = authHeader && authHeader.split(' ')[1];
   let decoded = null;
   console.log(`Token is ${token}`);
-  if (token == null || token == undefined) {
+  if (token == null || token == undefined || token == "") {
     res.statusCode = 401;
     res.writeHead(401, {'Content-type': 'application/json', "Access-Control-Allow-Origin": "*"});
     res.end(JSON.stringify({'code': 401, 'description': 'user needs to be logged in'}));
   }
   else {
-    let decoded = new Promise((resolve, reject) => {
+    decoded = new Promise((resolve, reject) => {
       resolve(jwt.verify(token, "secret", (err, data) => {
         if (err) {
           res.statusCode = 401;
@@ -22,6 +22,7 @@ exports.verifyJwt = async function(req,res) {
         return data;
       }));
     });
+    console.log(decoded);
   }
   return decoded;
 }

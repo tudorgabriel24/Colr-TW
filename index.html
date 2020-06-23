@@ -18,6 +18,7 @@
             <a href="./index.html">Home</a>
             <a href="./html/export.html">Export</a>
             <a href="./html/upload.html">Upload article</a>
+            <a href="../html/adminPanel.html">Admin panel</a>
           </div>
         </div>
         <div>
@@ -95,14 +96,14 @@
 
             <label for="type">Collection type:</label>
             <select name="Collection type" id="post_type">
-              <option value="Capac">Capac</option>
-              <option value="Dop">Dop</option>
-              <option value="Eticheta">Eticheta</option>
+              <option value="Cap">Cap</option>
+              <option value="Cork">Cork</option>
+              <option value="Label">Label</option>
             </select>
 
             <label for="value">Value:</label>
             <select name="Value" id="price_range">
-              <option value="50">50</option>
+              <option value="Under 100">Under 100</option>
               <option value="100-200">100-200</option>
               <option value="100-200">100-200</option>
               <option value="500-1.000">500-1.000</option>
@@ -111,13 +112,14 @@
               <option value="2.000-3.000">2.000-3.000</option>
               <option value="3.000-4.000">3.000-4.000</option>
               <option value="4.000-5.000">4.000-5.000</option>
-              <option value="Peste 5.000">Peste 5.000</option>
+              <option value="Over 5.000">Over 5.000</option>
             </select>
 
             <label for="state">Current state:</label>
             <select name="Current state" id="stat">
-              <option value="Intact">Intact</option>
-              <option value="Degradat">Degradat</option>
+              <option value="Brand New">Brand New</option>
+              <option value="Slighty Damaged">Slighty Damaged</option>
+              <option value="Damaged">Damaged</option>
             </select>
 
             <button id="search" onclick="searchFil(event)">Search</button>

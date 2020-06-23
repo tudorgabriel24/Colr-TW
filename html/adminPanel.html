@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin panel</title>
+    <script src="../js/HamburgerMenu.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css" >
+    <link rel="stylesheet" href="../css/upload.css" />
+    <link rel="stylesheet" href="../css/adminPanel.css">
+
+  </head>
+  <body>
+    <header>
+      <div>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+            >&times;</a
+          >
+          <div style="margin-top: 200px;">
+            <a href="../index.html">Home</a>
+            <a href="./export.html">Export</a>
+            <a href="./upload.html">Upload article</a>
+            <a href="./adminPanel.html">Admin panel</a>
+          </div>
+        </div>
+        <div>
+          <img src="../assets/logo.svg" id="miniLogo" alt="" />
+        </div>
+        <div id="userLogin" onclick="navigateToLogin()">
+          <span style="display: flex;">
+            <div>Login</div>
+            <img src="../assets/user.svg" alt="Login" />
+          </span>
+        </div>
+        <div
+          class="headerMenu"
+          style="font-size: 30px; cursor: pointer;"
+          onclick="openNav()"
+        >
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+
+      <div class="PageHeader">
+        <p id="headerTitle">Admin panel</p>
+      </div>
+
+      <div id="admin-panel-section">
+        <div id="user-list-container"></div>
+
+        <div id="articles-container">
+          <div id="chosen-user">
+            <p>User `s articles</p>
+          </div>
+
+        </div>
+        </div>
+      </div>
+
+      <div id="update-article-dialog">
+        
+      </div>
+
+      <script src="../js/adminPanel.js"></script>
+  </body>
+  </html>
