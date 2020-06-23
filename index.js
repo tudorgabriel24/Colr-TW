@@ -116,6 +116,9 @@ function loadItem(image, description) {
   itemImage.src = `./project-node-app/images/${image}.png`;
   itemImage.alt = ``;
 
+  let bottomArticleContainer = document.createElement('DIV');
+  bottomArticleContainer.classList.add('bottom-article-container');
+
   let itemDescription = document.createElement("P");
   itemDescription.innerHTML = description;
   let popButton = document.createElement("SPAN");
@@ -125,7 +128,8 @@ function loadItem(image, description) {
 
   galleryGrid.appendChild(container);
   container.appendChild(itemImage);
-  container.appendChild(itemDescription);
+  container.appendChild(bottomArticleContainer);
+  bottomArticleContainer.appendChild(itemDescription);
   itemDescription.appendChild(popButton);
 }
 

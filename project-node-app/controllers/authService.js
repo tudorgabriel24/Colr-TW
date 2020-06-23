@@ -83,7 +83,7 @@ exports.loginRequest = async (req, resp, headers) => {
   console.log("HEADERS", headers);
   // const reqUrl = url.parse(req.url, true);
   let response = {
-    success: false,
+    success: false
   };
   let body = "";
 

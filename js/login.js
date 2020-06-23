@@ -48,13 +48,22 @@ function onSubmit(event) {
     let fullNameInput = document.querySelector("#full-name-input").value;
     console.log(emailInput," ", passwordInput, " ", fullNameInput);
 
-    if(activeForm === "login") {
-        makeLoginRequest(emailInput,passwordInput);
-    } else {
-        if(activeForm === "register") {
-            makeRegisterRequest(fullNameInput,emailInput,passwordInput);
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput) && passwordInput !== "") {
+        if(activeForm === "login") {
+            makeLoginRequest(emailInput,passwordInput);
+        } else {
+            if(activeForm === "register") {
+                if(fullNameInput !== "") {
+                    makeRegisterRequest(fullNameInput,emailInput,passwordInput);
+                } else {
+                    showNotification("FullName field empty!");
+                }
+            }
         }
+    } else {
+        showNotification("Email pattern wrong!");
     }
+
 }
 
 function makeLoginRequest(email,password) {
