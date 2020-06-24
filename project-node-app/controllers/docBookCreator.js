@@ -8,7 +8,7 @@ var builder = require("xmlbuilder");
 // var params = ["Romania", "Italia", "Spania"];
 // var col = "Country"; // type , brand
 
-exports.getDoc = async function (no_views, times_upl, params, col) {
+exports.getDoc = async function (no_views, times_upl, params, col, res) {
   var obj = {
     table: {
       "@frame": "all",
@@ -51,10 +51,17 @@ exports.getDoc = async function (no_views, times_upl, params, col) {
   var xml = xml.end({ pretty: true });
 
   console.log(xml);
-
-  fs.writeFile("./xml/docBook.xml", xml, function (err, data) {
-    if (err) console.log(err);
-
-    console.log("successfully created docBook file");
+  res.writeHead(200, {
+    "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   });
+  res.end(xml);
+
+  // fs.writeFile("./xml/docBook.xml", xml, function (err, data) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+
+  //   console.log("successfully created docBook file");
+  // });
 };

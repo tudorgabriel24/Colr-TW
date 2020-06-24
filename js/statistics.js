@@ -61,6 +61,8 @@ let renderMenuData = function (response) {
   }
 };
 
+var docbook = '';
+
 function exportCSV() {
   let csvContent = "data:text/csv;charset=utf-8,";
   console.log(rows);
@@ -80,20 +82,7 @@ function exportCSV() {
 }
 
 function exportDocBook() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function () {
-    console.log(xhttp.responseText);
-    doc(xhttp.responseText);
-  };
-
-  xhttp.open("GET", "../project-node-app/xml/docBook.xml", true);
-
-  xhttp.getResponseHeader("Access-Control-Allow-Origin", "");
-  xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "");
-  xhttp.setRequestHeader("Content-Type", "application/json");
-  const authToken = localStorage.getItem("Authorization");
-  xhttp.setRequestHeader("Authorization", authToken);
-  xhttp.send();
+  doc(docbook);
 
   function doc(object) {
     let docContent = "data:text/plain;charset=utf-8,";
@@ -118,12 +107,12 @@ for (let i = 0; i < stats.length; i++) {
 function getStatistics(param) {
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
-    console.log(xhttp.responseText);
+    // console.log(xhttp.responseText);
     var response = JSON.parse(xhttp.responseText);
     var label = [];
     var views = [];
     var times = [];
-    console.log(param);
+    // console.log(param);
     for (var i in response) {
       label.push(response[i][param]);
       views.push(response[i].totalViews);
@@ -142,21 +131,23 @@ function getStatistics(param) {
   xhttp.send();
 
   const docXHTTP = new XMLHttpRequest();
-  // docXHTTP.onload = function () {
-  //   console.log("Export response is:");
-  //   console.log(docXHTTP.responseText);
-  // };
+  docXHTTP.onload = function () {
+    console.log("Export response is:");
+    console.log(docXHTTP.responseText);
+    docbook = docXHTTP.responseText;
+  };
   docXHTTP.open("GET", `http://localhost:3000/export?param=${param}`, true);
+  console.log('asd');
   docXHTTP.getResponseHeader("Access-Control-Allow-Origin", "");
   docXHTTP.getAllResponseHeaders("Access-Control-Allow-Origin", "");
   docXHTTP.setRequestHeader("Content-Type", "application/json");
-  // const authToken = localStorage.getItem("Authorization");
   docXHTTP.setRequestHeader("Authorization", authToken);
   docXHTTP.send();
 }
 
 function option(label_list, views_list, times_list) {
   if (myChart != undefined) {
+    console.log('se distruge canvasul');
     myChart.destroy();
   }
   my_label = label_list;
