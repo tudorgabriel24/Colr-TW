@@ -111,9 +111,6 @@ function exportDocBook() {
 
 var stats = document.getElementsByClassName("stats_button");
 for (let i = 0; i < stats.length; i++) {
-  var param = [];
-  // param.push(stats[i].id.split("_")[1]);
-  console.log(param);
   stats[i].addEventListener("click", function () {
     console.log(i);
     getStatistics(stats[i].id.split("_")[1]);
@@ -134,6 +131,18 @@ function getStatistics(param) {
       views.push(response[i].totalViews);
       times.push(response[i].timesUploaded);
     }
+    const docXHTTP = new XMLHttpRequest();
+    docXHTTP.onload = function () {
+      console.log("Export response is:");
+      console.log(docXHTTP.responseText);
+    }
+    docXHTTP.open("GET", `http://localhost:3000/export/?param=${param}`, true);
+    docXHTTP.getResponseHeader("Access-Control-Allow-Origin", "");
+    docXHTTP.getAllResponseHeaders("Access-Control-Allow-Origin", "");
+    docXHTTP.setRequestHeader("Content-Type", "application/json");
+    const authToken = localStorage.getItem("Authorization");
+    docXHTTP.setRequestHeader("Authorization", authToken);
+    docXHTTP.send();
     option(label, views, times);
   };
 
