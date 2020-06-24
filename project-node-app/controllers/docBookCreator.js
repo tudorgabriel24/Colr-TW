@@ -52,7 +52,7 @@ exports.getDoc = async function (no_views, times_upl, params, col) {
 
   console.log(xml);
 
-  fs.writeFile("../xml/docBook.xml", xml, function (err, data) {
+  fs.writeFile("./xml/docBook.xml", xml, function (err, data) {
     if (err) console.log(err);
 
     console.log("successfully created docBook file");

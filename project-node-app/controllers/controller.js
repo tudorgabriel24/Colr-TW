@@ -108,9 +108,11 @@ module.exports = http.createServer((req, res) => {
         utils.writeJson(res, response);
       });
   } else if (reqUrl.pathname == "/export" && req.method == "GET") {
+    console.log("Ceva");
     service
       .getStats(reqUrl.query.param, 3, 10)
       .then((response) => {
+        console.log("Altceva");
         var params = [];
         var timesUploaded = [];
         var totalViews = [];
@@ -119,7 +121,8 @@ module.exports = http.createServer((req, res) => {
           timesUploaded.push(response[i]["timesUploaded"]);
           totalViews.push(response[i]["totalViews"]);
         }
-        utils.writeJson(res, response);
+        // utils.writeJson(res, response);
+        console.log("Incepem docbook");
         docBookCreator.getDoc(
           totalViews,
           timesUploaded,
@@ -128,6 +131,7 @@ module.exports = http.createServer((req, res) => {
         );
       })
       .catch((response) => {
+        console.log("o eroare");
         utils.writeJson(res, response);
       });
   } else if (path[1] == "stats" && req.method == "GET") {
@@ -173,14 +177,12 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteFromCart(req, res);
     });
-  } 
-  else if(reqUrl.pathname == "/me" && req.method == "GET") {
+  } else if (reqUrl.pathname == "/me" && req.method == "GET") {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
     service.getUserData(req, res, headers);
-  }
-  else {
+  } else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );
