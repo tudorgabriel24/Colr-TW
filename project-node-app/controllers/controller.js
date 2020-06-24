@@ -107,7 +107,7 @@ module.exports = http.createServer((req, res) => {
       .catch((response) => {
         utils.writeJson(res, response);
       });
-  } else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
+  } else if (reqUrl.pathname == "/export" && req.method == "GET") {
     service
       .getStats(reqUrl.query.param, 3, 10)
       .then((response) => {
