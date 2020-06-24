@@ -105,12 +105,3 @@ function refreshGallery(object) {
   body.appendChild(galleryGrid);
   renderGalleryItems(object);
 }
-
-var showBtn = document.getElementById("modal");
-showBtn.addEventListener(onclick, function () {
-  addView();
-});
-
-function addView() {
-  console.log("A fost click");
-}
