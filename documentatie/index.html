@@ -42,15 +42,19 @@
         <li>Server: Apache</li>
         <li>AJAX</li>
       </ul>
+      <ul>
+        <li>XmlBuilder</li>
+        <li>Chart.js</li>
+      </ul>
     </section>
-<section id="arhitecturaaplicatie">
+<section id="arhitectura_aplicatie">
 	<h2>Arhiterctura aplicatie</h2>
 	<p>Am folosit o arhitectura de baza, adica Clientul trimite o cerere Serverului, Serverul apeleaza Baza de Date, iar raspunsul este trimis catre Client tot prin intermediul Serverului.</p>
 	<section id="diagramaarhitecturala">
       <h3>Diagrama workflow</h3>
-       <img src="../documentatie/assets/project.png" alt="Diagrama arhitecturala" width="125%"> 
+       <img src="../documentatie/assets/projectV3.png" alt="Diagrama arhitecturala" width="125%"> 
     </section>
-    <section id="diagramaarhitecturala">
+    <section id="diagrama_arhitecturala">
       <h3>Module</h3>
        <p>O lista cu module:</p>
        <ul>
@@ -60,7 +64,7 @@
        	<li>Exportare sub format CSV ale aricolelor</li>
        </ul>
     </section>
-    <section id="descrierefunctionalitati">
+    <section id="descriere_functionalitati">
       <h3>Descriere functionalitati</h3>
       <p>
        Vizitator:
@@ -68,19 +72,27 @@
       <ul>
       	<li>Logare: permite logarea</li>
       	<li>Înregistrare: permite crearea unui cont nou</li>
-      	<li>Vizualizare articole: permite vizitatorului să vizualizeze toate articolele publicate</li>
+      	<li>Vizualizare articole: permite vizitatorului sa vizualizeze toate articolele publicate</li>
       </ul>
        <p>
        User:
       </p>
       <ul>
-      	<li>Editare profil: Userul isi poate modifica profilul</li>
       	<li>Vizualizare articole: poate vedea la fel ca un vizitator articolele publicate</li>
       	<li>Adaugare articol: permite userului postarea de articole</li>
-      	<li>Adaugare articol in propriul cart: permite userului sa adauge articole publicate intr-un cart propriu, pe care acesta le va putea exporta in format CSV</li>
-      	<li>Exportarea cartului: permite userului exportarea articolelor din cartul prorpiu</li>
+      	<li>Exportare statistici in format CSV sau DocBook</li>
+        <li>Vizualizare diferite statistici</li>
+        <li>Vizualizare flux RSS</li>
       </ul>
-       
+      <p>
+        Admin:
+      </p>
+      <ul>
+        <li>Include toate functionalitatile de user</li>
+        <li>Editare articole, actualizare</li>
+        <li>Stergere articole sau useri</li>
+      	
+      </ul>
     </section>
     
   </section>
@@ -104,6 +116,7 @@
          <li>Autentificare - sistem de login, register, partea de Front si Back end</li>
          <li>Integrare pagina cu API</li>
          <li>Creare token</li>
+         <li>Admin Panel</li>
        	</ul>
        </li>
        <li>
@@ -118,10 +131,10 @@
     		Raicu Andrei
     	<ul>
         <li>Pagina principala: afisarea articolelor pe pagina principala, primite de la server</li>
-        <li>Export: exportarea cartului in format CSV</li>
+        <li>Formatare de date XML pentru DocBook si fluxul RSS</li>
         <li>Initializare AJAX</li>
         <li>Design Front End</li>
-    		
+        <li>Gestionare legaturilor Front End si Back End</li>	
     	</ul>
     </li>
 	</ol>
@@ -130,6 +143,22 @@
     </section>
 
     <section id="user case">
+      <h2>Use case</h2>
+      <p>Scenariu</p>
+      <ul>
+        <li>Un user doreste sa adauge un articol</li>
+      </ul>
+      <p>Descriere</p>
+      <ul><li>
+        Un utilizator acceseaza pagina, daca doreste sa adauge un articol acesta este nevoit sa se logheze sau sa-si creeze un cont. Dupa ce a intrat cu contul sau, poate merge pe pagina de a incarca un articol. Completeaza campurile necesare, inclusiv atasarea de imagine si dupa articolul este incarcat pe site.
+      </li></ul>
+      <ul>
+        <li>Un admin doreste sa stearga un articol</li>
+      </ul>
+      <p>Descriere</p>
+      <ul><li>
+        Un utilizator cu privilegii de administrator al paginii doreste sa stearga un articol. Acesta intra in contul sau de administrator si are acces la pagina de administrare a utilizatorilor si articolelor lor din cadrul site-ului. Acceseaza userul care a incarcat articolul respectiv si sterge postarea de pe profilul acestuia.
+      </li></ul>
     </section>
 
     <section id="references"><h2><span> </span>References</h2><dl></dl>
@@ -140,6 +169,8 @@
         <li>https://www.npmjs.com/package/mysql#introduction</li>
         <li>https://stackoverflow.com/</li>
         <li>https://www.w3schools.com/</li>
+        <li>https://www.npmjs.com/package/xmlbuilder</li>
+        <li>https://www.chartjs.org/docs/latest/</li>
       </ul>
 </section>
    
