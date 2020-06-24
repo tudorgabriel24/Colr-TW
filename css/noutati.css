@@ -346,7 +346,6 @@ input {
   transition: ease-in-out 100ms;
   font-weight: bold;
   font-size: 1.4rem;
-  font-size-adjust: 0.5rem;
   outline: none;
   margin: 0.8rem;
 }

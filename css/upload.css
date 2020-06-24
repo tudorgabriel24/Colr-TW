@@ -194,7 +194,6 @@ header {
   border-radius: 0.5rem;
   align-self: center;
   transition-duration: 0.2s;
-  font-size-adjust: 0.5rem;
   outline: none;
   margin-top: 1rem;
   font-weight: bold;
@@ -216,7 +215,6 @@ label {
   background-color: #16425b;
   color: #fff;
   cursor: pointer;
-  border-color: #16425b;
 }
 
 .uplBut {

@@ -421,7 +421,7 @@ let getUser = function () {
 }
 
 let changeTopMenuName = function (fullName) {
-  let showUsername = document.querySelector("#userLogin span p");
+  let showUsername = document.querySelector("#userLogin div p");
   let userContaier = document.getElementById('userLogin');
   userContaier.onclick = "";
   showUsername.innerHTML = fullName;
