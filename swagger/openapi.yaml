@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: Colr Api
+  description: API for using our Colr project
+  version: "1.0"
+servers:
+- url: https://virtserver.swaggerhub.com/dragos134/myApi/1.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /articles:
+    get:
+      description: gets a number of articles
+      parameters:
+      - name: limit
+        in: query
+        description: limits the number of articles on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Succes
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+    put:
+      description: updates article
+      parameters: []
+      responses:
+        "200":
+          description: Article added with success
+        "400":
+          description: Bad request
+        "404":
+          description: Can't update an article that is not yours
+    post:
+      description: adds new article
+      parameters: []
+      responses:
+        "201":
+          description: Article added
+        "401":
+          description: user not logged in
+        "500":
+          description: Internal server error
+    delete:
+      description: Deletes an article
+      parameters: []
+      responses:
+        "200":
+          description: Article deleted
+        "400":
+          description: Bad request
+        "404":
+          description: Can't delete an article that is not yours
+  /login:
+    post:
+      description: logs a user in
+      parameters: []
+      responses:
+        "200":
+          description: user logged in with success
+        "400":
+          description: bad request
+  /register:
+    post:
+      description: registers a user
+      parameters: []
+      responses:
+        "201":
+          description: user created succesfuly
+        "400":
+          description: bad request
+        "500":
+          description: internal server error
+  /user:
+    put:
+      description: updates user
+      parameters: []
+      responses:
+        "200":
+          description: user updated with success
+        "400":
+          description: bad request
+    delete:
+      description: deletes user
+      parameters: []
+      responses:
+        "200":
+          description: user deleted with success
+        "400":
+          description: bad request
+        "500":
+          description: internal server error
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        id:
+          pattern: '[0-9abcdef]{32}'
+          type: string
+          example: 3b0bd8546acf76f97ed2d5298697c150
+        user_id:
+          pattern: '[0-9abcdef]{32}'
+          type: string
+          example: f87330d93a88e085a5c9946d93c2bd9d
+        name:
+          type: string
+          example: capac timisoreana
+        year:
+          maximum: 4
+          type: integer
+          example: 2020
+        brand:
+          type: string
+          example: Timisoreana
+        alcoholic:
+          type: boolean
+          example: true
+        country:
+          type: string
+          example: Romania
+        description:
+          type: string
+          example: un capac de pet
+        currentState:
+          type: string
+          example: foarte nou
+        type:
+          type: string
+          example: Cap
+        priceRange:
+          type: string
+          example: 100-200
+    User:
+      type: object
+      properties:
+        id:
+          pattern: '[0-9abcdef]{32}'
+          type: string
+        fullName:
+          type: string
+          example: Ciocan Dragos
+        email:
+          type: string
+          example: ciocan.dragos13@gmail.com
+        password:
+          type: string
+          example: "12345"
+        updatedAt:
+          type: string
+          example: 2020-06-24
+        createdAt:
+          type: string
+          readOnly: true
+          example: 2020-06-24

@@ -107,7 +107,7 @@ module.exports = http.createServer((req, res) => {
       .catch((response) => {
         utils.writeJson(res, response);
       });
-  } else if (reqUrl.pathname == "/docbook" && req.method == "GET") {
+  } else if (reqUrl.pathname == "/export" && req.method == "GET") {
     service
       .getStats(reqUrl.query.param, 3, 10)
       .then((response) => {
@@ -173,7 +173,14 @@ module.exports = http.createServer((req, res) => {
       console.log(req.body);
       service.deleteFromCart(req, res);
     });
-  } else {
+  } 
+  else if(reqUrl.pathname == "/me" && req.method == "GET") {
+    console.log(
+      "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
+    );
+    service.getUserData(req, res, headers);
+  }
+  else {
     console.log(
       "Request Type:" + req.method + " Invalid Endpoint: " + reqUrl.pathname
     );

@@ -14,11 +14,7 @@
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
             >&times;</a
           >
-          <div style="margin-top: 150px;">
-            <a href="../index.html">Home</a>
-            <a href="../html/export.html">Statistics</a>
-            <a href="../html/upload.html">Upload article</a>
-            <a href="../html/adminPanel.html">Admin panel</a>
+          <div style="margin-top: 150px;" id='nav-container'>
           </div>
         </div>
         <div>
@@ -64,14 +60,20 @@
           name="year"
           required
         /><br />
-        <input
-          class="inpText"
-          type="text"
-          placeholder="Brand"
-          id="brand"
-          name="brand"
-          required
-        /><br />
+        <label for="brand">Brand:</label>
+        <select name="brand" id="brand" class="inpText">
+          <option value="Coca Cola">Coca Cola</option>
+          <option value="Pepsi">Pepsi</option>
+          <option value="Sprite">Sprite</option>
+          <option value="Bergenbier">Bergenbier</option>
+          <option value="Timisoreana">Timisoreana</option>
+          <option value="Adria">Adria</option>
+          <option value="Jack Daniels">Jack Daniels</option>
+          <option value="Smirnoff">Smirnoff</option>
+          <option value="Peroni">Peroni</option>
+          <option value="Borsec">Boresc</option>
+          <option value="Coca Cola">Coca Cola</option>
+        </select>
         <label for="alcoholic" class="checkLab"
           >Is alcoholic:
           <input
@@ -170,6 +172,66 @@
       <img id="blah" src="#" alt="" /><br />
     </section>
     <script>
+      window.onload = function loadMenu() {
+        if(localStorage.getItem("Authorization") !== undefined && localStorage.getItem("Authorization") !== null) {
+          getUser();
+        }
+      }
+
+        let getUser = async function () {
+        console.log("AICI AA");
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+        console.log(xhttp.responseText);
+        let responseBody = JSON.parse(xhttp.responseText);
+        console.log(responseBody);
+        renderMenuData(responseBody);
+      };
+      xhttp.open("GET", "http://localhost:3000/me", true);
+      xhttp.getResponseHeader("Access-Control-Allow-Origin", "*");
+      xhttp.getAllResponseHeaders("Access-Control-Allow-Origin", "*");
+      // xhttp.setRequestHeader("Content-Type", "application/json");
+      const authToken = localStorage.getItem("Authorization");
+      console.log(authToken);
+      xhttp.setRequestHeader("Authorization", authToken);
+      xhttp.send();
+
+    }
+
+    let renderMenuData = function (response) {
+      let menuContainer = document.getElementById('nav-container');
+      let homePage = document.createElement('a');
+      homePage.href = '../index.html';
+      homePage.innerHTML = 'Home';
+      menuContainer.appendChild(homePage);
+      if(response.success === true) {
+        let statisticsPage = document.createElement('a');
+        statisticsPage.href = './export.html';
+        statisticsPage.innerHTML = 'Statistics';
+        let uploadPage = document.createElement('a');
+        uploadPage.href = './upload.html';
+        uploadPage.innerHTML = 'Upload articles';
+        menuContainer.appendChild(statisticsPage);
+        menuContainer.appendChild(uploadPage);
+
+        if(response.user.admin) {
+          let adminPage = document.createElement('a');
+          adminPage.href = './adminPanel.html';
+          adminPage.innerHTML = "Admin panel";
+          menuContainer.appendChild(adminPage);
+        }
+        let logout = document.createElement('a');
+        logout.href = '';
+        logout.innerHTML = 'Logout';
+        menuContainer.appendChild(logout);
+
+        logout.addEventListener('click', function () {
+          localStorage.removeItem('Authorization');
+          window.location.replace('http://localhost:5500/index.html');
+        })
+      }
+    };
+      
       window.addEventListener("load", function () {
         function sendForm() {
           var request = new XMLHttpRequest();
