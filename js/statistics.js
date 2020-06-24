@@ -135,7 +135,9 @@ function getStatistics(param) {
     docXHTTP.onload = function () {
       console.log("Export response is:");
       console.log(docXHTTP.responseText);
+      option(label, views, times);
     }
+
     docXHTTP.open("GET", `http://localhost:3000/export/?param=${param}`, true);
     docXHTTP.getResponseHeader("Access-Control-Allow-Origin", "");
     docXHTTP.getAllResponseHeaders("Access-Control-Allow-Origin", "");
@@ -143,7 +145,7 @@ function getStatistics(param) {
     const authToken = localStorage.getItem("Authorization");
     docXHTTP.setRequestHeader("Authorization", authToken);
     docXHTTP.send();
-    option(label, views, times);
+    // option(label, views, times);
   };
 
   xhttp.open("GET", `http://localhost:3000/stats/${param}`, true);

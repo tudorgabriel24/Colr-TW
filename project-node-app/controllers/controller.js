@@ -119,7 +119,6 @@ module.exports = http.createServer((req, res) => {
           timesUploaded.push(response[i]["timesUploaded"]);
           totalViews.push(response[i]["totalViews"]);
         }
-        utils.writeJson(res, response);
         docBookCreator.getDoc(
           totalViews,
           timesUploaded,
