@@ -7,7 +7,7 @@
     <colspec colname="c3"/>
     <thead>
       <row>
-        <entry>type</entry>
+        <entry>country</entry>
         <entry>Number_views</entry>
         <entry>Times_uploaded</entry>
       </row>
@@ -15,18 +15,13 @@
     <tbody/>
   </tgroup>
   <row>
-    <entry>Cap</entry>
-    <entry>10</entry>
-    <entry>4</entry>
+    <entry>Russia</entry>
+    <entry>0</entry>
+    <entry>1</entry>
   </row>
   <row>
-    <entry>Cork</entry>
+    <entry>Romania</entry>
     <entry>0</entry>
-    <entry>2</entry>
-  </row>
-  <row>
-    <entry/>
-    <entry>0</entry>
-    <entry>149</entry>
+    <entry>1</entry>
   </row>
 </table>

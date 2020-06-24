@@ -127,7 +127,8 @@ module.exports = http.createServer((req, res) => {
           totalViews,
           timesUploaded,
           params,
-          reqUrl.query.param
+          reqUrl.query.param,
+          res
         );
       })
       .catch((response) => {
